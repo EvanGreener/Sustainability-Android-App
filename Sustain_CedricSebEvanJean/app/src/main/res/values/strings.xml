@@ -1,7 +1,11 @@
 <resources>
     <string name="app_name">Sustain_CedricSebEvanJean</string>
 
+    <!-- Strings for the options menu -->
     <string name="AboutOption">About</string>
     <string name="WWWOption">WWW</string>
     <string name="SettingOption">Settings</string>
+
+    <!-- String for the Dawson Sustain webpage -->
+    <string name="DawsonURL">https://www.dawsoncollege.qc.ca/sustainable/</string>
 </resources>

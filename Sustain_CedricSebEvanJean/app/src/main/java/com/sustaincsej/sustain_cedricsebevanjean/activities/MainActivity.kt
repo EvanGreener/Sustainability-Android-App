@@ -1,5 +1,7 @@
 package com.sustaincsej.sustain_cedricsebevanjean.activities
 
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -52,7 +54,8 @@ class MainActivity : AppCompatActivity() {
      * Function that will create an intent to go to the About activity
      */
     private fun aboutClicked() {
-
+        val intent = Intent(this, AboutActivity::class.java)
+        startActivity(intent)
     }
 
     /**
@@ -60,13 +63,15 @@ class MainActivity : AppCompatActivity() {
      * website.
      */
     private fun wwwClicked() {
-
+        val webpage: Uri = Uri.parse(getString(R.string.DawsonURL))
+        startActivity(Intent(Intent.ACTION_VIEW, webpage))
     }
 
     /**
      * Function that will create an intent to go to the Settings activity.
      */
     private fun settingsClicked() {
-
+        val intent = Intent(this, SettingsActivity::class.java)
+        startActivity(intent)
     }
 }
