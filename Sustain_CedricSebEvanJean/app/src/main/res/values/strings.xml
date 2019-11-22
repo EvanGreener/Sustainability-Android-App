@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Sustain_CedricSebEvanJean</string>
+
+    <string name="AboutOption">About</string>
+    <string name="WWWOption">WWW</string>
+    <string name="SettingOption">Settings</string>
 </resources>
