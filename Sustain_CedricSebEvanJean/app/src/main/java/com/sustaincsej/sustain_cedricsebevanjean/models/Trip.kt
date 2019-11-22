@@ -20,7 +20,10 @@ data class Trip (
     @ColumnInfo(name = "reason_for_trip") @NonNull val reasonForTrip : String
 )
 
+
+
 class Converters {
+
     @TypeConverter
     fun fromTimestamp(value: Long?): Date? {
         return value?.let { Date(it) }
