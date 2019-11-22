@@ -47,6 +47,16 @@
             android:src="@drawable/sustainability"
             tools:srcCompat="@drawable/sustainability" />
 
+        <ImageButton
+            android:id="@+id/main_co2calc_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/componentMargin"
+            android:layout_weight="0.5"
+            android:background="@color/transparent"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/co2" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -74,53 +84,6 @@
             android:textColor="@color/onBackground"
             android:textSize="@dimen/smallTextSize"
             android:textStyle="italic" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight=".4"
-        android:background="@color/background"
-        android:orientation="horizontal"
-        android:padding="@dimen/linearLayoutPaddingSmall">
-
-        <ImageButton
-            android:id="@+id/main_co2calc_button"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/componentMargin"
-            android:layout_weight="0.5"
-            android:background="@color/transparent"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/co2" />
-
-        <ImageButton
-            android:id="@+id/main_triplog_button"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/componentMargin"
-            android:layout_weight="0.5"
-            android:background="@color/transparent"
-            android:scaleType="centerCrop"
-            android:src="@drawable/trip"
-            tools:srcCompat="@drawable/trip" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.08"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:text="@string/main_co2calc_button_string"
-            android:textAlignment="center"
-            android:textColor="@color/onBackground"
-            android:textSize="@dimen/smallTextSize"
-            android:textStyle="italic" />
 
         <TextView
             android:layout_width="0dp"
@@ -142,13 +105,15 @@
         android:padding="@dimen/linearLayoutPaddingSmall">
 
         <ImageButton
+            android:id="@+id/main_triplog_button"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/componentMargin"
             android:layout_weight="0.5"
             android:background="@color/transparent"
             android:scaleType="centerCrop"
-            app:srcCompat="@color/background" />
+            android:src="@drawable/trip"
+            tools:srcCompat="@drawable/trip" />
 
         <ImageButton
             android:id="@+id/main_triplogphp_button"
@@ -160,41 +125,6 @@
             android:scaleType="centerCrop"
             android:src="@drawable/tripphp"
             tools:srcCompat="@drawable/tripphp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.08"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:textAlignment="center"
-            android:textColor="@color/onBackground"
-            android:textSize="@dimen/smallTextSize"
-            android:textStyle="italic" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:text="@string/main_triplogphp_button_string"
-            android:textAlignment="center"
-            android:textColor="@color/onBackground"
-            android:textSize="@dimen/smallTextSize"
-            android:textStyle="italic" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight=".4"
-        android:background="@color/background"
-        android:orientation="horizontal"
-        android:padding="@dimen/linearLayoutPaddingSmall">
 
         <ImageButton
             android:id="@+id/main_schooltrip_button"
@@ -227,6 +157,26 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
+            android:text="@string/main_triplogphp_button_string"
+            android:textAlignment="center"
+            android:textColor="@color/onBackground"
+            android:textSize="@dimen/smallTextSize"
+            android:textStyle="italic" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/main_co2calc_button_string"
+            android:textAlignment="center"
+            android:textColor="@color/onBackground"
+            android:textSize="@dimen/smallTextSize"
+            android:textStyle="italic" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
             android:text="@string/main_schooltrip_button_string"
             android:textAlignment="center"
             android:textColor="@color/onBackground"
@@ -249,6 +199,7 @@
         android:layout_marginTop="10dp"
         android:padding="@dimen/componentPadding"
         android:text="@string/main_co2_header_string"
+        android:textAlignment="center"
         android:textColor="@color/onBackground"
         android:textSize="@dimen/secondaryHeaderSize" />
 
