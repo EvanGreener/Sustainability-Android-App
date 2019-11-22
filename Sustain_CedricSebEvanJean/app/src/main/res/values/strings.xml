@@ -9,4 +9,11 @@
     <string name="main_triplogphp_button_string">Trip Log (PHP)</string>
     <string name="main_schooltrip_button_string">New School Trip</string>
     <string name="main_hometrip_button_string">New Home Trip</string>
+    <string name="weather_title_string">WEATHER</string>
+    <string name="weather_recommendation_label">Advice: </string>
+    <string name="weather_recommendation_badweather">Take public transit, do not walk or bike.</string>
+    <string name="weather_recommendation_okweather">Take public transit or walk.</string>
+    <string name="weather_recommendation_goodweather">Great weather to bike or walk!</string>
+    <string name="weather_lat_label">Lat:</string>
+    <string name="weather_lon_label">Lon:</string>
 </resources>
