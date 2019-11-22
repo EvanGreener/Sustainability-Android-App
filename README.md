@@ -4,6 +4,9 @@ Android app to help students to identify their CO2 footprint and its consequence
 
 NOTES FOR DEVELOPERS:
 
+NAMING:
+-> id: activity_name Ex: main_title | about_description
+
 VIEWS
 -> Colors, string and dimens constants only
 

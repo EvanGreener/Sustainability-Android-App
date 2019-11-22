@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Carbon Emission Tracker</string>
+    <string name="main_title_string">CO2 TRACKER</string>
+    <string name="main_co2_header_string">Total CO2: </string>
+    <string name="main_weatherapi_button_string">Weather API</string>
+    <string name="main_sustfacts_button_string">Sustainability Facts</string>
+    <string name="main_co2calc_button_string">CO2 Calculator</string>
+    <string name="main_triplog_button_string">Trip Log (SQLite)</string>
+    <string name="main_triplogphp_button_string">Trip Log (PHP)</string>
+    <string name="main_schooltrip_button_string">New School Trip</string>
+    <string name="main_hometrip_button_string">New Home Trip</string>
 </resources>
