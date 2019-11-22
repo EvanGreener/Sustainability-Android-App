@@ -1,2 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <dimen name="containerPadding">30dp</dimen>
+    <dimen name="componentPadding">10dp</dimen>
+    <dimen name="componentMargin">15dp</dimen>
+    <dimen name="titleSize">45sp</dimen>
+    <dimen name="headerSize">32sp</dimen>
+    <dimen name="secondaryHeaderSize">28sp</dimen>
+    <dimen name="textSize">20sp</dimen>
+    <dimen name="buttonTextSize">15sp</dimen>
+    <dimen name="inputTextSize">18sp</dimen>
+</resources>
