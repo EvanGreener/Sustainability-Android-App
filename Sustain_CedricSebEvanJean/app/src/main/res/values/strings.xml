@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Carbon Emission Tracker</string>
+    <string name="triplog_title_string">TRIP LOG</string>
+    <string name="trip_row_date_string">Date: </string>
+    <string name="trip_row_distance_string">Distance: </string>
+    <string name="trip_row_co2_string">Total CO2: </string>
 </resources>
