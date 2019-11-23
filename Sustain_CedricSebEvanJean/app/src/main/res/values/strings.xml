@@ -16,4 +16,15 @@
     <string name="weather_recommendation_goodweather">Great weather to bike or walk!</string>
     <string name="weather_lat_label">Lat:</string>
     <string name="weather_lon_label">Lon:</string>
+    <string name="settings_title_string">SETTINGS</string>
+    <string name="settings_firstname_hint">First Name</string>
+    <string name="settings_lastname_hint">Last Name</string>
+    <string name="settings_email_hint">E-mail</string>
+    <string name="settings_password_hint">Password</string>
+    <string name="settings_home_lat_hint">Home Latitude</string>
+    <string name="settings_home_lon_hint">Home Longitude</string>
+    <string name="settings_school_lat_hint">School Latitude</string>
+    <string name="settings_school_lon_hint">School Longitude</string>
+    <string name="settings_last_modified_string">Last modified: </string>
+    <string name="settings_save_button_string">SAVE</string>
 </resources>
