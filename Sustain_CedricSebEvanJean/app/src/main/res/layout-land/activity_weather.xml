@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="@dimen/containerPadding"
+    tools:context=".activities.WeatherActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:text="@string/weather_title_string"
+        android:textAlignment="center"
+        android:textColor="@color/onBackground"
+        android:textSize="@dimen/titleSize" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/weather_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/componentPadding"
+                app:srcCompat="@drawable/weather" />
+
+            <TextView
+                android:id="@+id/weather_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/componentMargin"
+                android:background="@color/background"
+                android:padding="@dimen/componentPadding"
+                android:text="24C"
+                android:textAlignment="center"
+                android:textColor="@color/onSurface"
+                android:textSize="@dimen/headerSize" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/componentPadding">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/componentMargin"
+                    android:layout_weight="1"
+                    android:background="@color/surface"
+                    android:padding="@dimen/componentPadding"
+                    android:text="@string/weather_recommendation_label"
+                    android:textColor="@color/onSurface"
+                    android:textSize="@dimen/smallTextSize" />
+
+                <TextView
+                    android:id="@+id/weather_recommendation_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/componentMargin"
+                    android:layout_weight="1"
+                    android:background="@color/surface"
+                    android:padding="@dimen/componentPadding"
+                    android:text="@string/weather_recommendation_goodweather"
+                    android:textColor="@color/onSurface"
+                    android:textSize="@dimen/smallTextSize" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/weather_uv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/componentMargin"
+                android:background="@color/surface"
+                android:padding="@dimen/componentPadding"
+                android:text="UV MODERATE"
+                android:textAlignment="center"
+                android:textColor="@color/onSurface"
+                android:textSize="@dimen/smallTextSize" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/componentMargin"
+                    android:layout_weight=".3"
+                    android:background="@color/surface"
+                    android:padding="@dimen/componentPadding"
+                    android:text="@string/weather_lat_label"
+                    android:textColor="@color/onSurface"
+                    android:textSize="@dimen/smallTextSize" />
+
+                <TextView
+                    android:id="@+id/weather_current_lat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/componentMargin"
+                    android:layout_weight=".5"
+                    android:background="@color/surface"
+                    android:padding="@dimen/componentPadding"
+                    android:text="123.7686"
+                    android:textColor="@color/onSurface"
+                    android:textSize="@dimen/smallTextSize" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/componentMargin"
+                    android:layout_weight=".3"
+                    android:background="@color/surface"
+                    android:padding="@dimen/componentPadding"
+                    android:text="@string/weather_lon_label"
+                    android:textColor="@color/onSurface"
+                    android:textSize="@dimen/smallTextSize" />
+
+                <TextView
+                    android:id="@+id/weather_current_lon"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/componentMargin"
+                    android:layout_weight=".5"
+                    android:background="@color/surface"
+                    android:padding="@dimen/componentPadding"
+                    android:text="34.6345"
+                    android:textColor="@color/onSurface"
+                    android:textSize="@dimen/smallTextSize" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
