@@ -38,19 +38,23 @@
                     android:orientation="horizontal">
 
                     <ImageView
+                        android:id="@+id/about_cedric_pic"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="@dimen/componentMargin"
                         android:layout_weight="1"
+                        android:onClick="handleImageViewClick"
                         android:padding="@dimen/componentPadding"
                         android:scaleType="centerCrop"
                         app:srcCompat="@drawable/cedric" />
 
                     <ImageView
+                        android:id="@+id/about_jean_pic"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="@dimen/componentMargin"
                         android:layout_weight="1"
+                        android:onClick="handleImageViewClick"
                         android:padding="@dimen/componentPadding"
                         android:scaleType="centerCrop"
                         app:srcCompat="@drawable/jean" />
@@ -93,19 +97,23 @@
                     android:orientation="horizontal">
 
                     <ImageView
+                        android:id="@+id/about_evan_pic"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="@dimen/componentMargin"
                         android:layout_weight="1"
+                        android:onClick="handleImageViewClick"
                         android:padding="@dimen/componentPadding"
                         android:scaleType="centerCrop"
                         app:srcCompat="@drawable/evan" />
 
                     <ImageView
+                        android:id="@+id/about_seb_pic"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="@dimen/componentMargin"
                         android:layout_weight="1"
+                        android:onClick="handleImageViewClick"
                         android:padding="@dimen/componentPadding"
                         android:scaleType="centerCrop"
                         app:srcCompat="@drawable/seb" />
