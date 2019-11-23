@@ -36,4 +36,11 @@
     <string name="settings_school_lon_hint">School Longitude</string>
     <string name="settings_last_modified_string">Last modified: </string>
     <string name="settings_save_button_string">SAVE</string>
+    <string name="about_title_string">ABOUT</string>
+    <string name="about_app_description">Welcome to our Carbon Emission Tracker!\n\n
+                                         This application was designed to help students like us familiarize themselves with their average carbon emission,
+                                         in hopes of spreading awareness of the impact of our actions on the environment.
+                                         In addition, this app provides users with a weather API for the current weather, fun facts about sustainability, a CO2 calculator
+                                         to estimate carbon emission for a trip, and a log of personalized saved trips.\n\n
+                                         Take care of the environment, and she will take care of you!</string>
 </resources>
