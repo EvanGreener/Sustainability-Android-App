@@ -21,4 +21,12 @@ class MainActivity : AppCompatActivity() {
     fun handleWeatherAPIClick(view: View) {
         startActivity(Intent(this, WeatherActivity::class.java))
     }
+
+    fun handleSustFactClick(view: View) {
+        startActivity(Intent(this, SustainabilityFactsActivity::class.java))
+    }
+
+    fun handleTripLogClick(view: View) {
+        startActivity(Intent(this, TripLogActivity::class.java))
+    }
 }
