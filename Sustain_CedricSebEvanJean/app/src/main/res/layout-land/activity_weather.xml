@@ -47,6 +47,7 @@
                 android:textAlignment="center"
                 android:textColor="@color/onSurface"
                 android:textSize="@dimen/headerSize" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -59,17 +60,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/componentMargin"
-                    android:layout_weight="1"
-                    android:background="@color/surface"
-                    android:padding="@dimen/componentPadding"
-                    android:text="@string/weather_recommendation_label"
-                    android:textColor="@color/onSurface"
-                    android:textSize="@dimen/smallTextSize" />
 
                 <TextView
                     android:id="@+id/weather_recommendation_text"
@@ -154,6 +144,15 @@
                     android:textSize="@dimen/smallTextSize" />
 
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/weather_description"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.3"
+                android:textAlignment="center"
+                android:textColor="@color/onBackground"
+                android:textStyle="italic" />
         </LinearLayout>
 
     </LinearLayout>

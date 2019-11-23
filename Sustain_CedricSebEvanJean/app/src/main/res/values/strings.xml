@@ -16,4 +16,9 @@
     <string name="weather_recommendation_goodweather">Great weather to bike or walk!</string>
     <string name="weather_lat_label">Lat:</string>
     <string name="weather_lon_label">Lon:</string>
+    <string name="weather_uv_low">UV: Low</string>
+    <string name="weather_uv_moderate">UV: Moderate</string>
+    <string name="weather_uv_high">UV: High</string>
+    <string name="weather_uv_veryhigh">UV: Very High</string>
+    <string name="weather_uv_extreme">UV: Extreme</string>
 </resources>
