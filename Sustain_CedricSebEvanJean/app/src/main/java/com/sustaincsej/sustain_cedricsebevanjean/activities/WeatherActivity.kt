@@ -123,6 +123,7 @@ class WeatherActivity : AppCompatActivity() {
             "Rain" -> R.drawable.rain
             "Snow" -> R.drawable.snow
             "Storm" -> R.drawable.storm
+            "Clouds" -> R.drawable.clouds
             else -> R.drawable.weather
         })
         findViewById<TextView>(R.id.weather_description).text = weather.weather[0].description
