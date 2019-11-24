@@ -112,6 +112,7 @@
             android:layout_margin="@dimen/componentMargin"
             android:layout_weight="0.5"
             android:background="@color/transparent"
+            android:onClick="handleTripLogClick"
             android:scaleType="centerCrop"
             android:src="@drawable/trip"
             tools:srcCompat="@drawable/trip" />
@@ -134,6 +135,7 @@
             android:layout_margin="@dimen/componentMargin"
             android:layout_weight="0.5"
             android:background="@color/transparent"
+            android:onClick="handleSchoolTripClick"
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/school" />
 
@@ -144,6 +146,7 @@
             android:layout_margin="@dimen/componentMargin"
             android:layout_weight="0.5"
             android:background="@color/transparent"
+            android:onClick="handleHomeTripClick"
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/home" />
     </LinearLayout>
