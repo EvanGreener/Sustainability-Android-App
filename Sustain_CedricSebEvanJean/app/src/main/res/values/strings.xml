@@ -36,6 +36,26 @@
     <string name="settings_school_lon_hint">School Longitude</string>
     <string name="settings_last_modified_string">Last modified: </string>
     <string name="settings_save_button_string">SAVE</string>
+    <string name="about_title_string">ABOUT</string>
+    <string name="about_app_description">Welcome to our Carbon Emission Tracker!\n\n
+                                         This application was designed to help students like us familiarize themselves with their average carbon emission,
+                                         in hopes of spreading awareness of the impact of our actions on the environment.\n\n
+                                         It provides users with:
+                                         \n-> A weather API for the current weather
+                                         \n-> Fun facts about sustainability
+                                         \n-> A CO2 calculator to estimate carbon emission for a trip
+                                         \n-> A log of personalized saved trips.\n\n
+                                         Take care of the environment, and she will take care of you!
+                                         \n\nA Dawson College Project: \n-> Course ID: 420-518-DW \n-> Section: 00002
+    </string>
+    <string name="about_cedric_name">Cedric Richards</string>
+    <string name="about_jean_name">Jean Robatto</string>
+    <string name="about_evan_name">Evan Greenstein</string>
+    <string name="about_seb_name">Seb</string>
+    <string name="about_cedric_message">BLA BLA I AM CEDRIC</string>
+    <string name="about_jean_message">BLA BLA I AM Jean</string>
+    <string name="about_evan_message">BLA BLA I AM EVAN</string>
+    <string name="about_seb_message">BLA BLA I AM SEB</string>
     <string name="trip_title_string">TRIP</string>
     <string name="trip_fromlat_label">From Latitude: </string>
     <string name="trip_fromlon_label">From Longitude: </string>

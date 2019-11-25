@@ -23,6 +23,10 @@ class MainActivity : AppCompatActivity() {
         startActivity(Intent(this, WeatherActivity::class.java))
     }
 
+    fun handleSustFactClick(view: View) {
+        startActivity(Intent(this, FactsActivity::class.java))
+    }
+    
     fun handleTripLogClick(view: View) {
         startActivity(Intent(this, TripLogActivity::class.java))
     }

@@ -44,6 +44,7 @@
             android:layout_margin="@dimen/componentMargin"
             android:layout_weight="0.5"
             android:background="@color/transparent"
+            android:onClick="handleSustFactClick"
             android:scaleType="centerCrop"
             android:src="@drawable/sustainability"
             tools:srcCompat="@drawable/sustainability" />
@@ -91,11 +92,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:text="@string/main_triplog_button_string"
+            android:text="@string/main_co2calc_button_string"
             android:textAlignment="center"
             android:textColor="@color/onBackground"
             android:textSize="@dimen/smallTextSize"
             android:textStyle="italic" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -125,6 +127,7 @@
             android:layout_margin="@dimen/componentMargin"
             android:layout_weight="0.5"
             android:background="@color/transparent"
+            android:onClick="handleTripLogClick"
             android:scaleType="centerCrop"
             android:src="@drawable/tripphp"
             tools:srcCompat="@drawable/tripphp" />
@@ -172,7 +175,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:text="@string/main_co2calc_button_string"
+            android:text="@string/main_triplog_button_string"
             android:textAlignment="center"
             android:textColor="@color/onBackground"
             android:textSize="@dimen/smallTextSize"
