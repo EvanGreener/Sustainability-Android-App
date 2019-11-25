@@ -36,4 +36,11 @@
     <string name="settings_school_lon_hint">School Longitude</string>
     <string name="settings_last_modified_string">Last modified: </string>
     <string name="settings_save_button_string">SAVE</string>
+    <string name="co2calc_title_string">CALCULATOR</string>
+    <string name="co2calc_home_toggle">HOME</string>
+    <string name="co2calc_school_toggle">SCHOOL</string>
+    <string name="co2calc_fromto_label">From here,\nto:</string>
+    <string name="co2calc_travelmode_label">Travel mode:</string>
+    <string name="co2calc_co2_label">Total CO2:</string>
+    <string name="co2calc_trees_label">Number of trees to offset CO2:\n\n\n\n</string>
 </resources>
