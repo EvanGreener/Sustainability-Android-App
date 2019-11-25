@@ -92,6 +92,7 @@
             android:layout_margin="@dimen/componentMargin"
             android:layout_weight="0.5"
             android:background="@color/transparent"
+            android:onClick="handleCO2Click"
             android:scaleType="fitXY"
             app:srcCompat="@drawable/co2" />
 
@@ -205,6 +206,7 @@
             android:layout_margin="@dimen/componentMargin"
             android:layout_weight="0.5"
             android:background="@color/transparent"
+            android:onClick="handleSchoolTripClick"
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/school" />
 
@@ -215,6 +217,7 @@
             android:layout_margin="@dimen/componentMargin"
             android:layout_weight="0.5"
             android:background="@color/transparent"
+            android:onClick="handleHomeTripClick"
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/home" />
     </LinearLayout>
