@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical"
+    android:padding="@dimen/containerPadding"
+    tools:context=".activities.SustainabilityFactsActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sust_title_string"
+        android:textAlignment="center"
+        android:textColor="@color/onBackground"
+        android:textSize="@dimen/titleSize" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".9"
+        android:padding="@dimen/containerPadding">
+
+        <ImageView
+            android:id="@+id/sust_fact_image"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            app:srcCompat="@drawable/cedric" />
+
+        <TextView
+            android:id="@+id/sust_fact_source"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/componentPadding"
+            android:text="www.example.com/whatever/idontcare"
+            android:textColor="@color/onSurface"
+            android:textSize="@dimen/textSize"
+            android:textStyle="bold|italic"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/sust_fact_text" />
+
+        <TextView
+            android:id="@+id/sust_fact_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/componentPadding"
+            android:text="This man has a BEARD! (Placeholder)"
+            android:textAlignment="center"
+            android:textColor="@color/onSurface"
+            android:textSize="@dimen/secondaryHeaderSize"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/sust_fact_image"
+            app:layout_constraintVertical_bias="0.916" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".1"
+        android:gravity="center"
+        android:text="@string/sust_help_string"
+        android:textColor="@color/onBackground"
+        android:textSize="@dimen/textSize"
+        android:textStyle="italic" />
+</LinearLayout>
