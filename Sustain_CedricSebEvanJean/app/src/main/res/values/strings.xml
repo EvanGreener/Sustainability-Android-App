@@ -47,4 +47,28 @@
     <string name="trip_date_label">Date: </string>
     <string name="trip_time_label">Time: </string>
     <string name="trip_reason_label">Reason for Trip: </string>
+    <string name="co2calc_title_string">CALCULATOR</string>
+    <string name="co2calc_home_toggle">HOME</string>
+    <string name="co2calc_school_toggle">SCHOOL</string>
+    <string name="co2calc_fromto_label">From here,\nto:</string>
+    <string name="co2calc_travelmode_label">Travel mode:</string>
+    <string name="co2calc_co2_label">Total CO2:</string>
+    <string name="co2calc_trees_label">Number of trees to offset CO2:\n\n\n\n</string>
+    <string name="newtrip_title_string">ADD A TRIP</string>
+    <string name="newtrip_lat_hint">Lat</string>
+    <string name="newtrip_lon_hint">Lon</string>
+    <string name="newtrip_reason_hint">Reason for trip</string>
+    <string name="newtrip_local_button">Save Local</string>
+    <string name="newtrip_remote_button">Save Remote</string>
+    <string-array name="newtrip_travel_modes">
+        <item>Car Diesel</item>
+        <item>Car Gas</item>
+        <item>Carpool (3) Diesel</item>
+        <item>Carpool (3) Gas</item>
+        <item>Public Transit</item>
+        <item>Walk</item>
+        <item>Bike</item>
+    </string-array>
+    <string name="sust_title_string">SUSTAINABILITY FACTS</string>
+    <string name="sust_help_string">Click on the image for a new fact!</string>
 </resources>
