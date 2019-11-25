@@ -58,4 +58,6 @@
         <item>Walk</item>
         <item>Bike</item>
     </string-array>
+    <string name="sust_title_string">SUSTAINABILITY FACTS</string>
+    <string name="sust_help_string">Click on the image for a new fact!</string>
 </resources>
