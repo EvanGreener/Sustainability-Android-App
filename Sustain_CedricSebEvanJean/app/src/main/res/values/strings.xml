@@ -36,4 +36,15 @@
     <string name="settings_school_lon_hint">School Longitude</string>
     <string name="settings_last_modified_string">Last modified: </string>
     <string name="settings_save_button_string">SAVE</string>
+    <string name="trip_title_string">TRIP</string>
+    <string name="trip_fromlat_label">From Latitude: </string>
+    <string name="trip_fromlon_label">From Longitude: </string>
+    <string name="trip_tolat_label">To Latitude: </string>
+    <string name="trip_tolon_label">To Longitude: </string>
+    <string name="trip_travelmode_label">Travel Mode: </string>
+    <string name="trip_distance_label">Distance in km: </string>
+    <string name="trip_co2_label">Total CO2: </string>
+    <string name="trip_date_label">Date: </string>
+    <string name="trip_time_label">Time: </string>
+    <string name="trip_reason_label">Reason for Trip: </string>
 </resources>
