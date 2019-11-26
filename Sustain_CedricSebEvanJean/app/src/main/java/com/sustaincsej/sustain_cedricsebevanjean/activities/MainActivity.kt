@@ -21,18 +21,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //Today's date
-        val formater = SimpleDateFormat("dd/MM/yyyy")
-        val date = Calendar.getInstance().time
-        formater.format(date)
-
-        //check if contains a key. Would check timestamp exists to know if settings
-        //exist
-        val prefs = getPreferences(Context.MODE_PRIVATE)
-        if(prefs.contains("hi")) {
-
-        }
-
         //Get permission
         val permissions = arrayOf(android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_FINE_LOCATION)
         ActivityCompat.requestPermissions(this, permissions,0)
