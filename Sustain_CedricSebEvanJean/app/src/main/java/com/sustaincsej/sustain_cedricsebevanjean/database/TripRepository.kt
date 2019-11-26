@@ -11,4 +11,8 @@ class TripRepository(private val tripDao: TripDAO) {
     suspend fun insert(trip: Trip) {
         tripDao.insert(trip)
     }
+
+    fun delete (trip: Trip) {
+        tripDao.delete(trip)
+    }
 }

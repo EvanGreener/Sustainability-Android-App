@@ -16,7 +16,7 @@ class TripViewModel(application: Application) : AndroidViewModel(application) {
 
     init {
 
-        val tripsDao = TripRoomDatabase.getDatabase(application).tripDao()
+        val tripsDao = TripRoomDatabase.getDatabase(application, viewModelScope).tripDao()
         repository = TripRepository(tripsDao)
         allTrips = repository.allTrips
     }
