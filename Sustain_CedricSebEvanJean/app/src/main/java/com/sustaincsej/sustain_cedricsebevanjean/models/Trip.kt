@@ -16,7 +16,7 @@ data class Trip (
     @ColumnInfo(name = "to_longitude") @NonNull val toLongitude: Double,
     @NonNull val distance : Double,
     @ColumnInfo(name = "carbon_dioxide") @NonNull val carbonDioxide : Double,
-    @ColumnInfo(name = "date_time_stamp") @TypeConverters(Converters::class) @NonNull val dateTimeStamp: Date,
+    @ColumnInfo(name = "date_time_stamp")  @NonNull val dateTimeStamp: Date,
     @ColumnInfo(name = "reason_for_trip") @NonNull val reasonForTrip : String
 )
 
