@@ -15,6 +15,10 @@
     <string name="EmptyTitle">Settings Incomplete!</string>
     <string name="EmptyMessage">All Settings fields must be filled before saving!</string>
     <string name="EmptyButton">I\'ll fix it!</string>
+    <string name="LeaveTitle">Are You Sure?</string>
+    <string name="LeaveMessage">Would you like to discard any unsaved changes to settings?</string>
+    <string name="LeaveYes">Yes</string>
+    <string name="LeaveNo">No</string>
     <!-- Strings for SettingsActivity loggin -->
     <string name="SaveClick">Saved Settings</string>
 

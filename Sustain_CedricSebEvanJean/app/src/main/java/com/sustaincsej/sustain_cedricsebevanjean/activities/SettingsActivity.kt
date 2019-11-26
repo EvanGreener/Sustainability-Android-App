@@ -1,6 +1,7 @@
 package com.sustaincsej.sustain_cedricsebevanjean.activities
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -16,6 +17,10 @@ import java.util.*
 
 /**
  * Class that allows the user to input their settings via a form.
+ *
+ * @author Sebastien Palin
+ * @author Jean Robatto
+ * @author Evan Greenstein
  */
 class SettingsActivity : AppCompatActivity() {
 
@@ -32,7 +37,8 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var dateStamp : TextView
 
     /**
-     * onCreate that will also update the views based on what is in shared preferences.
+     * onCreate that will also update the views based on what is in shared preferences and initialize all
+     * lateinit variables.
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -144,9 +150,19 @@ class SettingsActivity : AppCompatActivity() {
             .show()
     }
 
-    //Handle back button press
+    /**
+     * Override that will only go back if the user confirms they want to leave the settings page.
+     */
     override fun onBackPressed() {
-        super.onBackPressed()
+        AlertDialog.Builder(this)
+            .setTitle(getString(R.string.LeaveTitle))
+            .setMessage(getString(R.string.LeaveMessage))
+            .setPositiveButton(getString(R.string.LeaveYes)) { _: DialogInterface, _: Int ->
+                super.onBackPressed()
+            }
+            .setNegativeButton(getString(R.string.LeaveNo), null)
+            .create()
+            .show()
     }
 
     /**
