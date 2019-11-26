@@ -1,6 +1,5 @@
 package com.sustaincsej.sustain_cedricsebevanjean.activities
 
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -12,8 +11,6 @@ import android.view.View
 import androidx.core.app.ActivityCompat
 import com.sustaincsej.sustain_cedricsebevanjean.R
 import com.sustaincsej.sustain_cedricsebevanjean.common.NewTripPopupFragment
-import java.text.SimpleDateFormat
-import java.util.*
 
 class MainActivity : AppCompatActivity() {
 

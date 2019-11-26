@@ -28,7 +28,9 @@ class SettingsActivity : AppCompatActivity() {
     //To display the date stamp
     private lateinit var dateStamp : TextView
 
-
+    /**
+     * onCreate that will also update the views based on what is in shared preferences.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
@@ -54,7 +56,7 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     /**
-     * Function that will save all EditText input to shared preferences
+     * Function that will save all EditText input to shared preferences and update the UI accordingly.
      */
     fun savePreferences(view: View) {
         with(getPreferences(Context.MODE_PRIVATE).edit()) {
@@ -69,11 +71,15 @@ class SettingsActivity : AppCompatActivity() {
      */
     private fun updateUI() {
         val prefs = getPreferences(Context.MODE_PRIVATE)
-        dateStamp.text = prefs.getString("TimeStamp", getString(R.string.settings_last_modified_string))
+
+        val dateText = prefs.getString("TimeStamp", "")
+        dateStamp.text = getString(R.string.settings_last_modified_string) + " " + dateText
     }
 
     /**
      * Function that will return today's date. Used for storing the timestamp settings were saved.
+     *
+     * @return Today's date, formatted to dd/MM/yyy
      */
     private fun getDate() : String {
         //Today's date
