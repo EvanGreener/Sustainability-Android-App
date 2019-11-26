@@ -10,8 +10,4 @@ class SettingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
     }
-    //Handle back button press
-    override fun onBackPressed() {
-        super.onBackPressed()
-    }
 }
