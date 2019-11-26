@@ -1,9 +1,226 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical"
+    android:padding="@dimen/containerPadding"
     tools:context=".activities.TripActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/trip_title_string"
+        android:textAlignment="center"
+        android:textColor="@color/onBackground"
+        android:textSize="@dimen/titleSize" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/containerPadding">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".5"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/componentMargin"
+                    android:padding="@dimen/componentPadding"
+                    android:text="@string/trip_fromlat_label"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/onBackground" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/componentMargin"
+                    android:padding="@dimen/componentPadding"
+                    android:text="@string/trip_fromlon_label"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/onBackground" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/componentMargin"
+                    android:padding="@dimen/componentPadding"
+                    android:text="@string/trip_tolat_label"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/onBackground" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/componentMargin"
+                    android:padding="@dimen/componentPadding"
+                    android:text="@string/trip_tolon_label"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/onBackground" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/componentMargin"
+                    android:padding="@dimen/componentPadding"
+                    android:text="@string/trip_travelmode_label"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/onBackground" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/componentMargin"
+                    android:padding="@dimen/componentPadding"
+                    android:text="@string/trip_distance_label"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/onBackground" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/componentMargin"
+                    android:padding="@dimen/componentPadding"
+                    android:text="@string/trip_co2_label"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/onBackground" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/componentMargin"
+                    android:padding="@dimen/componentPadding"
+                    android:text="@string/trip_date_label"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/onBackground" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/componentMargin"
+                    android:padding="@dimen/componentPadding"
+                    android:text="@string/trip_time_label"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/onBackground" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/componentMargin"
+                    android:padding="@dimen/componentPadding"
+                    android:text="@string/trip_reason_label"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/onBackground" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".5"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/trip_fromlat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/componentMargin"
+                    android:padding="@dimen/componentPadding"
+                    android:text="Placeholder"
+                    android:textColor="@color/onBackground" />
+
+                <TextView
+                    android:id="@+id/trip_fromlon"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/componentMargin"
+                    android:padding="@dimen/componentPadding"
+                    android:text="Placeholder"
+                    android:textColor="@color/onBackground" />
+
+                <TextView
+                    android:id="@+id/trip_tolat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/componentMargin"
+                    android:padding="@dimen/componentPadding"
+                    android:text="Placeholder"
+                    android:textColor="@color/onBackground" />
+
+                <TextView
+                    android:id="@+id/trip_tolon"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/componentMargin"
+                    android:padding="@dimen/componentPadding"
+                    android:text="Placeholder"
+                    android:textColor="@color/onBackground" />
+
+                <TextView
+                    android:id="@+id/trip_travelmode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/componentMargin"
+                    android:padding="@dimen/componentPadding"
+                    android:text="Placeholder"
+                    android:textColor="@color/onBackground" />
+
+                <TextView
+                    android:id="@+id/trip_distance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/componentMargin"
+                    android:padding="@dimen/componentPadding"
+                    android:text="Placeholder"
+                    android:textColor="@color/onBackground" />
+
+                <TextView
+                    android:id="@+id/trip_co2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/componentMargin"
+                    android:padding="@dimen/componentPadding"
+                    android:text="Placeholder"
+                    android:textColor="@color/onBackground" />
+
+                <TextView
+                    android:id="@+id/trip_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/componentMargin"
+                    android:padding="@dimen/componentPadding"
+                    android:text="Placeholder"
+                    android:textColor="@color/onBackground" />
+
+                <TextView
+                    android:id="@+id/trip_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/componentMargin"
+                    android:padding="@dimen/componentPadding"
+                    android:text="Placeholder"
+                    android:textColor="@color/onBackground" />
+
+                <TextView
+                    android:id="@+id/trip_reason"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/componentMargin"
+                    android:padding="@dimen/componentPadding"
+                    android:text="Placeholder"
+                    android:textColor="@color/onBackground" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
