@@ -10,6 +10,8 @@
     <!-- Strings for log tags -->
     <string name="SettingsTag">SETTINGS_ACTIVITY</string>
 
+    <!-- Strings for the SettingsActivity -->
+    <string name="SaveToast">Settings have been saved!</string>
     <!-- Strings for SettingsActivity loggin -->
     <string name="SaveClick">Saved Settings</string>
 

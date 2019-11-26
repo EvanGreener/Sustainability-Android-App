@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import com.sustaincsej.sustain_cedricsebevanjean.R
 import java.text.SimpleDateFormat
 import java.util.*
@@ -64,6 +65,7 @@ class SettingsActivity : AppCompatActivity() {
 
         savePreferences()
         updateUI()
+        saveToast()
     }
 
     /**
@@ -85,6 +87,17 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     /**
+     * Function that will return today's date. Used for storing the timestamp settings were saved.
+     *
+     * @return Today's date, formatted to dd/MM/yyy
+     */
+    private fun getDate() : String {
+        val formater = SimpleDateFormat("dd/MM/yyyy")
+        val date = Calendar.getInstance().time
+        return formater.format(date)
+    }
+
+    /**
      * Function that will update the UI when the user saves their settings
      */
     private fun updateUI() {
@@ -95,15 +108,10 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     /**
-     * Function that will return today's date. Used for storing the timestamp settings were saved.
-     *
-     * @return Today's date, formatted to dd/MM/yyy
+     * function that displays a Toast informing the user that their settings have been saved
      */
-    private fun getDate() : String {
-        //Today's date
-        val formater = SimpleDateFormat("dd/MM/yyyy")
-        val date = Calendar.getInstance().time
-        return formater.format(date)
+    private fun saveToast() {
+        Toast.makeText(this, getString(R.string.SaveToast), Toast.LENGTH_LONG).show()
     }
 
     //Handle back button press
