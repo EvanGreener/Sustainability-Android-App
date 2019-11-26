@@ -156,15 +156,40 @@ class SettingsActivity : AppCompatActivity() {
     override fun onBackPressed() {
         Log.i(TAG, getString(R.string.BackClick))
 
-        AlertDialog.Builder(this)
-            .setTitle(getString(R.string.LeaveTitle))
-            .setMessage(getString(R.string.LeaveMessage))
-            .setPositiveButton(getString(R.string.LeaveYes)) { _: DialogInterface, _: Int ->
-                super.onBackPressed()
-            }
-            .setNegativeButton(getString(R.string.LeaveNo), null)
-            .create()
-            .show()
+        if (! doPreferencesExist()) {
+            AlertDialog.Builder(this)
+                .setTitle(getString(R.string.StayTitle))
+                .setMessage(getString(R.string.StayMessage))
+                .setPositiveButton(getString(R.string.StayButton), null)
+                .create()
+                .show()
+        }
+        else {
+            AlertDialog.Builder(this)
+                .setTitle(getString(R.string.LeaveTitle))
+                .setMessage(getString(R.string.LeaveMessage))
+                .setPositiveButton(getString(R.string.LeaveYes)) { _: DialogInterface, _: Int ->
+                    super.onBackPressed()
+                }
+                .setNegativeButton(getString(R.string.LeaveNo), null)
+                .create()
+                .show()
+        }
+    }
+
+    /**
+     * Function that will check if all shared preferences exist.
+     *
+     * Checks every preference since we need every one of them and in case all the preferences aren't
+     * saved for whatever reason.
+     *
+     * @return A boolean indicating if all preferences exist
+     */
+    private fun doPreferencesExist() : Boolean {
+        val prefs = getPreferences(Context.MODE_PRIVATE)
+        return prefs.contains("FirstName") && prefs.contains("LastName") && prefs.contains("Email")
+                && prefs.contains("Password") && prefs.contains("HomeLat") && prefs.contains("HomeLon")
+                && prefs.contains("SchoolLat") && prefs.contains("SchoolLon") && prefs.contains("TimeStamp")
     }
 
     /**
