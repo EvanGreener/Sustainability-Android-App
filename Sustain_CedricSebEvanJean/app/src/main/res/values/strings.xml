@@ -10,6 +10,9 @@
     <!-- Strings for log tags -->
     <string name="SettingsTag">SETTINGS_ACTIVITY</string>
 
+    <!-- Strings for SettingsActivity loggin -->
+    <string name="SaveClick">Saved Settings</string>
+
     <string name="app_name">Carbon Emission Tracker</string>
     <string name="triplog_title_string">TRIP LOG</string>
     <string name="trip_row_date_string">Date: </string>

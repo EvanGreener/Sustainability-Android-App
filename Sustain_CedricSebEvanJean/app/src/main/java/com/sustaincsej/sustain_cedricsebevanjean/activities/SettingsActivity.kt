@@ -60,6 +60,8 @@ class SettingsActivity : AppCompatActivity() {
      * Function that is called when the user clicks on the save button
      */
     fun handleSave(view: View) {
+        Log.i(TAG, getString(R.string.SaveClick))
+
         savePreferences()
         updateUI()
     }
@@ -67,8 +69,16 @@ class SettingsActivity : AppCompatActivity() {
     /**
      * Function that will save all EditText input to shared preferences
      */
-    fun savePreferences() {
+    private fun savePreferences() {
         with(getPreferences(Context.MODE_PRIVATE).edit()) {
+            putString("FirstName", firstName.text.toString())
+            putString("LastName", lastName.text.toString())
+            putString("Email", email.text.toString())
+            putString("Password", password.text.toString())
+            putString("HomeLat", homeLat.text.toString())
+            putString("HomeLon", homeLon.text.toString())
+            putString("SchoolLat", schoolLat.text.toString())
+            putString("SchoolLon", schoolLon.text.toString())
             putString("TimeStamp", getDate())
             commit()
         }
