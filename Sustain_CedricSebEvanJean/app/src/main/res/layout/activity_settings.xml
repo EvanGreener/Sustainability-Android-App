@@ -154,6 +154,6 @@
             android:text="@string/settings_save_button_string"
             android:textColor="@color/onSurface"
             android:textSize="@dimen/buttonTextSize"
-            android:onClick="savePreferences"/>
+            android:onClick="handleSave"/>
     </LinearLayout>
 </LinearLayout>

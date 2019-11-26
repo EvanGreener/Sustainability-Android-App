@@ -7,6 +7,9 @@
     <!-- String for the Dawson Sustain webpage -->
     <string name="DawsonURL">https://www.dawsoncollege.qc.ca/sustainable/</string>
 
+    <!-- Strings for log tags -->
+    <string name="SettingsTag">SETTINGS_ACTIVITY</string>
+
     <string name="app_name">Carbon Emission Tracker</string>
     <string name="triplog_title_string">TRIP LOG</string>
     <string name="trip_row_date_string">Date: </string>

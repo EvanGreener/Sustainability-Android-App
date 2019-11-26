@@ -1,6 +1,7 @@
 package com.sustaincsej.sustain_cedricsebevanjean.activities
 
 import android.content.Context
+import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -56,14 +57,21 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     /**
-     * Function that will save all EditText input to shared preferences and update the UI accordingly.
+     * Function that is called when the user clicks on the save button
      */
-    fun savePreferences(view: View) {
+    fun handleSave(view: View) {
+        savePreferences()
+        updateUI()
+    }
+
+    /**
+     * Function that will save all EditText input to shared preferences
+     */
+    fun savePreferences() {
         with(getPreferences(Context.MODE_PRIVATE).edit()) {
             putString("TimeStamp", getDate())
             commit()
         }
-        updateUI()
     }
 
     /**
@@ -93,7 +101,12 @@ class SettingsActivity : AppCompatActivity() {
         super.onBackPressed()
     }
 
-
+    /**
+     * Companion object used for logging
+     */
+    companion object {
+        private val TAG = Resources.getSystem().getString(R.string.SettingsTag)
+    }
 
 
 }
