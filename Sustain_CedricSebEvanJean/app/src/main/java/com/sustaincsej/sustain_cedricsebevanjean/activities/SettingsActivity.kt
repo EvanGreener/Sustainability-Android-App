@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.sustaincsej.sustain_cedricsebevanjean.R
 import java.text.SimpleDateFormat
 import java.util.*
@@ -63,9 +64,26 @@ class SettingsActivity : AppCompatActivity() {
     fun handleSave(view: View) {
         Log.i(TAG, getString(R.string.SaveClick))
 
-        savePreferences()
-        updateUI()
-        saveToast()
+        if (areSettingsFilled()) {
+            savePreferences()
+            updateUI()
+            saveToast()
+        }
+        else {
+            incompleteAlert()
+        }
+    }
+
+    /**
+     * Function that will check if all EditTexts have been filled. This is used to ensure that the user inputs
+     * all necessary settings data and doesn't leave anything out.
+     *
+     * @return A boolean indicating if all fields have been filled
+     */
+    private fun areSettingsFilled() : Boolean {
+        return firstName.text.toString() != "" && lastName.text.toString() != "" && email.text.toString() != ""
+                && password.text.toString() != "" && homeLat.text.toString() != "" && homeLon.text.toString() != ""
+                && schoolLat.text.toString() != "" && schoolLon.text.toString() != ""
     }
 
     /**
@@ -92,9 +110,9 @@ class SettingsActivity : AppCompatActivity() {
      * @return Today's date, formatted to dd/MM/yyy
      */
     private fun getDate() : String {
-        val formater = SimpleDateFormat("dd/MM/yyyy")
+        val formatter = SimpleDateFormat("dd/MM/yyyy")
         val date = Calendar.getInstance().time
-        return formater.format(date)
+        return formatter.format(date)
     }
 
     /**
@@ -114,6 +132,18 @@ class SettingsActivity : AppCompatActivity() {
         Toast.makeText(this, getString(R.string.SaveToast), Toast.LENGTH_LONG).show()
     }
 
+    /**
+     * Function that displays an Alert telling the user they haven't filled every setting
+     */
+    private fun incompleteAlert() {
+        AlertDialog.Builder(this)
+            .setMessage(getString(R.string.EmptyMessage))
+            .setTitle(getString(R.string.EmptyTitle))
+            .setPositiveButton(getString(R.string.EmptyButton), null)
+            .create()
+            .show()
+    }
+
     //Handle back button press
     override fun onBackPressed() {
         super.onBackPressed()
@@ -123,7 +153,7 @@ class SettingsActivity : AppCompatActivity() {
      * Companion object used for logging
      */
     companion object {
-        private val TAG = Resources.getSystem().getString(R.string.SettingsTag)
+        private val TAG = "SETTINGS"
     }
 
 

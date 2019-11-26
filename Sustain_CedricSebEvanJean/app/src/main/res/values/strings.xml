@@ -12,6 +12,9 @@
 
     <!-- Strings for the SettingsActivity -->
     <string name="SaveToast">Settings have been saved!</string>
+    <string name="EmptyTitle">Settings Incomplete!</string>
+    <string name="EmptyMessage">All Settings fields must be filled before saving!</string>
+    <string name="EmptyButton">I\'ll fix it!</string>
     <!-- Strings for SettingsActivity loggin -->
     <string name="SaveClick">Saved Settings</string>
 
