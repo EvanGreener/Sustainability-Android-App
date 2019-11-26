@@ -11,6 +11,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.sustaincsej.sustain_cedricsebevanjean.R
 import com.sustaincsej.sustain_cedricsebevanjean.adapters.TripRecyclerViewAdapter
 import com.sustaincsej.sustain_cedricsebevanjean.common.NewTripPopupFragment
@@ -21,6 +24,12 @@ class TripLogActivity : AppCompatActivity() {
 
     private lateinit var tripViewModel: TripViewModel
     private val newTripActivityRequestCode = 1
+
+    //For RecyclerView
+    private lateinit var tripList: MutableList<Trip>
+    private lateinit var tripView: RecyclerView
+    private lateinit var tripViewAdapter: TripRecyclerViewAdapter
+    private lateinit var tripViewManager: RecyclerView.LayoutManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +59,8 @@ class TripLogActivity : AppCompatActivity() {
         */
 
 
+        
+        //initTripView() --useless
     }
 
     /*
@@ -76,5 +87,18 @@ class TripLogActivity : AppCompatActivity() {
 
     fun handleNewTripButtonClick(view: View) {
         NewTripPopupFragment(this).showPopup()
+    }
+
+    //Kind of useless now...
+    private fun initTripView() {
+        tripViewManager = LinearLayoutManager(this)
+        //TODO The trip list should be a list of trip objects from the database
+        tripList = mutableListOf(Trip(), Trip(), Trip(),Trip(), Trip(), Trip(),Trip(), Trip(), Trip())
+        tripViewAdapter = TripRecyclerViewAdapter(tripList, this)
+        tripView = findViewById<RecyclerView>(R.id.trip_log_recycler_view).apply {
+            layoutManager = tripViewManager
+            adapter = tripViewAdapter
+        }
+
     }
 }
