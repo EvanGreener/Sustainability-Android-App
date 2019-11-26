@@ -4,10 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.sustaincsej.sustain_cedricsebevanjean.R
 
-class FactsActivity : AppCompatActivity() {
+class SustainabilityFactsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_facts)
+        setContentView(R.layout.activity_sustainability_facts)
     }
 }

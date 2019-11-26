@@ -1,5 +1,6 @@
 package com.sustaincsej.sustain_cedricsebevanjean.activities
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -7,13 +8,58 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
+import androidx.core.app.ActivityCompat
 import com.sustaincsej.sustain_cedricsebevanjean.R
+import com.sustaincsej.sustain_cedricsebevanjean.common.NewTripPopupFragment
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        //Today's date
+        val formater = SimpleDateFormat("dd/MM/yyyy")
+        val date = Calendar.getInstance().time
+        formater.format(date)
+
+        //check if contains a key. Would check timestamp exists to know if settings
+        //exist
+        val prefs = getPreferences(Context.MODE_PRIVATE)
+        if(prefs.contains("hi")) {
+
+        }
+
+        //Get permission
+        val permissions = arrayOf(android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_FINE_LOCATION)
+        ActivityCompat.requestPermissions(this, permissions,0)
+    }
+
+    fun handleWeatherAPIClick(view: View) {
+        startActivity(Intent(this, WeatherActivity::class.java))
+    }
+
+    fun handleSustFactClick(view: View) {
+        //startActivity(Intent(this, FactsActivity::class.java))
+    }
+    
+    fun handleTripLogClick(view: View) {
+        startActivity(Intent(this, TripLogActivity::class.java))
+    }
+
+    fun handleSchoolTripClick(view: View) {
+        NewTripPopupFragment(this).showPopup()
+    }
+
+    fun handleHomeTripClick(view: View) {
+        NewTripPopupFragment(this).showPopup()
+    }
+
+    fun handleCO2Click(view: View) {
+        startActivity(Intent(this, CO2CalcActivity::class.java))
     }
 
     /**
