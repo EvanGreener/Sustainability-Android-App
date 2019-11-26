@@ -154,6 +154,8 @@ class SettingsActivity : AppCompatActivity() {
      * Override that will only go back if the user confirms they want to leave the settings page.
      */
     override fun onBackPressed() {
+        Log.i(TAG, getString(R.string.BackClick))
+
         AlertDialog.Builder(this)
             .setTitle(getString(R.string.LeaveTitle))
             .setMessage(getString(R.string.LeaveMessage))

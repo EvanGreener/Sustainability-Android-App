@@ -21,6 +21,7 @@
     <string name="LeaveNo">No</string>
     <!-- Strings for SettingsActivity loggin -->
     <string name="SaveClick">Saved Settings</string>
+    <string name="BackClick">Back button clicked</string>
 
     <string name="app_name">Carbon Emission Tracker</string>
     <string name="triplog_title_string">TRIP LOG</string>
