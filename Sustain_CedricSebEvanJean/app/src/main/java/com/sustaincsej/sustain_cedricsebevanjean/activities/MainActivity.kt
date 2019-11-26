@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun handleSustFactClick(view: View) {
-        startActivity(Intent(this, FactsActivity::class.java))
+        startActivity(Intent(this, SustainabilityFactsActivity::class.java))
     }
     
     fun handleTripLogClick(view: View) {
