@@ -7,8 +7,8 @@
     <!-- String for the Dawson Sustain webpage -->
     <string name="DawsonURL">https://www.dawsoncollege.qc.ca/sustainable/</string>
 
-    <!-- Strings for log tags -->
-    <string name="SettingsTag">SETTINGS_ACTIVITY</string>
+    <!-- Strings for the MainActivity -->
+    <string name="NoPrefs">Shared preferences are missing</string>
 
     <!-- Strings for the SettingsActivity -->
     <string name="SaveToast">Settings have been saved!</string>
@@ -19,7 +19,7 @@
     <string name="LeaveMessage">Would you like to discard any unsaved changes to settings?</string>
     <string name="LeaveYes">Yes</string>
     <string name="LeaveNo">No</string>
-    <!-- Strings for SettingsActivity loggin -->
+    <!-- Strings for SettingsActivity logging -->
     <string name="SaveClick">Saved Settings</string>
     <string name="BackClick">Back button clicked</string>
 
