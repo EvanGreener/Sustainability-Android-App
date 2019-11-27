@@ -198,6 +198,4 @@ class SettingsActivity : AppCompatActivity() {
     companion object {
         private val TAG = "SETTINGS"
     }
-
-
 }
