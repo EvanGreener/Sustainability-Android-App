@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
      * @return A boolean indicating if all preferences exist
      */
     private fun doPreferencesExist() : Boolean {
-        val prefs = getPreferences(Context.MODE_PRIVATE)
+        val prefs = getSharedPreferences(getString(R.string.Preferences), Context.MODE_PRIVATE)
         return prefs.contains("FirstName") && prefs.contains("LastName") && prefs.contains("Email")
                 && prefs.contains("Password") && prefs.contains("HomeLat") && prefs.contains("HomeLon")
                 && prefs.contains("SchoolLat") && prefs.contains("SchoolLon") && prefs.contains("TimeStamp")

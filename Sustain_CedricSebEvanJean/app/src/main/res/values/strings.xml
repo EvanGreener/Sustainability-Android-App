@@ -9,6 +9,7 @@
 
     <!-- Strings for the MainActivity -->
     <string name="NoPrefs">Shared preferences are missing</string>
+    <string name="Preferences">Settings</string>
 
     <!-- Strings for the SettingsActivity -->
     <string name="SaveToast">Settings have been saved!</string>

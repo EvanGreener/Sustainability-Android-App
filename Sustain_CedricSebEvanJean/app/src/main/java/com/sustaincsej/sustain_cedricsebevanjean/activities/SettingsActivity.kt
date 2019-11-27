@@ -96,7 +96,7 @@ class SettingsActivity : AppCompatActivity() {
      * Function that will save all EditText input to shared preferences
      */
     private fun savePreferences() {
-        with(getPreferences(Context.MODE_PRIVATE).edit()) {
+        with(getSharedPreferences(getString(R.string.Preferences), Context.MODE_PRIVATE).edit()) {
             putString("FirstName", firstName.text.toString())
             putString("LastName", lastName.text.toString())
             putString("Email", email.text.toString())
@@ -125,7 +125,7 @@ class SettingsActivity : AppCompatActivity() {
      * Function that will update the UI when the user saves their settings
      */
     private fun updateUI() {
-        val prefs = getPreferences(Context.MODE_PRIVATE)
+        val prefs = getSharedPreferences(getString(R.string.Preferences), Context.MODE_PRIVATE)
 
         val dateText = prefs.getString("TimeStamp", "")
         dateStamp.text = getString(R.string.settings_last_modified_string) + " " + dateText
@@ -186,7 +186,7 @@ class SettingsActivity : AppCompatActivity() {
      * @return A boolean indicating if all preferences exist
      */
     private fun doPreferencesExist() : Boolean {
-        val prefs = getPreferences(Context.MODE_PRIVATE)
+        val prefs = getSharedPreferences(getString(R.string.Preferences),Context.MODE_PRIVATE)
         return prefs.contains("FirstName") && prefs.contains("LastName") && prefs.contains("Email")
                 && prefs.contains("Password") && prefs.contains("HomeLat") && prefs.contains("HomeLon")
                 && prefs.contains("SchoolLat") && prefs.contains("SchoolLon") && prefs.contains("TimeStamp")
