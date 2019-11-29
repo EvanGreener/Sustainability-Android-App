@@ -7,6 +7,26 @@
     <!-- String for the Dawson Sustain webpage -->
     <string name="DawsonURL">https://www.dawsoncollege.qc.ca/sustainable/</string>
 
+    <!-- Strings for the MainActivity -->
+    <string name="NoPrefs">Shared preferences are missing</string>
+    <string name="Preferences">Settings</string>
+
+    <!-- Strings for the SettingsActivity -->
+    <string name="SaveToast">Settings have been saved!</string>
+    <string name="EmptyTitle">Settings Incomplete!</string>
+    <string name="EmptyMessage">All Settings fields must be filled before saving!</string>
+    <string name="EmptyButton">I\'ll fix it!</string>
+    <string name="LeaveTitle">Are You Sure?</string>
+    <string name="LeaveMessage">Would you like to discard any unsaved changes to settings?</string>
+    <string name="LeaveYes">Yes</string>
+    <string name="LeaveNo">No</string>
+    <string name="StayTitle">Don\'t Leave Yet!</string>
+    <string name="StayMessage">You have to input these settings before using this app!</string>
+    <string name="StayButton">Ok</string>
+    <!-- Strings for SettingsActivity logging -->
+    <string name="SaveClick">Saved Settings</string>
+    <string name="BackClick">Back button clicked</string>
+
     <string name="app_name">Carbon Emission Tracker</string>
     <string name="triplog_title_string">TRIP LOG</string>
     <string name="trip_row_date_string">Date: </string>
