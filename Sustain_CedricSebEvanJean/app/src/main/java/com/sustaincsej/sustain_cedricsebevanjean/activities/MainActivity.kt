@@ -11,10 +11,20 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.sustaincsej.sustain_cedricsebevanjean.R
+import com.sustaincsej.sustain_cedricsebevanjean.adapters.TripRecyclerViewAdapter
 import com.sustaincsej.sustain_cedricsebevanjean.common.NewTripPopupFragment
+import com.sustaincsej.sustain_cedricsebevanjean.models.TripViewModel
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +54,7 @@ class MainActivity : AppCompatActivity() {
         return prefs.contains("FirstName") && prefs.contains("LastName") && prefs.contains("Email")
                 && prefs.contains("Password") && prefs.contains("HomeLat") && prefs.contains("HomeLon")
                 && prefs.contains("SchoolLat") && prefs.contains("SchoolLon") && prefs.contains("TimeStamp")
-    }
+   }
 
     fun handleWeatherAPIClick(view: View) {
         startActivity(Intent(this, WeatherActivity::class.java))
