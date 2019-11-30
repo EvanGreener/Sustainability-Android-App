@@ -55,13 +55,13 @@ class SettingsActivity : AppCompatActivity() {
      */
     private fun getEditTexts() {
         firstName = findViewById<EditText>(R.id.settings_firstname) as EditText
-        lastName = findViewById<EditText>(R.id.settings_firstname) as EditText
-        email = findViewById<EditText>(R.id.settings_firstname) as EditText
-        password = findViewById<EditText>(R.id.settings_firstname) as EditText
-        homeLat = findViewById<EditText>(R.id.settings_firstname) as EditText
-        homeLon = findViewById<EditText>(R.id.settings_firstname) as EditText
-        schoolLat = findViewById<EditText>(R.id.settings_firstname) as EditText
-        schoolLon = findViewById<EditText>(R.id.settings_firstname) as EditText
+        lastName = findViewById<EditText>(R.id.setting_lastname) as EditText
+        email = findViewById<EditText>(R.id.settings_email) as EditText
+        password = findViewById<EditText>(R.id.settings_password) as EditText
+        homeLat = findViewById<EditText>(R.id.settings_home_lat) as EditText
+        homeLon = findViewById<EditText>(R.id.settings_home_lon) as EditText
+        schoolLat = findViewById<EditText>(R.id.settings_school_lat) as EditText
+        schoolLon = findViewById<EditText>(R.id.settings_school_lon) as EditText
     }
 
     /**
