@@ -101,7 +101,7 @@
     <string name="co2calc_fromto_label">From here,\nto:</string>
     <string name="co2calc_travelmode_label">Travel mode:</string>
     <string name="co2calc_co2_label">Total CO2:</string>
-    <string name="co2calc_trees_label">Number of trees to offset CO2:\n\n\n\n</string>
+    <string name="co2calc_trees_label">Number of trees to offset CO2 per year:\n\n\n\n</string>
     <string name="newtrip_title_string">ADD A TRIP</string>
     <string name="newtrip_lat_hint">Lat</string>
     <string name="newtrip_lon_hint">Lon</string>

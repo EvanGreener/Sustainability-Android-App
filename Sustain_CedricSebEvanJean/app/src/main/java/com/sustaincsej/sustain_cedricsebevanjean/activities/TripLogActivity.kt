@@ -12,8 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+
 import com.sustaincsej.sustain_cedricsebevanjean.R
 import com.sustaincsej.sustain_cedricsebevanjean.adapters.TripRecyclerViewAdapter
 import com.sustaincsej.sustain_cedricsebevanjean.common.NewTripPopupFragment
@@ -90,15 +89,15 @@ class TripLogActivity : AppCompatActivity() {
     }
 
     //Kind of useless now...
-    private fun initTripView() {
-        tripViewManager = LinearLayoutManager(this)
-        //TODO The trip list should be a list of trip objects from the database
-        tripList = mutableListOf(Trip(), Trip(), Trip(),Trip(), Trip(), Trip(),Trip(), Trip(), Trip())
-        tripViewAdapter = TripRecyclerViewAdapter(tripList, this)
-        tripView = findViewById<RecyclerView>(R.id.trip_log_recycler_view).apply {
-            layoutManager = tripViewManager
-            adapter = tripViewAdapter
-        }
-
-    }
+//    private fun initTripView() {
+//        tripViewManager = LinearLayoutManager(this)
+//        //TODO The trip list should be a list of trip objects from the database
+//        tripList = mutableListOf(Trip(), Trip(), Trip(),Trip(), Trip(), Trip(),Trip(), Trip(), Trip())
+//        tripViewAdapter = TripRecyclerViewAdapter(tripList, this)
+//        tripView = findViewById<RecyclerView>(R.id.trip_log_recycler_view).apply {
+//            layoutManager = tripViewManager
+//            adapter = tripViewAdapter
+//        }
+//
+//    }
 }
