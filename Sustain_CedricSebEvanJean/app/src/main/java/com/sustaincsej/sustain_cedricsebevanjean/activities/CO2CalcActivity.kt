@@ -12,7 +12,14 @@ import com.sustaincsej.sustain_cedricsebevanjean.R
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 
-
+/**
+ * CO2CalcActivity this is the activity and API (internal class) that calculates and displays CO2 emissions
+ * and Tree offset.
+ * Extends AdapterView.OnItemSelectedListener to be able to react to the user selecting different
+ * Values from the spinner
+ *
+ * @author Cedric Richards
+ */
 class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener {
     private lateinit var calculator: Co2Calculator
     private lateinit var transportMode : String
@@ -20,18 +27,32 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
     private var destinationHome = false
     private var vehicleEfficiency = 123.4f
 
+    /**
+     * The calculator is called in oncreate, but this is not the only place it is called, this is only
+     * its initial call
+     * We set up the spinner and the toggle buttons functionality here.
+     *
+     * @param savedInstanceState
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.d("Calculator", "onCreate")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_co2_calc)
+        Log.d("Calculator", "before calc")
         this.calculator = Co2Calculator()
         this.calculator.execute()
         showSpinner()
         setUpToggleButton()
-        Log.d("Calculator", "before calc")
+
 
 
     }
+
+    /**
+     * Everytime the button is pushed and the value of destinationHome is changed calculator is
+     * reinitialized and executed, it cannot be executed without being reinitialized.
+     *
+     */
     private fun setUpToggleButton()
     {
         Log.d("Calculator", "setUpToggleButton")
@@ -46,7 +67,11 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
 
     }
 
-
+    /**
+     * Sets the spinner to have an onItem listener, and to listen to the methods of this class
+     * as its listener.
+     *
+     */
     private fun showSpinner() {
         Log.d("Calculator", "ShowSpinner")
         val travelModeSpinner = findViewById(R.id.co2calc_travelmode_spinner) as Spinner
@@ -57,10 +82,19 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
 
     }
 
+    /**
+     * Mandatory for AdapterView.OnItemSelectedListener but unused by the algorythm of this activity.
+     *
+     */
     override fun onNothingSelected(parent: AdapterView<*>?) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    /**
+     * Everytime transport Mode is changed by the user the calculator is reinitialized and executed. It
+     * cannot be executed without being reinitialized.
+     *
+     */
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         Log.d("Calculator", "OnitemSelected")
         transportMode = parent!!.getItemAtPosition(position) as String
@@ -84,6 +118,13 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
         this.calculator.execute()
     }
 
+    /**
+     * The CO2Calculator API. The initial values all of its private fields will be overwritten
+     * before being used unless something goes wrong, such as there is no location in the device calling the API
+     * In this case these values will be used and the app will not crash.
+     *
+     *
+     */
     private inner class Co2Calculator : AsyncTask<Void, Float, Float>() {
 
         private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -94,6 +135,13 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
         private var homeLongitude = 0.0
         private var homeLatutude = 0.0
 
+
+        /**
+         * This Async task calls makes another asyncronous call, which is why onProgress update is used
+         * To update the UI as this function is actually unable to return data at a usefull time,
+         * but onProgressUpdate can, which is why publishProgress is called
+         *
+         */
         override fun doInBackground(vararg unused: Void): Float{
             Log.d("Calculator", "initializing calc")
 
@@ -101,6 +149,7 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
             fusedLocationClient = LocationServices.getFusedLocationProviderClient(this@CO2CalcActivity)
             Log.d("Calculator", "fusedLocation init")
             var location: Location? = null
+            //Asyncronous call to get location the method will end before it completes its task.
             fusedLocationClient.lastLocation
                 .addOnSuccessListener { l : Location? -> location = l
                     Log.i("Calculator", "entered listener")
@@ -109,9 +158,10 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
                     {
                         this.haveLocation = true
                         this.currentLocation = location as Location
-                        publishProgress(distanceToSchool())
+                        publishProgress(distanceToDestination())
                         Log.d("Calculator", "here1")
                     }
+
                     Log.d("Calculator", "here2")
                 }
 
@@ -119,6 +169,14 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
             Log.d("Calculator", "execute ended")
             return 0.0f
         }
+
+        /**This method receives the distance to and from the destination as an argument, and receives
+         * Local user selections and uses them to calculate and display the total CO2 and the treeOffset
+         *
+         * @see calculateTrees
+         * @see calculateCO2G
+         * @param result this is the distance in meters calculated by the api
+         */
         override fun onProgressUpdate(vararg result: Float?){
             Log.d("Calculator", "onProgressUpdate")
             var cO2View = findViewById<TextView>(R.id.co2calc_totalco2)
@@ -129,12 +187,24 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
             treeOffSetView.text = treeOffSet.toString()
         }
 
+        /**
+         * The calculation done to produce the total CO2 is done in grams and kilometers, the distance is adgusted
+         * to accomodate for that.
+         *
+         * @param distance this is the distance from the last location recorded by the device and the destination
+         */
         private fun calculateCO2G(distance: Float): Float{
             Log.d("Calculator", "calculateCO2G")
             var distanceKM = distance / 1000.0f
             var totalCO2 = distanceKM * this@CO2CalcActivity.vehicleEfficiency
             return totalCO2
         }
+
+        /**
+         * ThisFormula assumes that any planted tree is harvested after a year and needs to be replaced
+         * as a tree will absorb 59.7g CO2 per day, and the formula assumes that the user makes the trip everyday
+         *
+         */
         private fun calculateTrees(cO2InGrams: Float): Float
         {
             Log.d("Calculator", "calculateTrees")
@@ -143,7 +213,13 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
             return treesToOffset
         }
 
-        fun distanceToSchool() : Float
+        /**
+         * This function will return 0.0 as distance, turning all displayed information to 0.0
+         * If there is no location in the devices memory.
+         *
+         * @return the distance to the destination in meters as a Float
+         */
+        fun distanceToDestination() : Float
         {
             Log.d("Calculator", "distanceToSchool")
             var results: FloatArray = floatArrayOf(1.0f)
@@ -176,6 +252,12 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
             }
             return 0.0f
         }
+
+        /**
+         * Retreives the information the user provided in the settings page when they first started the app
+         * We use the location of the home and school to calculate distance relative to the devices location.
+         * 
+         */
         override fun onPreExecute() {
             // set up the task here
             Log.d("Calculator", "onPreExecute")
