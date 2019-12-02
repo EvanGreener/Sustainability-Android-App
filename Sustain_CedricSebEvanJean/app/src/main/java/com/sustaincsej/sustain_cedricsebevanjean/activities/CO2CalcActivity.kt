@@ -55,7 +55,11 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
     {
         return array
     }
-
+    fun calculate(array: Array<String>) :  AsyncTask<String, Float, Float>
+    {
+        this.calculator = Co2Calculator()
+        return this.calculator.execute(array[0], array[1])
+    }
     /**
      * Everytime the button is pushed and the value of destinationHome is changed calculator is
      * reinitialized and executed, it cannot be executed without being reinitialized.
