@@ -46,34 +46,31 @@ class TripLogActivity : AppCompatActivity() {
             trips?.let { adapter.setTrips(it) }
         })
 
-        /*
 
-        ===== UNCOMMENT when NewTripFragment is FULLY implemented
 
         val fab = findViewById<FloatingActionButton>(R.id.trip_log_add_trip)
         fab.setOnClickListener {
             val intent = Intent(this@TripLogActivity, NewTripPopupFragment::class.java)
             startActivityForResult(intent, newTripActivityRequestCode)
         }
-        */
-
-
-        
-        //initTripView() --useless
     }
-
-    /*
-
-    ===== UNCOMMENT when NewTripFragment is FULLY implemented
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == newTripActivityRequestCode && resultCode == Activity.RESULT_OK) {
-            data?.getStringExtra(NewTripPopupFragment.EXTRA_REPLY)?.let {
-                val trip = Trip(it)
-                tripViewModel.insert(trip)
-            }
+            val extras = data?.extras
+            val lat = extras?.getDouble(NewTripPopupFragment.TO_LAT)
+            val lon = extras?.getDouble(NewTripPopupFragment.TO_LON)
+            val travel_mode = extras?.getDouble(NewTripPopupFragment.TRAVEL_MODE)
+            val reason = extras?.getDouble(NewTripPopupFragment.REASON)
+
+            //Do the calculations..
+
+
+            val trip : Trip
+            tripViewModel.insert(trip)
+
         } else {
             Toast.makeText(
                 applicationContext,
@@ -82,22 +79,10 @@ class TripLogActivity : AppCompatActivity() {
         }
     }
 
-    */
 
     fun handleNewTripButtonClick(view: View) {
         NewTripPopupFragment(this).showPopup()
     }
 
-    //Kind of useless now...
-//    private fun initTripView() {
-//        tripViewManager = LinearLayoutManager(this)
-//        //TODO The trip list should be a list of trip objects from the database
-//        tripList = mutableListOf(Trip(), Trip(), Trip(),Trip(), Trip(), Trip(),Trip(), Trip(), Trip())
-//        tripViewAdapter = TripRecyclerViewAdapter(tripList, this)
-//        tripView = findViewById<RecyclerView>(R.id.trip_log_recycler_view).apply {
-//            layoutManager = tripViewManager
-//            adapter = tripViewAdapter
-//        }
-//
-//    }
+
 }
