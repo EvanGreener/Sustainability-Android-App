@@ -21,12 +21,17 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight=".9"
+        android:background="@color/background"
+        android:backgroundTint="@color/background"
+        android:clickable="false"
         android:padding="@dimen/containerPadding">
 
-        <ImageView
+        <ImageButton
             android:id="@+id/sust_fact_image"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:background="@color/background"
+            android:onClick="handleFactImageClick"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -39,6 +44,7 @@
             android:id="@+id/sust_fact_source"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="handleLinkClick"
             android:padding="@dimen/componentPadding"
             android:text="www.example.com/whatever/idontcare"
             android:textColor="@color/onSurface"
@@ -63,7 +69,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/sust_fact_image"
-            app:layout_constraintVertical_bias="0.916" />
+            app:layout_constraintVertical_bias="0.744" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
