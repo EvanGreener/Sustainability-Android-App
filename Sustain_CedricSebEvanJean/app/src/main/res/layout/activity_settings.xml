@@ -80,7 +80,7 @@
             android:background="@color/surface"
             android:ems="10"
             android:hint="@string/settings_home_lat_hint"
-            android:inputType="numberDecimal"
+            android:inputType="numberDecimal|numberSigned"
             android:padding="@dimen/componentPadding"
             android:textColor="@color/onSurface" />
 
@@ -93,7 +93,7 @@
             android:background="@color/surface"
             android:ems="10"
             android:hint="@string/settings_home_lon_hint"
-            android:inputType="numberDecimal"
+            android:inputType="numberDecimal|numberSigned"
             android:padding="@dimen/componentPadding"
             android:textColor="@color/onSurface" />
     </LinearLayout>
@@ -112,7 +112,7 @@
             android:background="@color/surface"
             android:ems="10"
             android:hint="@string/settings_school_lat_hint"
-            android:inputType="numberDecimal"
+            android:inputType="numberDecimal|numberSigned"
             android:padding="@dimen/componentPadding"
             android:textColor="@color/onSurface" />
 
@@ -125,7 +125,7 @@
             android:background="@color/surface"
             android:ems="10"
             android:hint="@string/settings_school_lon_hint"
-            android:inputType="numberDecimal"
+            android:inputType="numberDecimal|numberSigned"
             android:padding="@dimen/componentPadding"
             android:textColor="@color/onSurface" />
     </LinearLayout>
@@ -153,6 +153,7 @@
             android:background="@color/surface"
             android:text="@string/settings_save_button_string"
             android:textColor="@color/onSurface"
-            android:textSize="@dimen/buttonTextSize" />
+            android:textSize="@dimen/buttonTextSize"
+            android:onClick="handleSave"/>
     </LinearLayout>
 </LinearLayout>

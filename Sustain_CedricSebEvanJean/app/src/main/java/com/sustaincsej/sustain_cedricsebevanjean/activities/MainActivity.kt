@@ -5,17 +5,26 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.sustaincsej.sustain_cedricsebevanjean.R
+import com.sustaincsej.sustain_cedricsebevanjean.adapters.TripRecyclerViewAdapter
 import com.sustaincsej.sustain_cedricsebevanjean.common.NewTripPopupFragment
+import com.sustaincsej.sustain_cedricsebevanjean.models.TripViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +33,28 @@ class MainActivity : AppCompatActivity() {
         //Get permission
         val permissions = arrayOf(android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_FINE_LOCATION)
         ActivityCompat.requestPermissions(this, permissions,0)
+
+        //Check if shared preferences exist
+        if (! doPreferencesExist()) {
+            Log.i(TAG, getString(R.string.NoPrefs))
+            startActivity(Intent(this, SettingsActivity::class.java))
+        }
     }
+
+    /**
+     * Function that will check if all shared preferences exist.
+     *
+     * Checks every preference since we need every one of them and in case all the preferences aren't
+     * saved for whatever reason.
+     *
+     * @return A boolean indicating if all preferences exist
+     */
+    private fun doPreferencesExist() : Boolean {
+        val prefs = getSharedPreferences(getString(R.string.Preferences), Context.MODE_PRIVATE)
+        return prefs.contains("FirstName") && prefs.contains("LastName") && prefs.contains("Email")
+                && prefs.contains("Password") && prefs.contains("HomeLat") && prefs.contains("HomeLon")
+                && prefs.contains("SchoolLat") && prefs.contains("SchoolLon") && prefs.contains("TimeStamp")
+   }
 
     fun handleWeatherAPIClick(view: View) {
         startActivity(Intent(this, WeatherActivity::class.java))
@@ -107,5 +137,9 @@ class MainActivity : AppCompatActivity() {
     private fun settingsClicked() {
         val intent = Intent(this, SettingsActivity::class.java)
         startActivity(intent)
+    }
+
+    companion object {
+        private val TAG = "MAIN_ACTIVITY"
     }
 }
