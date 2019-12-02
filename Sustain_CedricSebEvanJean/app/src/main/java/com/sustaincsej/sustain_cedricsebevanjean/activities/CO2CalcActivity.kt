@@ -5,11 +5,14 @@ import android.location.Location
 import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.*
 import com.sustaincsej.sustain_cedricsebevanjean.R
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 
 /**
@@ -22,10 +25,11 @@ import com.google.android.gms.location.LocationServices
  */
 class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener {
     private lateinit var calculator: Co2Calculator
-    private lateinit var transportMode : String
+    private var transportMode = "Car Diesel"
     //if false destination is school
-    private var destinationHome = false
+    private var destinationHome = "School"
     private var vehicleEfficiency = 123.4f
+
 
     /**
      * The calculator is called in oncreate, but this is not the only place it is called, this is only
@@ -40,14 +44,22 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
         setContentView(R.layout.activity_co2_calc)
         Log.d("Calculator", "before calc")
         this.calculator = Co2Calculator()
-        this.calculator.execute()
+        this.calculator.execute(transportMode, destinationHome)
         showSpinner()
         setUpToggleButton()
 
 
 
     }
-
+    fun returnInfo(array: Array<Float>) : Array<Float>
+    {
+        return array
+    }
+    fun calculate(array: Array<String>) :  AsyncTask<String, Float, Float>
+    {
+        this.calculator = Co2Calculator()
+        return this.calculator.execute(array[0], array[1])
+    }
     /**
      * Everytime the button is pushed and the value of destinationHome is changed calculator is
      * reinitialized and executed, it cannot be executed without being reinitialized.
@@ -58,11 +70,15 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
         Log.d("Calculator", "setUpToggleButton")
         val toggle: ToggleButton = findViewById(R.id.co2calc_homeschool_toggle)
         toggle.setOnCheckedChangeListener { _, isHome ->
-            //if false destination is school
-                destinationHome = isHome
+            if(isHome) {
+                destinationHome = "Home"
+            }
+            else{
+                destinationHome = "School"
+            }
             Log.i("Calculator", destinationHome.toString())
             this.calculator = Co2Calculator()
-            this.calculator.execute()
+            this.calculator.execute(transportMode, destinationHome)
         }
 
     }
@@ -115,7 +131,7 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
         {vehicleEfficiency = 0.0f}
 
         this.calculator = Co2Calculator()
-        this.calculator.execute()
+        this.calculator.execute(transportMode, destinationHome)
     }
 
     /**
@@ -125,7 +141,7 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
      *
      *
      */
-    private inner class Co2Calculator : AsyncTask<Void, Float, Float>() {
+    private inner class Co2Calculator : AsyncTask<String, Float, Float>() {
 
         private lateinit var fusedLocationClient: FusedLocationProviderClient
         private lateinit var currentLocation: Location
@@ -134,6 +150,8 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
         private var schoolLatutude = 45.48775
         private var homeLongitude = 0.0
         private var homeLatutude = 0.0
+        private lateinit var transportMode : String
+        private lateinit var destinationHome : String
 
 
         /**
@@ -142,14 +160,22 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
          * but onProgressUpdate can, which is why publishProgress is called
          *
          */
-        override fun doInBackground(vararg unused: Void): Float{
+        override fun doInBackground(vararg types : String): Float{
             Log.d("Calculator", "initializing calc")
 
+            transportMode = types[0]
+            destinationHome = types[1]
 
             fusedLocationClient = LocationServices.getFusedLocationProviderClient(this@CO2CalcActivity)
             Log.d("Calculator", "fusedLocation init")
             var location: Location? = null
             //Asyncronous call to get location the method will end before it completes its task.
+            var locationRequest = LocationRequest.create()
+            var locationCallback = LocationCallback()
+            fusedLocationClient.requestLocationUpdates(locationRequest,
+                locationCallback,
+                Looper.getMainLooper())
+
             fusedLocationClient.lastLocation
                 .addOnSuccessListener { l : Location? -> location = l
                     Log.i("Calculator", "entered listener")
@@ -185,6 +211,14 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
             var treeOffSetView = findViewById<TextView>(R.id.co2calc_trees)
             var treeOffSet = calculateTrees(totalCO2)
             treeOffSetView.text = treeOffSet.toString()
+            var distanceKM = result[0] as Float / 1000.0f
+            var array = arrayOf(
+                distanceKM,
+                totalCO2,
+                this.currentLocation.latitude.toFloat(),
+                this.currentLocation.longitude.toFloat()
+            )
+            returnInfo(array)
         }
 
         /**
@@ -196,7 +230,22 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
         private fun calculateCO2G(distance: Float): Float{
             Log.d("Calculator", "calculateCO2G")
             var distanceKM = distance / 1000.0f
-            var totalCO2 = distanceKM * this@CO2CalcActivity.vehicleEfficiency
+            var vehicleEfficiency = 0.0f
+            if(transportMode.equals("Car Diesel"))
+            {vehicleEfficiency = 121.5f}
+            else if(transportMode.equals("Car Gas"))
+            {vehicleEfficiency = 123.4f}
+            else if(transportMode.equals("Carpool (3) Diesel"))
+            {vehicleEfficiency = 40.5f}
+            else if(transportMode.equals("Carpool (3) Gas"))
+            {vehicleEfficiency = 41.1f}
+            else if(transportMode.equals("Public Transit"))
+            {vehicleEfficiency = 46.2f}
+            else if(transportMode.equals("Walk"))
+            {vehicleEfficiency = 0.0f}
+            else if(transportMode.equals("Bike"))
+            {vehicleEfficiency = 0.0f}
+            var totalCO2 = distanceKM * vehicleEfficiency
             return totalCO2
         }
 
@@ -226,7 +275,7 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
             Log.d("Calculator", "location = " +currentLocation.toString())
             if(this.haveLocation) {
                 Log.d("Calculator", "in if")
-                if(this@CO2CalcActivity.destinationHome) {
+                if(destinationHome.equals("Home")) {
 
                     Location.distanceBetween(
                         this.currentLocation.latitude,
@@ -256,7 +305,7 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
         /**
          * Retreives the information the user provided in the settings page when they first started the app
          * We use the location of the home and school to calculate distance relative to the devices location.
-         * 
+         *
          */
         override fun onPreExecute() {
             // set up the task here
