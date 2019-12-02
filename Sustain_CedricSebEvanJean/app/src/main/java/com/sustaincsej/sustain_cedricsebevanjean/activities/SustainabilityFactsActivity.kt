@@ -12,6 +12,9 @@ import com.sustaincsej.sustain_cedricsebevanjean.models.Fact
 import java.util.*
 import kotlin.collections.ArrayList
 
+/**
+* Class that displays a sustainability fact to the user from a firebase database.
+*/
 class SustainabilityFactsActivity : AppCompatActivity() {
 
     private lateinit var factImage: ImageButton
@@ -79,7 +82,8 @@ class SustainabilityFactsActivity : AppCompatActivity() {
      * Function that gets a random fact from the firebase database
      */
     private fun randomFact() {
-        factsIndex = random.nextInt(6)
+        factsIndex = random.nextInt(facts.size)
+        updateUI()
         Log.i("TEST", factsIndex.toString())
     }
 
@@ -95,7 +99,16 @@ class SustainabilityFactsActivity : AppCompatActivity() {
         else {
             factsIndex++
         }
+        updateUI()
         Log.i("TEST", factsIndex.toString())
+    }
+    
+    /**
+    * Function that changes the fact displayed in the UI
+    */
+    private fun updateUI() {
+        factText.text = facts.get(factsIndex).text
+        factSource.text = facts.get(factsIndex).source_url
     }
 
 }
