@@ -15,6 +15,13 @@ import com.sustaincsej.sustain_cedricsebevanjean.models.Fact
 import java.util.*
 import kotlin.collections.ArrayList
 
+/**
+ * Activity that displays a sustainability facts to the user from a firebase database.
+ *
+ * @author Jean Robatto
+ * @author Sebastien Palin
+ * @author Evan Greenstein
+ */
 class SustainabilityFactsActivity : AppCompatActivity() {
 
     private lateinit var factImage: ImageButton
@@ -31,6 +38,7 @@ class SustainabilityFactsActivity : AppCompatActivity() {
 
     private var loaded = false
 
+    // Get the contents of the firebase database
     private val factsEventListener = object : ValueEventListener {
 
         override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -68,6 +76,11 @@ class SustainabilityFactsActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Oncreate that will also store the image and text view from the layout.
+     *
+     * @param savedInstanceState
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sustainability_facts)
@@ -78,6 +91,9 @@ class SustainabilityFactsActivity : AppCompatActivity() {
         factSource = findViewById(R.id.sust_fact_source)
     }
 
+    /**
+     * onResume that creates a connection to firebase and gets everything from firebase.
+     */
     override fun onResume() {
         super.onResume()
         //Create database connection and information
@@ -87,6 +103,11 @@ class SustainabilityFactsActivity : AppCompatActivity() {
         database.addListenerForSingleValueEvent(factsEventListener)
     }
 
+    /**
+     * onSaveInstanceState that saves information needed to flip the screen correctly.
+     *
+     * @param outState
+     */
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.apply {
@@ -95,6 +116,11 @@ class SustainabilityFactsActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * onRestoreInstanceState that also sets the variables based on what was stored in the bundle.
+     *
+     * @param savedInstanceState
+     */
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         loaded = savedInstanceState.getBoolean("loaded", false)
@@ -112,6 +138,8 @@ class SustainabilityFactsActivity : AppCompatActivity() {
 
     /**
      * Goes to the link when clicked
+     *
+     * @param v
      */
     fun handleLinkClick(v: View) {
         val webpage: Uri = Uri.parse(factSource.text.toString())
@@ -139,6 +167,11 @@ class SustainabilityFactsActivity : AppCompatActivity() {
         showFact(factsIndex)
     }
 
+    /**
+     * Function that displays a fact.
+     *
+     * @param factsIndex The index in the facts array that is to be displayed.
+     */
     private fun showFact(factsIndex: Int) {
         val fact = facts[factsIndex]
         factText.text = fact.text
@@ -146,8 +179,8 @@ class SustainabilityFactsActivity : AppCompatActivity() {
         Picasso.get().load(fact.image_url).into(factImage)
     }
 
+    // For logging
     companion object {
         private val TAG = "SustFactActivity"
     }
-
 }
