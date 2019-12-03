@@ -51,7 +51,7 @@
                     android:background="@color/surface"
                     android:ems="10"
                     android:hint="@string/newtrip_lat_hint"
-                    android:inputType="number"
+                    android:inputType="numberSigned|numberDecimal"
                     android:padding="@dimen/componentPadding"
                     android:textColor="@color/onSurface"
                     android:textSize="@dimen/textSize" />
@@ -65,7 +65,7 @@
                     android:background="@color/surface"
                     android:ems="10"
                     android:hint="@string/newtrip_lon_hint"
-                    android:inputType="number"
+                    android:inputType="numberSigned|numberDecimal"
                     android:padding="@dimen/componentPadding"
                     android:textColor="@color/onSurface"
                     android:textSize="@dimen/textSize" />

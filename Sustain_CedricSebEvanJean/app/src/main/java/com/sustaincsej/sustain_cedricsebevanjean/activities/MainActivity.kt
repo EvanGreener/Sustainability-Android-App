@@ -11,20 +11,12 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.core.app.ActivityCompat
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.sustaincsej.sustain_cedricsebevanjean.R
-import com.sustaincsej.sustain_cedricsebevanjean.adapters.TripRecyclerViewAdapter
-import com.sustaincsej.sustain_cedricsebevanjean.common.NewTripPopupFragment
-import com.sustaincsej.sustain_cedricsebevanjean.models.TripViewModel
-import java.text.SimpleDateFormat
-import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
 
+    private val newTripActivityRequestCode = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,11 +61,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun handleSchoolTripClick(view: View) {
-        NewTripPopupFragment(this).showPopup()
+        val intent = Intent(this, NewTripPopupFragment::class.java)
+        startActivityForResult(intent, newTripActivityRequestCode)
     }
 
     fun handleHomeTripClick(view: View) {
-        NewTripPopupFragment(this).showPopup()
+        val intent = Intent(this, NewTripPopupFragment::class.java)
+        startActivityForResult(intent, newTripActivityRequestCode)
     }
 
     fun handleCO2Click(view: View) {

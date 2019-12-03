@@ -19,9 +19,9 @@
         <activity android:name=".activities.TripActivity" />
         <activity android:name=".activities.TripLogActivity" />
         <activity android:name=".activities.WeatherActivity" />
-        <activity android:name=".activities.FactsActivity" />
         <activity android:name=".activities.AboutActivity" />
         <activity android:name=".activities.SettingsActivity" />
+        <activity android:name=".activities.NewTripPopupFragment" />
         <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
