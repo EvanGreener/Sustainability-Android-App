@@ -4,23 +4,27 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 import com.sustaincsej.sustain_cedricsebevanjean.R
 import com.sustaincsej.sustain_cedricsebevanjean.adapters.TripRecyclerViewAdapter
-import com.sustaincsej.sustain_cedricsebevanjean.common.NewTripPopupFragment
 import com.sustaincsej.sustain_cedricsebevanjean.models.Trip
 import com.sustaincsej.sustain_cedricsebevanjean.models.TripViewModel
+import java.util.*
 
 class TripLogActivity : AppCompatActivity() {
 
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var tripViewModel: TripViewModel
     private val newTripActivityRequestCode = 1
 
@@ -34,6 +38,8 @@ class TripLogActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_trip_log)
 
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this@TripLogActivity)
+
         val recyclerView = findViewById<RecyclerView>(R.id.trip_log_recycler_view)
         val adapter = TripRecyclerViewAdapter(this)
         recyclerView.adapter = adapter
@@ -46,34 +52,39 @@ class TripLogActivity : AppCompatActivity() {
             trips?.let { adapter.setTrips(it) }
         })
 
-        /*
 
-        ===== UNCOMMENT when NewTripFragment is FULLY implemented
 
         val fab = findViewById<FloatingActionButton>(R.id.trip_log_add_trip)
         fab.setOnClickListener {
-            val intent = Intent(this@TripLogActivity, NewTripPopupFragment::class.java)
+            val intent = Intent(this, NewTripPopupFragment::class.java)
             startActivityForResult(intent, newTripActivityRequestCode)
         }
-        */
-
-
-        
-        //initTripView() --useless
     }
-
-    /*
-
-    ===== UNCOMMENT when NewTripFragment is FULLY implemented
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == newTripActivityRequestCode && resultCode == Activity.RESULT_OK) {
-            data?.getStringExtra(NewTripPopupFragment.EXTRA_REPLY)?.let {
-                val trip = Trip(it)
-                tripViewModel.insert(trip)
-            }
+            val extras = data?.extras
+
+            var lat = extras?.getDouble(NewTripPopupFragment.TO_LAT)
+            var lon = extras?.getDouble(NewTripPopupFragment.TO_LON)
+            val travel_mode = extras?.getString(NewTripPopupFragment.TRAVEL_MODE)!!
+            val reason = extras?.getString(NewTripPopupFragment.REASON)!!
+            val distance = extras?.getDouble(NewTripPopupFragment.DISTANCE)
+            val co2 = extras?.getDouble(NewTripPopupFragment.CO2)
+            val startLat = extras?.getDouble(NewTripPopupFragment.FROM_LAT)
+            val startLon = extras?.getDouble(NewTripPopupFragment.FROM_LON)
+
+            Log.d(TAG, "co2: " + co2.toString() )
+            Log.d(TAG, "distance: " + distance.toString())
+
+
+            val trip  = Trip(id = 0, travelMode = travel_mode, reasonForTrip = reason, distance = distance,
+                carbonDioxide = co2, dateTimeStamp = java.util.Calendar.getInstance().time, fromLatitude = startLat,
+                fromLongitude = startLon, toLatitude = lat!!, toLongitude = lon!! )
+            tripViewModel.insert(trip)
+
         } else {
             Toast.makeText(
                 applicationContext,
@@ -82,22 +93,10 @@ class TripLogActivity : AppCompatActivity() {
         }
     }
 
-    */
-
-    fun handleNewTripButtonClick(view: View) {
-        NewTripPopupFragment(this).showPopup()
+    companion object{
+        val TAG = "TripLogActivity"
     }
 
-    //Kind of useless now...
-//    private fun initTripView() {
-//        tripViewManager = LinearLayoutManager(this)
-//        //TODO The trip list should be a list of trip objects from the database
-//        tripList = mutableListOf(Trip(), Trip(), Trip(),Trip(), Trip(), Trip(),Trip(), Trip(), Trip())
-//        tripViewAdapter = TripRecyclerViewAdapter(tripList, this)
-//        tripView = findViewById<RecyclerView>(R.id.trip_log_recycler_view).apply {
-//            layoutManager = tripViewManager
-//            adapter = tripViewAdapter
-//        }
-//
-//    }
+
+
 }
