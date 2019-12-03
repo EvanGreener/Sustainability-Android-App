@@ -183,5 +183,4 @@ class SustainabilityFactsActivity : AppCompatActivity() {
     companion object {
         private val TAG = "SustFactActivity"
     }
-
 }
