@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
@@ -19,6 +20,7 @@ import com.sustaincsej.sustain_cedricsebevanjean.R
 import com.sustaincsej.sustain_cedricsebevanjean.adapters.TripRecyclerViewAdapter
 import com.sustaincsej.sustain_cedricsebevanjean.models.Trip
 import com.sustaincsej.sustain_cedricsebevanjean.models.TripViewModel
+import java.util.*
 
 class TripLogActivity : AppCompatActivity() {
 
@@ -64,6 +66,7 @@ class TripLogActivity : AppCompatActivity() {
 
         if (requestCode == newTripActivityRequestCode && resultCode == Activity.RESULT_OK) {
             val extras = data?.extras
+
             var lat = extras?.getDouble(NewTripPopupFragment.TO_LAT)
             var lon = extras?.getDouble(NewTripPopupFragment.TO_LON)
             val travel_mode = extras?.getString(NewTripPopupFragment.TRAVEL_MODE)!!
@@ -73,6 +76,8 @@ class TripLogActivity : AppCompatActivity() {
             val startLat = extras?.getDouble(NewTripPopupFragment.FROM_LAT)
             val startLon = extras?.getDouble(NewTripPopupFragment.FROM_LON)
 
+            Log.d(TAG, "co2: " + co2.toString() )
+            Log.d(TAG, "distance: " + distance.toString())
 
 
             val trip  = Trip(id = 0, travelMode = travel_mode, reasonForTrip = reason, distance = distance,
@@ -88,7 +93,9 @@ class TripLogActivity : AppCompatActivity() {
         }
     }
 
-
+    companion object{
+        val TAG = "TripLogActivity"
+    }
 
 
 

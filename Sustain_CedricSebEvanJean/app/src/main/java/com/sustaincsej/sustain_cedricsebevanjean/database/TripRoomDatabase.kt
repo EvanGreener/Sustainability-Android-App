@@ -55,6 +55,7 @@ abstract class TripRoomDatabase : RoomDatabase() {
         }
 
         suspend fun populateDatabase(tripDao: TripDAO) {
+            /*
             //For testing purposes
             tripDao.deleteAll()
 
@@ -65,7 +66,7 @@ abstract class TripRoomDatabase : RoomDatabase() {
             trip = Trip(0,"GAS",1.0,9032.0,94.5,4.0,
                 0.0,0.0, java.sql.Date.valueOf("2019-11-26") ,"Yeet")
             tripDao.insert(trip)
-
+            */
         }
     }
 }

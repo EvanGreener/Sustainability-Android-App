@@ -15,7 +15,9 @@ import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+
 import com.sustaincsej.sustain_cedricsebevanjean.R
+import com.sustaincsej.sustain_cedricsebevanjean.models.TravelMode
 
 class NewTripPopupFragment : AppCompatActivity(),  AdapterView.OnItemSelectedListener {
 
@@ -32,6 +34,8 @@ class NewTripPopupFragment : AppCompatActivity(),  AdapterView.OnItemSelectedLis
 
     private var currentLat = 0.0 //default value
     private var currentLon = 0.0 //default value
+    private val destinationLatDefault = 45.48775
+    private val destinationLonDefault = -73.58854
     private var distance = 0.0
     private var co2 = 0.0
 
@@ -42,11 +46,7 @@ class NewTripPopupFragment : AppCompatActivity(),  AdapterView.OnItemSelectedLis
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dialog_fragment_new_trip)
 
-        //Set spinner values
-        val spinner = findViewById<Spinner>(R.id.newtrip_travelmode_spinner)
-        val adapter = ArrayAdapter(this@NewTripPopupFragment,
-            R.layout.simple_spinner, resources.getStringArray(R.array.newtrip_travel_modes))
-        spinner.adapter = adapter
+        showSpinner()
 
         destinationLat = findViewById(R.id.newtrip_tolat)
         destinationLon = findViewById(R.id.newtrip_tolon)
@@ -70,10 +70,26 @@ class NewTripPopupFragment : AppCompatActivity(),  AdapterView.OnItemSelectedLis
         }
     }
 
+    /**
+     * Sets the spinner to have an onItem listener, and to listen to the methods of this class
+     * as its listener.
+     *
+     */
+    private fun showSpinner() {
+        Log.d("Calculator", "ShowSpinner")
+        val travelModeSpinner = findViewById(R.id.newtrip_travelmode_spinner) as Spinner
+        val dataAdapter = ArrayAdapter<String>(
+            this, R.layout.simple_spinner, resources.getStringArray(R.array.newtrip_travel_modes))
+        travelModeSpinner.adapter = dataAdapter
+        travelModeSpinner.onItemSelectedListener = this
+
+    }
+
+
     private fun onClick(id: Int) {
         val lat =  destinationLat.text.toString()
         val lon = destinationLon.text.toString()
-        val travelmode = travelmode.selectedItem.toString()
+        var travelmode = travelmode.selectedItem.toString()
         val reason = findViewById<EditText>(R.id.newtrip_reason).text.toString()
 
         var latDouble = 0.0
@@ -88,7 +104,17 @@ class NewTripPopupFragment : AppCompatActivity(),  AdapterView.OnItemSelectedLis
             lonDouble = lon.toDouble()
         }
 
-        when (id) { //TODO Implement buttons
+        when(travelmode){
+            "Car Diesel" -> travelmode = TravelMode.CAR_DIESEL.name
+            "Car Gas" -> travelmode = TravelMode.CAR_GAS.name
+            "Carpool (3) Diesel" -> travelmode = TravelMode.CARPOOL_DIESEL.name
+            "Carpool (3) Gas" -> travelmode = TravelMode.CARPOOL_GAS.name
+            "Public Transit" -> travelmode = TravelMode.PUBLIC_TRANSIT.name
+            "Walk" -> travelmode = TravelMode.WALK.name
+            "Bike" -> travelmode = TravelMode.BIKE.name
+        }
+
+        when (id) { //TODO Implement remote
             R.id.newtrip_remote_btn -> Log.i(TAG, "Remote button clicked")//FIRE REMOTE
             R.id.newtrip_local_btn ->{
                 Log.i(TAG, "Local button clicked")
@@ -115,10 +141,17 @@ class NewTripPopupFragment : AppCompatActivity(),  AdapterView.OnItemSelectedLis
 
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-
+        Log.d(TAG, "onItemSelected")
         val travelMode = parent!!.getItemAtPosition(position) as String
 
-        val info = calculateAndUpdate(travelMode, destinationLat.text.toString().toDouble(), destinationLon.text.toString().toDouble())
+        val info : DoubleArray
+        if (destinationLat.text.isEmpty() || destinationLon.text.isEmpty()){
+            info = calculateAndUpdate(travelMode, destinationLatDefault, destinationLonDefault)
+        }
+        else{
+            info = calculateAndUpdate(travelMode, destinationLat.text.toString().toDouble(), destinationLon.text.toString().toDouble())
+        }
+
         distance = info[0]
         co2 = info[1]
         currentLat = info[2]
@@ -139,19 +172,18 @@ class NewTripPopupFragment : AppCompatActivity(),  AdapterView.OnItemSelectedLis
 
         var startLat = 0.0
         var startLon = 0.0
-        var distance  = 0.0
-        var co2 = 0.0
+
 
         fusedLocationClient.lastLocation
             .addOnSuccessListener { l : Location? -> location = l
             if (location != null) {
                 haveLocation = true
                 currentLocation = location as Location
-                distance = distanceToDestination(destLat, destLon)
-                distanceTxt.text = distance.toString()
+                this.distance = distanceToDestination(destLat, destLon)
+                distanceTxt.text = this.distance.toString()
 
-                co2 = calculateCO2G(distance, travelMode)
-                co2Txt.text = co2.toString()
+                this.co2 = calculateCO2G(distance, travelMode)
+                co2Txt.text = this.co2.toString()
 
 
                 startLat = currentLocation.latitude
