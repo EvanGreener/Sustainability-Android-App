@@ -26,6 +26,7 @@
         android:background="@color/surface"
         android:ems="10"
         android:hint="@string/settings_firstname_hint"
+        style="@style/EditTextTheme"
         android:inputType="textPersonName"
         android:padding="@dimen/componentPadding"
         android:textColor="@color/onSurface" />
@@ -38,6 +39,7 @@
         android:background="@color/surface"
         android:ems="10"
         android:hint="@string/settings_lastname_hint"
+        style="@style/EditTextTheme"
         android:inputType="textPersonName"
         android:padding="@dimen/componentPadding"
         android:textColor="@color/onSurface" />
@@ -50,6 +52,7 @@
         android:background="@color/surface"
         android:ems="10"
         android:hint="@string/settings_email_hint"
+        style="@style/EditTextTheme"
         android:inputType="textEmailAddress"
         android:padding="@dimen/componentPadding"
         android:textColor="@color/onSurface" />
@@ -62,6 +65,7 @@
         android:background="@color/surface"
         android:ems="10"
         android:hint="@string/settings_password_hint"
+        style="@style/EditTextTheme"
         android:inputType="textPassword"
         android:padding="@dimen/componentPadding"
         android:textColor="@color/onSurface" />
@@ -80,6 +84,7 @@
             android:background="@color/surface"
             android:ems="10"
             android:hint="@string/settings_home_lat_hint"
+            style="@style/EditTextTheme"
             android:inputType="numberDecimal|numberSigned"
             android:padding="@dimen/componentPadding"
             android:textColor="@color/onSurface" />
@@ -93,6 +98,7 @@
             android:background="@color/surface"
             android:ems="10"
             android:hint="@string/settings_home_lon_hint"
+            style="@style/EditTextTheme"
             android:inputType="numberDecimal|numberSigned"
             android:padding="@dimen/componentPadding"
             android:textColor="@color/onSurface" />
@@ -112,6 +118,7 @@
             android:background="@color/surface"
             android:ems="10"
             android:hint="@string/settings_school_lat_hint"
+            style="@style/EditTextTheme"
             android:inputType="numberDecimal|numberSigned"
             android:padding="@dimen/componentPadding"
             android:textColor="@color/onSurface" />
@@ -125,6 +132,7 @@
             android:background="@color/surface"
             android:ems="10"
             android:hint="@string/settings_school_lon_hint"
+            style="@style/EditTextTheme"
             android:inputType="numberDecimal|numberSigned"
             android:padding="@dimen/componentPadding"
             android:textColor="@color/onSurface" />

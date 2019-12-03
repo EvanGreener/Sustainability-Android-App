@@ -10,4 +10,5 @@
     <color name="background">#121212</color>
     <color name="surface">#1D1D1D</color>
     <color name="transparent">#00FFFFFF</color>
+    <color name="hintColor">#808080</color>
 </resources>
