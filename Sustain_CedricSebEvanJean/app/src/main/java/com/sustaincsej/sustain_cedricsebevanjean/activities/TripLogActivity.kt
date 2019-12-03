@@ -10,17 +10,19 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 import com.sustaincsej.sustain_cedricsebevanjean.R
 import com.sustaincsej.sustain_cedricsebevanjean.adapters.TripRecyclerViewAdapter
-import com.sustaincsej.sustain_cedricsebevanjean.common.NewTripPopupFragment
 import com.sustaincsej.sustain_cedricsebevanjean.models.Trip
 import com.sustaincsej.sustain_cedricsebevanjean.models.TripViewModel
 
 class TripLogActivity : AppCompatActivity() {
 
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var tripViewModel: TripViewModel
     private val newTripActivityRequestCode = 1
 
@@ -33,6 +35,8 @@ class TripLogActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_trip_log)
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this@TripLogActivity)
 
         val recyclerView = findViewById<RecyclerView>(R.id.trip_log_recycler_view)
         val adapter = TripRecyclerViewAdapter(this)
@@ -50,7 +54,7 @@ class TripLogActivity : AppCompatActivity() {
 
         val fab = findViewById<FloatingActionButton>(R.id.trip_log_add_trip)
         fab.setOnClickListener {
-            val intent = Intent(this@TripLogActivity, NewTripPopupFragment::class.java)
+            val intent = Intent(this, NewTripPopupFragment::class.java)
             startActivityForResult(intent, newTripActivityRequestCode)
         }
     }
@@ -60,15 +64,20 @@ class TripLogActivity : AppCompatActivity() {
 
         if (requestCode == newTripActivityRequestCode && resultCode == Activity.RESULT_OK) {
             val extras = data?.extras
-            val lat = extras?.getDouble(NewTripPopupFragment.TO_LAT)
-            val lon = extras?.getDouble(NewTripPopupFragment.TO_LON)
-            val travel_mode = extras?.getDouble(NewTripPopupFragment.TRAVEL_MODE)
-            val reason = extras?.getDouble(NewTripPopupFragment.REASON)
+            var lat = extras?.getDouble(NewTripPopupFragment.TO_LAT)
+            var lon = extras?.getDouble(NewTripPopupFragment.TO_LON)
+            val travel_mode = extras?.getString(NewTripPopupFragment.TRAVEL_MODE)!!
+            val reason = extras?.getString(NewTripPopupFragment.REASON)!!
+            val distance = extras?.getDouble(NewTripPopupFragment.DISTANCE)
+            val co2 = extras?.getDouble(NewTripPopupFragment.CO2)
+            val startLat = extras?.getDouble(NewTripPopupFragment.FROM_LAT)
+            val startLon = extras?.getDouble(NewTripPopupFragment.FROM_LON)
 
-            //Do the calculations..
 
 
-            val trip : Trip
+            val trip  = Trip(id = 0, travelMode = travel_mode, reasonForTrip = reason, distance = distance,
+                carbonDioxide = co2, dateTimeStamp = java.util.Calendar.getInstance().time, fromLatitude = startLat,
+                fromLongitude = startLon, toLatitude = lat!!, toLongitude = lon!! )
             tripViewModel.insert(trip)
 
         } else {
@@ -80,9 +89,7 @@ class TripLogActivity : AppCompatActivity() {
     }
 
 
-    fun handleNewTripButtonClick(view: View) {
-        NewTripPopupFragment(this).showPopup()
-    }
+
 
 
 }
