@@ -5,7 +5,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -20,7 +19,6 @@ import com.sustaincsej.sustain_cedricsebevanjean.R
 import com.sustaincsej.sustain_cedricsebevanjean.adapters.TripRecyclerViewAdapter
 import com.sustaincsej.sustain_cedricsebevanjean.models.Trip
 import com.sustaincsej.sustain_cedricsebevanjean.models.TripViewModel
-import java.util.*
 
 class TripLogActivity : AppCompatActivity() {
 
@@ -56,7 +54,7 @@ class TripLogActivity : AppCompatActivity() {
 
         val fab = findViewById<FloatingActionButton>(R.id.trip_log_add_trip)
         fab.setOnClickListener {
-            val intent = Intent(this, NewTripPopupFragment::class.java)
+            val intent = Intent(this, NewTripActivity::class.java)
             startActivityForResult(intent, newTripActivityRequestCode)
         }
     }
@@ -67,17 +65,17 @@ class TripLogActivity : AppCompatActivity() {
         if (requestCode == newTripActivityRequestCode && resultCode == Activity.RESULT_OK) {
             val extras = data?.extras
 
-            var lat = extras?.getDouble(NewTripPopupFragment.TO_LAT)
-            var lon = extras?.getDouble(NewTripPopupFragment.TO_LON)
-            val travel_mode = extras?.getString(NewTripPopupFragment.TRAVEL_MODE)!!
-            val reason = extras?.getString(NewTripPopupFragment.REASON)!!
-            val distance = extras?.getDouble(NewTripPopupFragment.DISTANCE)
-            val co2 = extras?.getDouble(NewTripPopupFragment.CO2)
-            val startLat = extras?.getDouble(NewTripPopupFragment.FROM_LAT)
-            val startLon = extras?.getDouble(NewTripPopupFragment.FROM_LON)
+            var lat = extras?.getDouble(NewTripActivity.TO_LAT)
+            var lon = extras?.getDouble(NewTripActivity.TO_LON)
+            val travel_mode = extras?.getString(NewTripActivity.TRAVEL_MODE)!!
+            val reason = extras.getString(NewTripActivity.REASON)!!
+            val distance = extras.getDouble(NewTripActivity.DISTANCE)
+            val co2 = extras.getDouble(NewTripActivity.CO2)
+            val startLat = extras.getDouble(NewTripActivity.FROM_LAT)
+            val startLon = extras.getDouble(NewTripActivity.FROM_LON)
 
-            Log.d(TAG, "co2: " + co2.toString() )
-            Log.d(TAG, "distance: " + distance.toString())
+            Log.d(TAG, "co2: $co2")
+            Log.d(TAG, "distance: $distance")
 
 
             val trip  = Trip(id = 0, travelMode = travel_mode, reasonForTrip = reason, distance = distance,

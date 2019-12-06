@@ -1,7 +1,6 @@
 package com.sustaincsej.sustain_cedricsebevanjean.activities
 
 import android.app.Activity
-import android.app.Dialog
 import android.content.Intent
 import android.location.Location
 import android.os.Bundle
@@ -19,7 +18,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.sustaincsej.sustain_cedricsebevanjean.R
 import com.sustaincsej.sustain_cedricsebevanjean.models.TravelMode
 
-class NewTripPopupFragment : AppCompatActivity(),  AdapterView.OnItemSelectedListener {
+class NewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener {
 
 
     private lateinit var currentLocation: Location
@@ -44,7 +43,7 @@ class NewTripPopupFragment : AppCompatActivity(),  AdapterView.OnItemSelectedLis
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.dialog_fragment_new_trip)
+        setContentView(R.layout.activity_new_trip)
 
         showSpinner()
 
@@ -160,7 +159,7 @@ class NewTripPopupFragment : AppCompatActivity(),  AdapterView.OnItemSelectedLis
 
     private fun calculateAndUpdate(travelMode: String, destLat: Double, destLon: Double) : DoubleArray {
 
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this@NewTripPopupFragment)
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this@NewTripActivity)
 
         var location: Location? = null
         //Asyncronous call to get location the method will end before it completes its task.
@@ -256,7 +255,7 @@ class NewTripPopupFragment : AppCompatActivity(),  AdapterView.OnItemSelectedLis
      */
 
     companion object {
-        private val TAG = "NewTripPopupFragment"
+        private val TAG = "NewTripActivity"
         const val FROM_LAT = "from-lat"
         const val FROM_LON  = "from-lon"
         const val TO_LAT = "to-lat"

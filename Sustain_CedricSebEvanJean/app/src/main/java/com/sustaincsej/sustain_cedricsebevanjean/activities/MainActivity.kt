@@ -61,12 +61,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun handleSchoolTripClick(view: View) {
-        val intent = Intent(this, NewTripPopupFragment::class.java)
+        val intent = Intent(this, NewTripActivity::class.java)
         startActivityForResult(intent, newTripActivityRequestCode)
     }
 
     fun handleHomeTripClick(view: View) {
-        val intent = Intent(this, NewTripPopupFragment::class.java)
+        val intent = Intent(this, NewTripActivity::class.java)
         startActivityForResult(intent, newTripActivityRequestCode)
     }
 
