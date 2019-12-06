@@ -25,4 +25,8 @@ class TripViewModel(application: Application) : AndroidViewModel(application) {
     fun insert(trip: Trip) = viewModelScope.launch {
         repository.insert(trip)
     }
+
+    fun delete(trip: Trip) = viewModelScope.launch {
+        repository.delete(trip)
+    }
 }
