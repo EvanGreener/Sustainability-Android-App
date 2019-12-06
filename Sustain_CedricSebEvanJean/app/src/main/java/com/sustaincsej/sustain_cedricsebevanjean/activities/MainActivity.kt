@@ -2,15 +2,20 @@ package com.sustaincsej.sustain_cedricsebevanjean.activities
 
 import android.content.Context
 import android.content.Intent
+import android.location.Location
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Looper
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.core.app.ActivityCompat
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationServices
 import com.sustaincsej.sustain_cedricsebevanjean.R
 
 class MainActivity : AppCompatActivity() {
@@ -31,6 +36,44 @@ class MainActivity : AppCompatActivity() {
             Log.i(TAG, getString(R.string.NoPrefs))
             startActivity(Intent(this, SettingsActivity::class.java))
         }
+        storeLocationSharedPref()
+    }
+
+    fun storeLocationSharedPref()
+    {
+        var fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        Log.d("Calculator", "fusedLocation init")
+        var location: Location? = null
+        //Asyncronous call to get location the method will end before it completes its task.
+        var locationRequest = LocationRequest.create()
+        var locationCallback = LocationCallback()
+        fusedLocationClient.requestLocationUpdates(locationRequest,
+            locationCallback,
+            Looper.getMainLooper())
+
+        fusedLocationClient.lastLocation
+            .addOnSuccessListener { location : Location? ->
+
+
+                if (location != null)
+                {
+                    with(getSharedPreferences(getString(R.string.Preferences), Context.MODE_PRIVATE).edit()) {
+                        putString("CurrentLongitude", location!!.longitude.toString())
+                        putString("CurrentLatitude", location!!.latitude.toString())
+                        commit()
+                    }
+
+                }
+                else
+                {
+                    with(getSharedPreferences(getString(R.string.Preferences), Context.MODE_PRIVATE).edit()) {
+                        putString("CurrentLongitude", "0.0")
+                        putString("CurrentLatitude", "0.0")
+                        commit()
+                    }
+                }
+                Log.i("Location", location!!.longitude.toString())
+            }
     }
 
     /**

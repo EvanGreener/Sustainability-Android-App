@@ -8,6 +8,8 @@ import android.os.Bundle
 import android.os.Looper
 import android.util.Log
 import android.view.View
+import android.view.View.X
+
 import android.widget.*
 import com.sustaincsej.sustain_cedricsebevanjean.R
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -152,7 +154,8 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
         private var homeLatutude = 0.0
         private lateinit var transportMode : String
         private lateinit var destinationHome : String
-
+        private var currentLatitude = 0.0
+        private var currentLongitude = 0.0
 
         /**
          * This Async task calls makes another asyncronous call, which is why onProgress update is used
@@ -166,30 +169,23 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
             transportMode = types[0]
             destinationHome = types[1]
 
-            fusedLocationClient = LocationServices.getFusedLocationProviderClient(this@CO2CalcActivity)
-            Log.d("Calculator", "fusedLocation init")
-            var location: Location? = null
-            //Asyncronous call to get location the method will end before it completes its task.
-            var locationRequest = LocationRequest.create()
-            var locationCallback = LocationCallback()
-            fusedLocationClient.requestLocationUpdates(locationRequest,
-                locationCallback,
-                Looper.getMainLooper())
+            curl -X GET -H "Accept: application/json" -H "Authorization: Bearer longtokenhere" "https://hostname/api/v1/tripinfo?fromlatitude=45.4908788&fromlongitude=-73. 588405&                          tolatitude=45.4908788&tolongitude=-73. 588405&mode=publicTransport"
 
-            fusedLocationClient.lastLocation
-                .addOnSuccessListener { l : Location? -> location = l
-                    Log.i("Calculator", "entered listener")
-                    Log.d("Calculator", l.toString())
-                    if (location != null)
-                    {
-                        this.haveLocation = true
-                        this.currentLocation = location as Location
-                        publishProgress(distanceToDestination())
-                        Log.d("Calculator", "here1")
-                    }
+            val queue = Volley.newRequestQueue(this)
+            val url = "http://www.google.com"
 
-                    Log.d("Calculator", "here2")
-                }
+            // Request a string response from the provided URL.
+            val stringRequest = StringRequest(Request.Method.GET, url,
+                Response.Listener<String> { response ->
+                    // Display the first 500 characters of the response string.
+                    textView.text = "Response is: ${response.substring(0, 500)}"
+                },
+                Response.ErrorListener { textView.text = "That didn't work!" })
+
+            // Add the request to the RequestQueue.
+            queue.add(stringRequest)
+
+
 
 
             Log.d("Calculator", "execute ended")
@@ -278,8 +274,8 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
                 if(destinationHome.equals("Home")) {
 
                     Location.distanceBetween(
-                        this.currentLocation.latitude,
-                        this.currentLocation.longitude,
+                        this.currentLatitude,
+                        this.currentLongitude,
                         homeLatutude,
                         homeLongitude,
                         results
@@ -288,8 +284,8 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
                 else
                 {
                     Location.distanceBetween(
-                        this.currentLocation.latitude,
-                        this.currentLocation.longitude,
+                        this.currentLatitude,
+                        this.currentLongitude,
                         schoolLatutude,
                         schoolLongitude,
                         results
@@ -315,10 +311,14 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
                 var schoolLon = this["SchoolLon"] as String
                 var homeLat = this["HomeLat"] as String
                 var homeLon = this["HomeLon"] as String
+                var curLat = this["CurrentLatitude"] as String
+                var curLong = this["CurrentLongitude"] as String
                 schoolLongitude = schoolLon.toDouble()
                 schoolLatutude = schoolLat.toDouble()
                 homeLongitude = homeLon.toDouble()
                 homeLatutude = homeLat.toDouble()
+                currentLatitude = curLat.toDouble()
+                currentLongitude = curLong.toDouble()
             }
         }
 
