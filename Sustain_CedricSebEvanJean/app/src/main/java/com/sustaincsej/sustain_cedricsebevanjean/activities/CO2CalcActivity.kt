@@ -3,22 +3,20 @@ package com.sustaincsej.sustain_cedricsebevanjean.activities
 import android.content.Context
 import android.location.Location
 import android.os.AsyncTask
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Looper
+import android.util.Base64
+import android.util.Base64.DEFAULT
 import android.util.Log
 import android.view.View
-import android.view.View.X
-
 import android.widget.*
-import com.sustaincsej.sustain_cedricsebevanjean.R
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationServices
 import java.io.*
 import java.net.HttpURLConnection
 import java.net.URL
+import java.nio.charset.StandardCharsets
+import com.sustaincsej.sustain_cedricsebevanjean.R
+
 
 /**
  * CO2CalcActivity this is the activity and API (internal class) that calculates and displays CO2 emissions
@@ -159,7 +157,7 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
         private lateinit var destinationHome : String
         private var currentLatitude = 0.0
         private var currentLongitude = 0.0
-        private val myurl = "https://jayaghgtracker.herokuapp.com/"
+        private val myurl = "https://jayaghgtracker.herokuapp.com/api/v1/tripinfo"
         private val NETIOBUFFER = 1024
 
         /**
@@ -178,6 +176,12 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
             var conn: HttpURLConnection? = null
             val url = URL(myurl)
 
+            /*
+            Authenticator.setDefault(object : Authenticator() {
+                protected val passwordAuthentication: PasswordAuthentication?
+                    protected get() = PasswordAuthentication("sect2team2@test", "1qazxsw2".toCharArray())
+            })*/
+
             try {
                 // create and open the connection
                 conn = url.openConnection() as HttpURLConnection
@@ -195,6 +199,12 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
                 conn.setRequestProperty("tolatitude", homeLatutude.toString())
                 conn.setRequestProperty("tolongitude", schoolLongitude.toString())
                 conn.setRequestProperty("mode", "publicTransport")
+
+                //val auth: String = "sect2team2@test" + ":" + "1qazxsw2"
+                //val encodedAuth: ByteArray =
+                //    Base64.encode(auth.toByteArray(StandardCharsets.UTF_8), DEFAULT)
+                //val authHeaderValue = "Basic " + String(encodedAuth)
+                conn.setRequestProperty("Authorization", "1qazxsw2")
 
                 conn.connect()
 
