@@ -3,17 +3,20 @@ package com.sustaincsej.sustain_cedricsebevanjean.activities
 import android.content.Context
 import android.location.Location
 import android.os.AsyncTask
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Looper
+import android.util.Base64
+import android.util.Base64.DEFAULT
 import android.util.Log
 import android.view.View
 import android.widget.*
-import com.sustaincsej.sustain_cedricsebevanjean.R
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationServices
+import java.io.*
+import java.net.HttpURLConnection
+import java.net.URL
+import java.nio.charset.StandardCharsets
+import com.sustaincsej.sustain_cedricsebevanjean.R
+
 
 /**
  * CO2CalcActivity this is the activity and API (internal class) that calculates and displays CO2 emissions
@@ -146,7 +149,10 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
         private var homeLatutude = 0.0
         private lateinit var transportMode : String
         private lateinit var destinationHome : String
-
+        private var currentLatitude = 0.0
+        private var currentLongitude = 0.0
+        private val myurl = "https://jayaghgtracker.herokuapp.com/api/v1/tripinfo"
+        private val NETIOBUFFER = 1024
 
         /**
          * This Async task calls makes another asyncronous call, which is why onProgress update is used
@@ -160,37 +166,103 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
             transportMode = types[0]
             destinationHome = types[1]
 
-            fusedLocationClient = LocationServices.getFusedLocationProviderClient(this@CO2CalcActivity)
-            Log.d("Calculator", "fusedLocation init")
-            var location: Location? = null
-            //Asyncronous call to get location the method will end before it completes its task.
-            var locationRequest = LocationRequest.create()
-            var locationCallback = LocationCallback()
-            fusedLocationClient.requestLocationUpdates(locationRequest,
-                locationCallback,
-                Looper.getMainLooper())
+            var istream: InputStream? = null
+            var conn: HttpURLConnection? = null
+            val url = URL(myurl)
 
-            fusedLocationClient.lastLocation
-                .addOnSuccessListener { l : Location? -> location = l
-                    Log.i("Calculator", "entered listener")
-                    Log.d("Calculator", l.toString())
-                    if (location != null)
-                    {
-                        this.haveLocation = true
-                        this.currentLocation = location as Location
-                        publishProgress(distanceToDestination())
-                        Log.d("Calculator", "here1")
+            /*
+            Authenticator.setDefault(object : Authenticator() {
+                protected val passwordAuthentication: PasswordAuthentication?
+                    protected get() = PasswordAuthentication("sect2team2@test", "1qazxsw2".toCharArray())
+            })*/
+
+            try {
+                // create and open the connection
+                conn = url.openConnection() as HttpURLConnection
+
+                conn.readTimeout = 10000
+
+                conn.connectTimeout = 15000
+
+                conn.requestMethod = "GET"
+
+                conn.doInput = true
+
+                conn.setRequestProperty("fromlatitude", currentLatitude.toString())
+                conn.setRequestProperty("fromlongitude", currentLongitude.toString())
+                conn.setRequestProperty("tolatitude", homeLatutude.toString())
+                conn.setRequestProperty("tolongitude", schoolLongitude.toString())
+                conn.setRequestProperty("mode", "publicTransport")
+
+                //val auth: String = "sect2team2@test" + ":" + "1qazxsw2"
+                //val encodedAuth: ByteArray =
+                //    Base64.encode(auth.toByteArray(StandardCharsets.UTF_8), DEFAULT)
+                //val authHeaderValue = "Basic " + String(encodedAuth)
+                conn.setRequestProperty("Authorization", "1qazxsw2")
+
+                conn.connect()
+
+                val response = conn.responseCode
+                Log.d("Calculator", "Server returned: $response")
+
+                if (response != HttpURLConnection.HTTP_OK) {
+                    return 0.0f
+                }
+
+                istream = conn.inputStream
+                Log.d("Calculator", readIt(istream))
+                return 0.0f //temporary
+            } catch (e: IOException) {
+                Log.e("Calculator", "IO exception in bg")
+                Log.getStackTraceString(e)
+                throw e
+            } finally {
+                if (istream != null) {
+                    try {
+                        istream.close()
+                    } catch (ignore: IOException) {
                     }
 
-                    Log.d("Calculator", "here2")
+                    if (conn != null)
+                        try {
+                            conn.disconnect()
+                        } catch (ignore: IllegalStateException) {
+                        }
+
                 }
+            }
+
 
 
             Log.d("Calculator", "execute ended")
             return 0.0f
         }
 
-        /**This method receives the distance to and from the destination as an argument, and receives
+        @Throws(IOException::class, UnsupportedEncodingException::class)
+        fun readIt(stream: InputStream?): String {
+            var bytesRead: Int
+            var totalRead = 0
+            val buffer = ByteArray(NETIOBUFFER)
+
+            // for data from the server
+            val bufferedInStream = BufferedInputStream(stream!!)
+
+            val byteArrayOutputStream = ByteArrayOutputStream()
+            val writer = DataOutputStream(byteArrayOutputStream)
+
+            bytesRead = bufferedInStream.read(buffer)
+            writer.write(buffer)
+            totalRead += bytesRead
+            writer.flush()
+            Log.d("Calculator", "Bytes read: " + totalRead
+                    + "(-1 means end of reader so max of)")
+
+            return byteArrayOutputStream.toString()
+        } // readIt()
+
+
+
+            /**This method receives the distance to and from the destination as an argument, and receives
          * Local user selections and uses them to calculate and display the total CO2 and the treeOffset
          *
          * @see calculateTrees
@@ -272,8 +344,8 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
                 if(destinationHome.equals("Home")) {
 
                     Location.distanceBetween(
-                        this.currentLocation.latitude,
-                        this.currentLocation.longitude,
+                        this.currentLatitude,
+                        this.currentLongitude,
                         homeLatutude,
                         homeLongitude,
                         results
@@ -282,8 +354,8 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
                 else
                 {
                     Location.distanceBetween(
-                        this.currentLocation.latitude,
-                        this.currentLocation.longitude,
+                        this.currentLatitude,
+                        this.currentLongitude,
                         schoolLatutude,
                         schoolLongitude,
                         results
@@ -309,10 +381,14 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
                 var schoolLon = this["SchoolLon"] as String
                 var homeLat = this["HomeLat"] as String
                 var homeLon = this["HomeLon"] as String
+                var curLat = this["CurrentLatitude"] as String
+                var curLong = this["CurrentLongitude"] as String
                 schoolLongitude = schoolLon.toDouble()
                 schoolLatutude = schoolLat.toDouble()
                 homeLongitude = homeLon.toDouble()
                 homeLatutude = homeLat.toDouble()
+                currentLatitude = curLat.toDouble()
+                currentLongitude = curLong.toDouble()
             }
         }
 
