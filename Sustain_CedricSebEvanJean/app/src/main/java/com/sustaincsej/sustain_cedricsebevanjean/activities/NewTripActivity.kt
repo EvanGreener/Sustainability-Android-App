@@ -1,6 +1,7 @@
 package com.sustaincsej.sustain_cedricsebevanjean.activities
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.location.Location
 import android.os.Bundle
@@ -85,6 +86,23 @@ class NewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener
 
             override fun afterTextChanged(p0: Editable?) {}
         })
+
+        //Set fields as needed
+        val preset = intent.getStringExtra("preset")
+
+        val prefs = getSharedPreferences(getString(R.string.Preferences), Context.MODE_PRIVATE)
+
+        if (preset == "home") {
+            destinationLat.setText(prefs.getString("HomeLat", ""))
+            destinationLon.setText(prefs.getString("HomeLon", ""))
+            destinationLat.isEnabled = false
+            destinationLon.isEnabled = false
+        } else if (preset == "school") {
+            destinationLat.setText(prefs.getString("SchoolLat", ""))
+            destinationLon.setText(prefs.getString("SchoolLon", ""))
+            destinationLat.isEnabled = false
+            destinationLon.isEnabled = false
+        }
     }
 
     /**

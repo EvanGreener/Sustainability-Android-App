@@ -114,19 +114,19 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/componentMargin"
                             android:padding="@dimen/componentPadding"
-                            android:text="@string/trip_distance_label"
+                            android:text="@string/newtrip_reason_hint"
                             android:textColor="@color/onBackground"
-                            android:textSize="@dimen/textSize" />
+                            android:textSize="@dimen/textSize"
+                            tools:text="@string/newtrip_reason_hint" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/componentMargin"
                             android:padding="@dimen/componentPadding"
-                            android:text="@string/newtrip_reason_hint"
+                            android:text="@string/trip_distance_label"
                             android:textColor="@color/onBackground"
-                            android:textSize="@dimen/textSize"
-                            tools:text="@string/newtrip_reason_hint" />
+                            android:textSize="@dimen/textSize" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -145,20 +145,6 @@
                         android:layout_weight=".5"
                         android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/newtrip_distancekm"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/componentMargin"
-                            android:layout_weight="1"
-                            android:background="@color/surface"
-                            android:gravity="center"
-                            android:padding="@dimen/componentPadding"
-                            android:textAlignment="center"
-                            android:textColor="@color/onSurface"
-                            android:textSize="@dimen/textSize"
-                            tools:text="Distance (placeholder)" />
-
                         <EditText
                             android:id="@+id/newtrip_reason"
                             android:layout_width="match_parent"
@@ -173,6 +159,20 @@
                             android:padding="@dimen/componentPadding"
                             android:textColor="@color/onSurface"
                             android:textSize="@dimen/textSize" />
+
+                        <TextView
+                            android:id="@+id/newtrip_distancekm"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/componentMargin"
+                            android:layout_weight="1"
+                            android:background="@color/surface"
+                            android:gravity="center"
+                            android:padding="@dimen/componentPadding"
+                            android:textAlignment="center"
+                            android:textColor="@color/onSurface"
+                            android:textSize="@dimen/textSize"
+                            tools:text="Distance (placeholder)" />
 
                         <TextView
                             android:id="@+id/newtrip_totalco2"

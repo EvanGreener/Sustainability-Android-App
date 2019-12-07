@@ -61,13 +61,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun handleSchoolTripClick(view: View) {
-        val intent = Intent(this, NewTripActivity::class.java)
-        startActivityForResult(intent, newTripActivityRequestCode)
+        val intent = Intent(this, TripLogActivity::class.java)
+        intent.putExtra("preset", "school")
+        startActivity(intent)
     }
 
     fun handleHomeTripClick(view: View) {
-        val intent = Intent(this, NewTripActivity::class.java)
-        startActivityForResult(intent, newTripActivityRequestCode)
+        val intent = Intent(this, TripLogActivity::class.java)
+        intent.putExtra("preset", "home")
+        startActivity(intent)
     }
 
     fun handleCO2Click(view: View) {
