@@ -5,10 +5,13 @@ import android.content.Intent
 import android.location.Location
 import android.os.Bundle
 import android.os.Looper
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.get
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -24,7 +27,6 @@ class NewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener
     private lateinit var currentLocation: Location
     private var haveLocation = false
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-    //private val dialog = Dialog(context)
 
     private lateinit var destinationLat: EditText
     private lateinit var destinationLon: EditText
@@ -62,11 +64,27 @@ class NewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener
         findViewById<Button>(R.id.newtrip_remote_btn).setOnClickListener {
             onClick(it.id)
         }
-        findViewById<FloatingActionButton>(R.id.newtrip_close_popup_btn).setOnClickListener {
-            val replyIntent = Intent()
-            setResult(Activity.RESULT_CANCELED, replyIntent)
-            finish()
-        }
+
+        //Set on change events
+        destinationLat.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                updateValues(findViewById<Spinner>(R.id.newtrip_travelmode_spinner).selectedItem.toString())
+            }
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun afterTextChanged(p0: Editable?){}
+        })
+
+        //Set on change events
+        destinationLon.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                updateValues(findViewById<Spinner>(R.id.newtrip_travelmode_spinner).selectedItem.toString())
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun afterTextChanged(p0: Editable?) {}
+        })
     }
 
     /**
@@ -96,6 +114,7 @@ class NewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener
         val replyIntent = Intent()
 
         if (lat.isEmpty() || lon.isEmpty() || travelmode.isEmpty() || reason.isEmpty()){
+            Toast.makeText(this, resources.getString(R.string.not_filled_out_not_saved), Toast.LENGTH_SHORT).show()
             return
         }
         else {
@@ -142,19 +161,7 @@ class NewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         Log.d(TAG, "onItemSelected")
         val travelMode = parent!!.getItemAtPosition(position) as String
-
-        val info : DoubleArray
-        if (destinationLat.text.isEmpty() || destinationLon.text.isEmpty()){
-            info = calculateAndUpdate(travelMode, destinationLatDefault, destinationLonDefault)
-        }
-        else{
-            info = calculateAndUpdate(travelMode, destinationLat.text.toString().toDouble(), destinationLon.text.toString().toDouble())
-        }
-
-        distance = info[0]
-        co2 = info[1]
-        currentLat = info[2]
-        currentLon = info[3]
+        updateValues(travelMode)
     }
 
     private fun calculateAndUpdate(travelMode: String, destLat: Double, destLon: Double) : DoubleArray {
@@ -169,10 +176,6 @@ class NewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener
             locationCallback,
             Looper.getMainLooper())
 
-        var startLat = 0.0
-        var startLon = 0.0
-
-
         fusedLocationClient.lastLocation
             .addOnSuccessListener { l : Location? -> location = l
             if (location != null) {
@@ -185,13 +188,29 @@ class NewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener
                 co2Txt.text = this.co2.toString()
 
 
-                startLat = currentLocation.latitude
-                startLon = currentLocation.longitude
+                currentLat = currentLocation.latitude
+                currentLon = currentLocation.longitude
 
             }
         }
 
-        return doubleArrayOf(distance, co2 , startLat , startLon)
+        return doubleArrayOf(distance, co2)
+    }
+
+    /**
+     * Updates the values for co2 emissions and distance
+     */
+    private fun updateValues(travelMode: String) {
+        val info : DoubleArray
+        if (destinationLat.text.isEmpty() || destinationLon.text.isEmpty()){
+            info = calculateAndUpdate(travelMode, destinationLatDefault, destinationLonDefault)
+        }
+        else{
+            info = calculateAndUpdate(travelMode, destinationLat.text.toString().toDouble(), destinationLon.text.toString().toDouble())
+        }
+
+        distance = info[0]
+        co2 = info[1]
     }
 
     /**

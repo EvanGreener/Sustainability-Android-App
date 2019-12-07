@@ -7,7 +7,16 @@
     android:background="@color/background"
     android:orientation="vertical"
     android:padding="@dimen/containerPadding"
-    tools:context=".activities.TripActivity">
+    tools:context=".fragments.TripDialogFragment">
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/trip_close_popup_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/surface"
+        android:clickable="true"
+        app:backgroundTint="@color/surface"
+        app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
 
     <TextView
 
