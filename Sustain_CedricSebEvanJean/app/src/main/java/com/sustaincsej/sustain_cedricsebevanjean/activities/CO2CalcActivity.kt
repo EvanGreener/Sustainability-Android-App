@@ -16,6 +16,9 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
+import java.io.*
+import java.net.HttpURLConnection
+import java.net.URL
 
 /**
  * CO2CalcActivity this is the activity and API (internal class) that calculates and displays CO2 emissions
@@ -156,6 +159,8 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
         private lateinit var destinationHome : String
         private var currentLatitude = 0.0
         private var currentLongitude = 0.0
+        private val myurl = "https://jayaghgtracker.herokuapp.com/"
+        private val NETIOBUFFER = 1024
 
         /**
          * This Async task calls makes another asyncronous call, which is why onProgress update is used
@@ -169,22 +174,59 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
             transportMode = types[0]
             destinationHome = types[1]
 
-            curl -X GET -H "Accept: application/json" -H "Authorization: Bearer longtokenhere" "https://hostname/api/v1/tripinfo?fromlatitude=45.4908788&fromlongitude=-73. 588405&                          tolatitude=45.4908788&tolongitude=-73. 588405&mode=publicTransport"
+            var istream: InputStream? = null
+            var conn: HttpURLConnection? = null
+            val url = URL(myurl)
 
-            val queue = Volley.newRequestQueue(this)
-            val url = "http://www.google.com"
+            try {
+                // create and open the connection
+                conn = url.openConnection() as HttpURLConnection
 
-            // Request a string response from the provided URL.
-            val stringRequest = StringRequest(Request.Method.GET, url,
-                Response.Listener<String> { response ->
-                    // Display the first 500 characters of the response string.
-                    textView.text = "Response is: ${response.substring(0, 500)}"
-                },
-                Response.ErrorListener { textView.text = "That didn't work!" })
+                conn.readTimeout = 10000
 
-            // Add the request to the RequestQueue.
-            queue.add(stringRequest)
+                conn.connectTimeout = 15000
 
+                conn.requestMethod = "GET"
+
+                conn.doInput = true
+
+                conn.setRequestProperty("fromlatitude", currentLatitude.toString())
+                conn.setRequestProperty("fromlongitude", currentLongitude.toString())
+                conn.setRequestProperty("tolatitude", homeLatutude.toString())
+                conn.setRequestProperty("tolongitude", schoolLongitude.toString())
+                conn.setRequestProperty("mode", "publicTransport")
+
+                conn.connect()
+
+                val response = conn.responseCode
+                Log.d("Calculator", "Server returned: $response")
+
+                if (response != HttpURLConnection.HTTP_OK) {
+                    return 0.0f
+                }
+
+                istream = conn.inputStream
+                Log.d("Calculator", readIt(istream))
+                return 0.0f //temporary
+            } catch (e: IOException) {
+                Log.e("Calculator", "IO exception in bg")
+                Log.getStackTraceString(e)
+                throw e
+            } finally {
+                if (istream != null) {
+                    try {
+                        istream.close()
+                    } catch (ignore: IOException) {
+                    }
+
+                    if (conn != null)
+                        try {
+                            conn.disconnect()
+                        } catch (ignore: IllegalStateException) {
+                        }
+
+                }
+            }
 
 
 
@@ -192,7 +234,31 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
             return 0.0f
         }
 
-        /**This method receives the distance to and from the destination as an argument, and receives
+        @Throws(IOException::class, UnsupportedEncodingException::class)
+        fun readIt(stream: InputStream?): String {
+            var bytesRead: Int
+            var totalRead = 0
+            val buffer = ByteArray(NETIOBUFFER)
+
+            // for data from the server
+            val bufferedInStream = BufferedInputStream(stream!!)
+
+            val byteArrayOutputStream = ByteArrayOutputStream()
+            val writer = DataOutputStream(byteArrayOutputStream)
+
+            bytesRead = bufferedInStream.read(buffer)
+            writer.write(buffer)
+            totalRead += bytesRead
+            writer.flush()
+            Log.d("Calculator", "Bytes read: " + totalRead
+                    + "(-1 means end of reader so max of)")
+
+            return byteArrayOutputStream.toString()
+        } // readIt()
+
+
+
+            /**This method receives the distance to and from the destination as an argument, and receives
          * Local user selections and uses them to calculate and display the total CO2 and the treeOffset
          *
          * @see calculateTrees
