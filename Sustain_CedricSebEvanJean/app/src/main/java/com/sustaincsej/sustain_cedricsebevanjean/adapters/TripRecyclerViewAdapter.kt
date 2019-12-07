@@ -2,20 +2,22 @@ package com.sustaincsej.sustain_cedricsebevanjean.adapters
 
 import android.content.Context
 
-import android.app.Activity
 import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sustaincsej.sustain_cedricsebevanjean.R
-import com.sustaincsej.sustain_cedricsebevanjean.activities.NewTripActivity
+import com.sustaincsej.sustain_cedricsebevanjean.activities.TripLogActivity
 
 import com.sustaincsej.sustain_cedricsebevanjean.models.TravelMode
 import com.sustaincsej.sustain_cedricsebevanjean.models.Trip
-import com.sustaincsej.sustain_cedricsebevanjean.activities.TripActivity
+import com.sustaincsej.sustain_cedricsebevanjean.fragments.TripDialogFragment
 
 class TripRecyclerViewAdapter internal constructor(
     context: Context
@@ -35,9 +37,13 @@ class TripRecyclerViewAdapter internal constructor(
         init {
             itemView.setOnClickListener{
                 val context = it.context
-                val intent = Intent(context, TripActivity::class.java)
-                intent.putExtra("trip", trip)
-                context.startActivity(intent)
+                val fragment = TripDialogFragment()
+                val args = Bundle()
+                args.putSerializable("trip", trip)
+                fragment.arguments = args
+
+                val app = context as AppCompatActivity
+                fragment.show(app.supportFragmentManager, "TRIP DETAILS")
             }
         }
     }

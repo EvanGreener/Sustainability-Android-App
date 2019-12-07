@@ -26,12 +26,6 @@ class TripLogActivity : AppCompatActivity() {
     private lateinit var tripViewModel: TripViewModel
     private val newTripActivityRequestCode = 1
 
-    //For RecyclerView
-    private lateinit var tripList: MutableList<Trip>
-    private lateinit var tripView: RecyclerView
-    private lateinit var tripViewAdapter: TripRecyclerViewAdapter
-    private lateinit var tripViewManager: RecyclerView.LayoutManager
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_trip_log)
@@ -57,6 +51,28 @@ class TripLogActivity : AppCompatActivity() {
             val intent = Intent(this, NewTripActivity::class.java)
             startActivityForResult(intent, newTripActivityRequestCode)
         }
+    }
+
+    /**
+     * If the activity was started from Home/School trip, add trip
+     */
+    override fun onStart() {
+        super.onStart()
+
+        val preset = intent.getStringExtra("preset") ?: ""
+
+        if (preset == "home") {
+            val intent = Intent(this, NewTripActivity::class.java)
+            intent.putExtra("preset", "home")
+            startActivityForResult(intent, newTripActivityRequestCode)
+        } else if (preset == "school") {
+            val intent = Intent(this, NewTripActivity::class.java)
+            intent.putExtra("preset", "school")
+            startActivityForResult(intent, newTripActivityRequestCode)
+        }
+
+        intent.removeExtra("preset")
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
