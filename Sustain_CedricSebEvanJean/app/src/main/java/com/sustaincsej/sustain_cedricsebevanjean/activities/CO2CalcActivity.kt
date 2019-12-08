@@ -50,13 +50,19 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
         this.calculator.execute(transportMode, destinationHome)
         showSpinner()
         setUpToggleButton()
-    }
 
+
+
+    }
     fun returnInfo(array: Array<Float>) : Array<Float>
     {
         return array
     }
-
+    fun calculate(array: Array<String>) :  AsyncTask<String, Float, Float>
+    {
+        this.calculator = Co2Calculator()
+        return this.calculator.execute(array[0], array[1])
+    }
     /**
      * Everytime the button is pushed and the value of destinationHome is changed calculator is
      * reinitialized and executed, it cannot be executed without being reinitialized.
@@ -73,7 +79,7 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
             else{
                 destinationHome = "School"
             }
-            Log.i("Calculator", destinationHome)
+            Log.i("Calculator", destinationHome.toString())
             this.calculator = Co2Calculator()
             this.calculator.execute(transportMode, destinationHome)
         }
@@ -262,7 +268,7 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
 
 
 
-            /**This method receives the distance to and from the destination as an argument, and receives
+        /**This method receives the distance to and from the destination as an argument, and receives
          * Local user selections and uses them to calculate and display the total CO2 and the treeOffset
          *
          * @see calculateTrees
