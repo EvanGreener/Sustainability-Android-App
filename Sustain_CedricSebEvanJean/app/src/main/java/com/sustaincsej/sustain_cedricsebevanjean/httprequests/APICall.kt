@@ -2,6 +2,8 @@ package com.sustaincsej.sustain_cedricsebevanjean.httprequests
 
 import android.os.AsyncTask
 import android.util.Log
+import org.json.JSONArray
+import org.json.JSONException
 import org.json.JSONObject
 import java.io.*
 import java.lang.Exception
@@ -21,7 +23,7 @@ import java.net.URL
  * @author Jean Robatto (with help from Jeffrey Boisvert)
  */
 class APICall(private var url: String, private val method: String, private val email: String, private val password: String, private var jsonString: String, private val gettingToken: Boolean = true) :
-    AsyncTask<Void, Void, JSONObject>() {
+    AsyncTask<Void, Void, JSONArray>() {
 
     val connection: HttpURLConnection
     private var jwtToken: String = ""
@@ -30,10 +32,11 @@ class APICall(private var url: String, private val method: String, private val e
      * Set token if needed, prepare the GET url if needed, open connection
      */
     init {
+        Log.d(TAG, "init")
         if (gettingToken) setToken()
         addToken()
         if (method=="GET") {
-            prepareGetUrl()
+             prepareGetUrl()
         }
         this.connection = URL(this.url).openConnection() as HttpURLConnection
     }
@@ -50,7 +53,7 @@ class APICall(private var url: String, private val method: String, private val e
             false
         ).execute().get()
 
-        this.jwtToken = if (response != null) response.getString("access_token") else ""
+        this.jwtToken = if (response != null) response.getJSONObject(0).getString("access_token") else ""
 
         Log.i(TAG, jwtToken)
     }
@@ -59,6 +62,7 @@ class APICall(private var url: String, private val method: String, private val e
      * Adds json data to url
      */
     private fun prepareGetUrl() {
+        Log.d(TAG, this.jsonString)
         val json = JSONObject(this.jsonString)
         val keys = json.keys()
         var completeUrl = "${this.url}?"
@@ -77,14 +81,21 @@ class APICall(private var url: String, private val method: String, private val e
      */
     private fun addToken() {
         if(this.jwtToken.isNotEmpty()) {
-            this.jsonString = this.jsonString.substring(0..this.jsonString.length-2) + ", \"token\":\"${this.jwtToken}\"}"
+            if(!this.jsonString.equals("")) {
+                this.jsonString =
+                    this.jsonString.substring(0..this.jsonString.length - 2) + ", \"token\":\"${this.jwtToken}\"}"
+            }
+            else
+            {
+                this.jsonString = "{\"token\":\"${this.jwtToken}\"}"
+            }
         }
     }
 
     /**
      * Background task
      */
-    override fun doInBackground(vararg p0: Void?): JSONObject? {
+    override fun doInBackground(vararg p0: Void?): JSONArray? {
         return getData()
     }
 
@@ -92,8 +103,9 @@ class APICall(private var url: String, private val method: String, private val e
     /**
      * @return Response data as json object
      */
-    private fun getData(): JSONObject? {
-        var jsonData: JSONObject? = null
+    private fun getData(): JSONArray? {
+        Log.d(TAG, "getData")
+        var jsonData: JSONArray? = null
 
         var out: OutputStream
         var reader: BufferedReader? = null
@@ -130,6 +142,7 @@ class APICall(private var url: String, private val method: String, private val e
                 Log.i(TAG, this.connection.url.toString())
 
                 if (this.connection.responseCode == 200) {
+                    Log.d(TAG, "connection")
                     reader = BufferedReader(InputStreamReader(this.connection.inputStream))
 
                     var line = reader.readLine()
@@ -138,8 +151,19 @@ class APICall(private var url: String, private val method: String, private val e
                         data.appendln(line)
                         line = reader.readLine()
                     }
-
-                    jsonData = JSONObject(data.toString())
+                    try {
+                        jsonData = JSONArray(data.toString())
+                    }
+                    catch(e: JSONException)
+                    {
+                        try{
+                            jsonData = JSONArray("["+data.toString()+"]")
+                        }
+                        catch(e: JSONException)
+                        {
+                            Log.i(TAG, e.toString())
+                        }
+                    }
 
                 } else {
                     Log.d(TAG, "Error in API Call: " + this.connection.responseCode + " " + this.connection.responseMessage)
@@ -157,6 +181,6 @@ class APICall(private var url: String, private val method: String, private val e
     }
 
     companion object {
-        private const val TAG = "API Call"
+        private const val TAG = "APICall"
     }
 }

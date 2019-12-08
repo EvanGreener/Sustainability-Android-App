@@ -18,6 +18,8 @@
         <activity android:name=".activities.CO2CalcActivity" />
         <activity android:name=".fragments.TripDialogFragment" />
         <activity android:name=".activities.TripLogActivity" />
+        <activity android:name=".activities.RemoteTripLogActivity" />
+        <activity android:name=".activities.RemoteNewTripActivity" />
         <activity android:name=".activities.WeatherActivity" />
         <activity android:name=".activities.AboutActivity" />
         <activity android:name=".activities.SettingsActivity" />

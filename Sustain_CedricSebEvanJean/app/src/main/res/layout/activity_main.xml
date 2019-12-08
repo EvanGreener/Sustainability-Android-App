@@ -160,6 +160,7 @@
             android:layout_margin="@dimen/componentMargin"
             android:layout_weight="0.5"
             android:background="@color/transparent"
+            android:onClick="handleRemoteTripLogClick"
             android:scaleType="centerCrop"
             android:src="@drawable/tripphp"
             tools:srcCompat="@drawable/tripphp" />
