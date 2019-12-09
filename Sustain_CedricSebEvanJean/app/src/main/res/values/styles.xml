@@ -8,6 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- Style for edit texts to make the hints legible -->
     <style name="EditTextTheme">
         <item name="android:textColorHint">@color/hintColor</item>
     </style>
