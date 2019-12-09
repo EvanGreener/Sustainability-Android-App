@@ -2,7 +2,6 @@ package com.sustaincsej.sustain_cedricsebevanjean.activities
 
 import android.content.Context
 import android.content.DialogInterface
-import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -47,7 +46,8 @@ class SettingsActivity : AppCompatActivity() {
         getEditTexts()
         dateStamp = findViewById(R.id.settings_date_stamp)
 
-        updateUI()
+        //Update ui
+        showSavedSettings()
     }
 
     /**
@@ -65,6 +65,22 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     /**
+     * Function that displays the user's saved settings in the settings views
+     */
+    private fun showSavedSettings() {
+        val prefs = getSharedPreferences(getString(R.string.Preferences), Context.MODE_PRIVATE)
+        firstName.setText(prefs.getString("FirstName", ""))
+        lastName.setText(prefs.getString("LastName", ""))
+        email.setText(prefs.getString("Email", ""))
+        password.setText(prefs.getString("Password", ""))
+        homeLat.setText(prefs.getString("HomeLat", ""))
+        homeLon.setText(prefs.getString("HomeLon", ""))
+        schoolLat.setText(prefs.getString("SchoolLat", ""))
+        schoolLon.setText(prefs.getString("SchoolLon", ""))
+        dateStamp.text = getString(R.string.settings_last_modified_string) + " " + prefs.getString("TimeStamp", "")
+    }
+
+    /**
      * Function that is called when the user clicks on the save button
      */
     fun handleSave(view: View) {
@@ -72,7 +88,7 @@ class SettingsActivity : AppCompatActivity() {
 
         if (areSettingsFilled()) {
             savePreferences()
-            updateUI()
+            showSavedSettings()
             saveToast()
         }
         else {
@@ -119,16 +135,6 @@ class SettingsActivity : AppCompatActivity() {
         val formatter = SimpleDateFormat("dd/MM/yyyy")
         val date = Calendar.getInstance().time
         return formatter.format(date)
-    }
-
-    /**
-     * Function that will update the UI when the user saves their settings
-     */
-    private fun updateUI() {
-        val prefs = getSharedPreferences(getString(R.string.Preferences), Context.MODE_PRIVATE)
-
-        val dateText = prefs.getString("TimeStamp", "")
-        dateStamp.text = getString(R.string.settings_last_modified_string) + " " + dateText
     }
 
     /**
