@@ -51,9 +51,9 @@
                             android:layout_weight=".5"
                             android:background="@color/surface"
                             android:ems="10"
-                            android:text="@string/remotenewtrip_home_text"
                             android:inputType="number"
                             android:padding="5dp"
+                            android:text="@string/remotenewtrip_home_text"
                             android:textColor="@color/onSurface"
                             android:textSize="@dimen/textSize" />
 
@@ -65,8 +65,8 @@
                             android:layout_weight=".5"
                             android:background="@color/surface"
                             android:ems="10"
-                            android:text="@string/remotenewtrip_school_text"
                             android:padding="5dp"
+                            android:text="@string/remotenewtrip_school_text"
                             android:textColor="@color/onSurface"
                             android:textSize="@dimen/textSize" />
                     </LinearLayout>
@@ -137,7 +137,7 @@
                 android:padding="@dimen/componentPadding">
 
                 <Button
-                    android:id="@+id/newtrip_remote_btn"
+                    android:id="@+id/remote_trip_save_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"

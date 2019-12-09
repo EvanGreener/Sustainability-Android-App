@@ -44,10 +44,10 @@
                         android:id="@+id/remotenewtrip_home"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight=".5"
-                        android:ems="10"
                         android:layout_marginRight="3dp"
+                        android:layout_weight=".5"
                         android:background="@color/surface"
+                        android:ems="10"
                         android:padding="@dimen/componentPadding"
                         android:text="@string/remotenewtrip_home_text"
                         android:textColor="@color/onBackground"
@@ -57,10 +57,10 @@
                         android:id="@+id/remotenewtrip_school"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight=".5"
-                        android:ems="10"
                         android:layout_marginLeft="3dp"
+                        android:layout_weight=".5"
                         android:background="@color/surface"
+                        android:ems="10"
                         android:padding="@dimen/componentPadding"
                         android:text="@string/remotenewtrip_school_text"
                         android:textColor="@color/onBackground"
@@ -86,7 +86,7 @@
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight=".5"
                         android:orientation="vertical">
 
@@ -185,7 +185,7 @@
         android:padding="@dimen/componentPadding">
 
         <Button
-            android:id="@+id/newtrip_remote_btn"
+            android:id="@+id/remote_trip_save_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"

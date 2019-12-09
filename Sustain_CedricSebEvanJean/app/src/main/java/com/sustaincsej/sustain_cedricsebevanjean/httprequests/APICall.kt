@@ -36,7 +36,7 @@ class APICall(private var url: String, private val method: String, private val e
         if (gettingToken) setToken()
         addToken()
         if (method=="GET") {
-             prepareGetUrl()
+             if(!jsonString.equals("")){prepareGetUrl()}
         }
         this.connection = URL(this.url).openConnection() as HttpURLConnection
     }
@@ -46,7 +46,7 @@ class APICall(private var url: String, private val method: String, private val e
      */
     private fun setToken() {
         val response = APICall(
-            "https://jayaghgtracker.herokuapp.com/api/auth/login",
+            "http://carbon-emission-tracker-team-7.herokuapp.com/api/auth/login",
             "POST",
             email, password,
             "{\"email\":\"$email\", \"password\":\"$password\"}",

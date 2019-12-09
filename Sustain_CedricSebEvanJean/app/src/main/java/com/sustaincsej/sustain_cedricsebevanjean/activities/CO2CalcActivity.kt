@@ -4,8 +4,6 @@ import android.content.Context
 import android.location.Location
 import android.os.AsyncTask
 import android.os.Bundle
-import android.util.Base64
-import android.util.Base64.DEFAULT
 import android.util.Log
 import android.view.View
 import android.widget.*
@@ -14,7 +12,6 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import java.io.*
 import java.net.HttpURLConnection
 import java.net.URL
-import java.nio.charset.StandardCharsets
 import com.sustaincsej.sustain_cedricsebevanjean.R
 
 
@@ -150,9 +147,9 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
         private lateinit var currentLocation: Location
         private var haveLocation = false
         private var schoolLongitude = -73.58854
-        private var schoolLatutude = 45.48775
+        private var schoolLatitude = 45.48775
         private var homeLongitude = 0.0
-        private var homeLatutude = 0.0
+        private var homeLatitude = 0.0
         private lateinit var transportMode : String
         private lateinit var destinationHome : String
         private var currentLatitude = 0.0
@@ -196,7 +193,7 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
 
                 conn.setRequestProperty("fromlatitude", currentLatitude.toString())
                 conn.setRequestProperty("fromlongitude", currentLongitude.toString())
-                conn.setRequestProperty("tolatitude", homeLatutude.toString())
+                conn.setRequestProperty("tolatitude", homeLatitude.toString())
                 conn.setRequestProperty("tolongitude", schoolLongitude.toString())
                 conn.setRequestProperty("mode", "publicTransport")
 
@@ -352,7 +349,7 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
                     Location.distanceBetween(
                         this.currentLatitude,
                         this.currentLongitude,
-                        homeLatutude,
+                        homeLatitude,
                         homeLongitude,
                         results
                     )
@@ -362,7 +359,7 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
                     Location.distanceBetween(
                         this.currentLatitude,
                         this.currentLongitude,
-                        schoolLatutude,
+                        schoolLatitude,
                         schoolLongitude,
                         results
                     )
@@ -390,9 +387,9 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
                 var curLat = this["CurrentLatitude"] as String
                 var curLong = this["CurrentLongitude"] as String
                 schoolLongitude = schoolLon.toDouble()
-                schoolLatutude = schoolLat.toDouble()
+                schoolLatitude = schoolLat.toDouble()
                 homeLongitude = homeLon.toDouble()
-                homeLatutude = homeLat.toDouble()
+                homeLatitude = homeLat.toDouble()
                 currentLatitude = curLat.toDouble()
                 currentLongitude = curLong.toDouble()
             }
