@@ -117,6 +117,9 @@
         <item>Walk</item>
         <item>Bike</item>
     </string-array>
+
+    <string name="remotenewtrip_home_text">HOME</string>
+    <string name="remotenewtrip_school_text">SCHOOL</string>
     <string name="sust_title_string">SUSTAINABILITY FACTS</string>
     <string name="sust_help_string">Click on the image for a new fact!</string>
     <string name="empty_not_saved">Trip not saved because it is empty.</string>

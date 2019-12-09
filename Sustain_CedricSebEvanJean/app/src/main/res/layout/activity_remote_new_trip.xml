@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:gravity="end"
+    android:orientation="vertical"
+    android:padding="@dimen/containerPadding">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:text="@string/newtrip_title_string"
+        android:textAlignment="center"
+        android:textColor="@color/onBackground"
+        android:textSize="@dimen/titleSize" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/componentPadding">
+
+                    <Button
+                        android:id="@+id/remotenewtrip_home"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="3dp"
+                        android:layout_weight=".5"
+                        android:background="@color/surface"
+                        android:ems="10"
+                        android:padding="@dimen/componentPadding"
+                        android:text="@string/remotenewtrip_home_text"
+                        android:textColor="@color/onBackground"
+                        android:textSize="@dimen/textSize" />
+
+                    <Button
+                        android:id="@+id/remotenewtrip_school"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="3dp"
+                        android:layout_weight=".5"
+                        android:background="@color/surface"
+                        android:ems="10"
+                        android:padding="@dimen/componentPadding"
+                        android:text="@string/remotenewtrip_school_text"
+                        android:textColor="@color/onBackground"
+                        android:textSize="@dimen/textSize" />
+
+                </LinearLayout>
+
+                <Spinner
+                    android:id="@+id/newtrip_travelmode_spinner"
+                    style="@android:style/Widget.DeviceDefault.Spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/componentMargin"
+                    android:layout_weight="1"
+                    android:dropDownWidth="wrap_content"
+                    android:padding="@dimen/componentPadding" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".5"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/componentMargin"
+                            android:padding="@dimen/componentPadding"
+                            android:text="@string/newtrip_reason_hint"
+                            android:textColor="@color/onBackground"
+                            android:textSize="@dimen/textSize"
+                            tools:text="@string/newtrip_reason_hint" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/componentMargin"
+                            android:padding="@dimen/componentPadding"
+                            android:text="@string/trip_distance_label"
+                            android:textColor="@color/onBackground"
+                            android:textSize="@dimen/textSize" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/componentMargin"
+                            android:padding="@dimen/componentPadding"
+                            android:text="@string/co2calc_co2_label"
+                            android:textColor="@color/onBackground"
+                            android:textSize="@dimen/textSize"
+                            tools:text="@string/co2calc_co2_label" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".5"
+                        android:orientation="vertical">
+
+                        <EditText
+                            android:id="@+id/newtrip_reason"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/componentMargin"
+                            android:layout_weight="4"
+                            android:background="@color/surface"
+                            android:ems="10"
+                            android:gravity="top"
+                            android:hint="@string/newtrip_reason_hint"
+                            android:inputType="textPersonName"
+                            android:padding="@dimen/componentPadding"
+                            android:textColor="@color/onSurface"
+                            android:textSize="@dimen/textSize" />
+
+                        <TextView
+                            android:id="@+id/newtrip_distancekm"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/componentMargin"
+                            android:layout_weight="1"
+                            android:background="@color/surface"
+                            android:gravity="center"
+                            android:padding="@dimen/componentPadding"
+                            android:textAlignment="center"
+                            android:textColor="@color/onSurface"
+                            android:textSize="@dimen/textSize"
+                            tools:text="Distance (placeholder)" />
+
+                        <TextView
+                            android:id="@+id/newtrip_totalco2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/componentMargin"
+                            android:layout_weight="1"
+                            android:background="@color/surface"
+                            android:gravity="center"
+                            android:padding="@dimen/componentPadding"
+                            android:textAlignment="center"
+                            android:textColor="@color/onSurface"
+                            android:textSize="@dimen/textSize"
+                            tools:text="Total CO2 (placeholder)" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        android:padding="@dimen/componentPadding">
+
+        <Button
+            android:id="@+id/remote_trip_save_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@color/surface"
+            android:padding="@dimen/componentPadding"
+            android:text="@string/newtrip_remote_button"
+            android:textColor="@color/onSurface"
+            android:textSize="@dimen/buttonTextSize" />
+
+    </LinearLayout>
+
+</LinearLayout>

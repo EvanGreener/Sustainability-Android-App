@@ -120,6 +120,10 @@ class MainActivity : AppCompatActivity() {
         startActivity(Intent(this, CO2CalcActivity::class.java))
     }
 
+    fun handleRemoteTripLogClick(view: View) {
+        startActivity(Intent(this, RemoteTripLogActivity::class.java))
+    }
+
     /**
      * Method to inflate the options menu
      */
