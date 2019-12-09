@@ -97,6 +97,7 @@ class TripLogActivity : AppCompatActivity() {
             val jsonString = "{\"fromlatitude\":\"45.4908788\", \"fromlongitude\":\"-73.588405\",\"tolatitude\":\"45.2908788\",  \"tolongitude\":\"-73.588405\",\"mode\":\"car\", \"engine\":\"gasoline\", \"consumption\":\"8.4\"}"
             var apiCall = APICall("http://carbon-emission-tracker-team-7.herokuapp.com/api/v1/tripinfo", "GET", "robatto.jeanmarie@gmail.com", "password", jsonString)
             var execute = apiCall.execute().get()
+            Log.d(TAG, execute.toString())
 
             val trip  = Trip(id = 0, travelMode = travel_mode, reasonForTrip = reason, distance = distance,
                 carbonDioxide = co2, dateTimeStamp = java.util.Calendar.getInstance().time, fromLatitude = startLat,
