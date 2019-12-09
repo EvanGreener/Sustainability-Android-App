@@ -17,7 +17,7 @@ interface TripDAO {
     fun getAllTrips() : LiveData<List<Trip>>
 
     @Delete
-    fun  delete(trip: Trip)
+    suspend fun  delete(trip: Trip)
 
     @Query("DELETE FROM trip_table")
     suspend fun deleteAll()

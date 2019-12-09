@@ -54,14 +54,14 @@ class SettingsActivity : AppCompatActivity() {
      * Function that will get all the user input fields and put them into private variables.
      */
     private fun getEditTexts() {
-        firstName = findViewById<EditText>(R.id.settings_firstname) as EditText
-        lastName = findViewById<EditText>(R.id.setting_lastname) as EditText
-        email = findViewById<EditText>(R.id.settings_email) as EditText
-        password = findViewById<EditText>(R.id.settings_password) as EditText
-        homeLat = findViewById<EditText>(R.id.settings_home_lat) as EditText
-        homeLon = findViewById<EditText>(R.id.settings_home_lon) as EditText
-        schoolLat = findViewById<EditText>(R.id.settings_school_lat) as EditText
-        schoolLon = findViewById<EditText>(R.id.settings_school_lon) as EditText
+        firstName = findViewById(R.id.settings_firstname)
+        lastName = findViewById(R.id.setting_lastname)
+        email = findViewById(R.id.settings_email)
+        password = findViewById(R.id.settings_password)
+        homeLat = findViewById(R.id.settings_home_lat)
+        homeLon = findViewById(R.id.settings_home_lon)
+        schoolLat = findViewById(R.id.settings_school_lat)
+        schoolLon = findViewById(R.id.settings_school_lon)
     }
 
     /**

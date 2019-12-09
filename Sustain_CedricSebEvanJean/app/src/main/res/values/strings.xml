@@ -100,12 +100,12 @@
     <string name="co2calc_school_toggle">SCHOOL</string>
     <string name="co2calc_fromto_label">From here,\nto:</string>
     <string name="co2calc_travelmode_label">Travel mode:</string>
-    <string name="co2calc_co2_label">Total CO2:</string>
+    <string name="co2calc_co2_label">Total CO2 (kg):</string>
     <string name="co2calc_trees_label">Number of trees to offset CO2 per year:\n\n\n\n</string>
     <string name="newtrip_title_string">ADD A TRIP</string>
     <string name="newtrip_lat_hint">Lat</string>
     <string name="newtrip_lon_hint">Lon</string>
-    <string name="newtrip_reason_hint">Reason for trip</string>
+    <string name="newtrip_reason_hint">Reason for trip: </string>
     <string name="newtrip_local_button">Save Local</string>
     <string name="newtrip_remote_button">Save Remote</string>
     <string-array name="newtrip_travel_modes">
@@ -120,4 +120,6 @@
     <string name="sust_title_string">SUSTAINABILITY FACTS</string>
     <string name="sust_help_string">Click on the image for a new fact!</string>
     <string name="empty_not_saved">Trip not saved because it is empty.</string>
+    <string name="not_filled_out_not_saved">Trip not saved because it is empty.</string>
+    <string name="delete">DELETE</string>
 </resources>

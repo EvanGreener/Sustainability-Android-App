@@ -2,6 +2,7 @@ package com.sustaincsej.sustain_cedricsebevanjean.models
 
 import androidx.annotation.NonNull
 import androidx.room.*
+import java.io.Serializable
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -18,7 +19,7 @@ data class Trip (
     @ColumnInfo(name = "carbon_dioxide") @NonNull val carbonDioxide : Double,
     @ColumnInfo(name = "date_time_stamp")  @NonNull val dateTimeStamp: Date,
     @ColumnInfo(name = "reason_for_trip") @NonNull val reasonForTrip : String
-)
+) : Serializable
 
 
 

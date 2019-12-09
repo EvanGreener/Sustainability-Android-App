@@ -7,7 +7,16 @@
     android:background="@color/background"
     android:orientation="vertical"
     android:padding="@dimen/containerPadding"
-    tools:context=".activities.TripActivity">
+    tools:context=".fragments.TripDialogFragment">
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/trip_close_popup_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/surface"
+        android:clickable="true"
+        app:backgroundTint="@color/surface"
+        app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
 
     <TextView
 
@@ -20,7 +29,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight=".7">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -103,15 +113,6 @@
                     android:layout_margin="@dimen/componentMargin"
                     android:padding="@dimen/componentPadding"
                     android:text="@string/trip_date_label"
-                    android:textAlignment="textEnd"
-                    android:textColor="@color/onBackground" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/componentMargin"
-                    android:padding="@dimen/componentPadding"
-                    android:text="@string/trip_time_label"
                     android:textAlignment="textEnd"
                     android:textColor="@color/onBackground" />
 
@@ -204,15 +205,6 @@
                     android:textColor="@color/onBackground" />
 
                 <TextView
-                    android:id="@+id/trip_time"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/componentMargin"
-                    android:padding="@dimen/componentPadding"
-                    android:text="Placeholder"
-                    android:textColor="@color/onBackground" />
-
-                <TextView
                     android:id="@+id/trip_reason"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -224,5 +216,24 @@
 
         </LinearLayout>
     </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".2"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/delete_trip_button"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/surface"
+            android:onClick="onDeleteClick"
+            android:padding="@dimen/componentPadding"
+            android:text="@string/delete"
+            android:textColor="@color/onSurface"
+            android:textSize="@dimen/buttonTextSize" />
+    </LinearLayout>
 
 </LinearLayout>

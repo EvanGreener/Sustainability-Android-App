@@ -16,12 +16,12 @@
         android:theme="@style/AppTheme">
         <activity android:name=".activities.SustainabilityFactsActivity"></activity>
         <activity android:name=".activities.CO2CalcActivity" />
-        <activity android:name=".activities.TripActivity" />
+        <activity android:name=".fragments.TripDialogFragment" />
         <activity android:name=".activities.TripLogActivity" />
         <activity android:name=".activities.WeatherActivity" />
         <activity android:name=".activities.AboutActivity" />
         <activity android:name=".activities.SettingsActivity" />
-        <activity android:name=".activities.NewTripPopupFragment" />
+        <activity android:name=".activities.NewTripActivity" />
         <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

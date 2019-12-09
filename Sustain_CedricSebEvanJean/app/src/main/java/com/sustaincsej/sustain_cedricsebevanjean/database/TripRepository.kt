@@ -12,7 +12,7 @@ class TripRepository(private val tripDao: TripDAO) {
         tripDao.insert(trip)
     }
 
-    fun delete (trip: Trip) {
+    suspend fun delete (trip: Trip) {
         tripDao.delete(trip)
     }
 }

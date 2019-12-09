@@ -2,19 +2,22 @@ package com.sustaincsej.sustain_cedricsebevanjean.adapters
 
 import android.content.Context
 
-import android.app.Activity
 import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sustaincsej.sustain_cedricsebevanjean.R
+import com.sustaincsej.sustain_cedricsebevanjean.activities.TripLogActivity
 
 import com.sustaincsej.sustain_cedricsebevanjean.models.TravelMode
 import com.sustaincsej.sustain_cedricsebevanjean.models.Trip
-import com.sustaincsej.sustain_cedricsebevanjean.activities.TripActivity
+import com.sustaincsej.sustain_cedricsebevanjean.fragments.TripDialogFragment
 
 class TripRecyclerViewAdapter internal constructor(
     context: Context
@@ -24,10 +27,25 @@ class TripRecyclerViewAdapter internal constructor(
     private var trips = emptyList<Trip>() // Cached copy of words
 
     inner class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var trip: Trip? = null
+
         val tripDateView: TextView = itemView.findViewById(R.id.trip_row_date)
         val tripDistanceView : TextView = itemView.findViewById(R.id.trip_row_distance)
         val tripCO2View : TextView = itemView.findViewById(R.id.trip_row_co2)
         val travelModeImg : ImageView = itemView.findViewById(R.id.trip_row_travelmode_pic)
+
+        init {
+            itemView.setOnClickListener{
+                val context = it.context
+                val fragment = TripDialogFragment()
+                val args = Bundle()
+                args.putSerializable("trip", trip)
+                fragment.arguments = args
+
+                val app = context as AppCompatActivity
+                fragment.show(app.supportFragmentManager, "TRIP DETAILS")
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TripViewHolder {
@@ -37,6 +55,8 @@ class TripRecyclerViewAdapter internal constructor(
 
     override fun onBindViewHolder(holder: TripViewHolder, position: Int) {
         val current = trips[position]
+
+        holder.trip = current
         holder.tripDateView.text = current.dateTimeStamp.toString()
         holder.tripDistanceView.text = current.distance.toString()
         holder.tripCO2View.text = current.carbonDioxide.toString()
@@ -64,61 +84,3 @@ class TripRecyclerViewAdapter internal constructor(
 
     override fun getItemCount() = trips.size
 }
-
-/*
-class TripRecyclerViewAdapter(private val data: MutableList<Trip>, private val context: Activity):
-    RecyclerView.Adapter<TripRecyclerViewAdapter.ViewHolder>() {
-
-    //View Holder Class
-    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-
-        internal var distance: TextView
-        internal var date: TextView
-        internal var co2: TextView
-        internal var image: ImageView
-
-        init {
-            distance = itemView.findViewById(R.id.trip_row_distance)
-            date = itemView.findViewById(R.id.trip_row_date)
-            co2 = itemView.findViewById(R.id.trip_row_co2)
-            image = itemView.findViewById(R.id.trip_row_travelmode_pic)
-
-            itemView.setOnClickListener {
-                //TODO Pass Trip Object as extra
-                context.startActivity(Intent(context, TripActivity::class.java))
-            }
-        }
-
-    }
-    */
-    
-    
-    /**
-     * Creates the viewholder
-     */
-    /*
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val tripRow = LayoutInflater.from(parent.context).inflate(R.layout.trip_row, parent, false)
-        return ViewHolder(tripRow)
-    }
-    */
-    /**
-     * Adds data to row
-     */
-     
-    /*
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        //TODO Add correct text for date/distance/co2 and correct image for travelmode
-        holder.co2.text = data[position].co2
-    }
-    */
-
-    /**
-     * Return count
-     */
-     /*
-    override fun getItemCount(): Int {
-        return data.size
-    }
-    */
-
