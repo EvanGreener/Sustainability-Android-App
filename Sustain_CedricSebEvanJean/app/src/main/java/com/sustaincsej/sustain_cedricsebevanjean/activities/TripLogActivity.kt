@@ -94,10 +94,14 @@ class TripLogActivity : AppCompatActivity() {
             Log.d(TAG, "co2: $co2")
             Log.d(TAG, "distance: $distance")
 
-            val jsonString = "{\"fromlatitude\":\"45.4908788\", \"fromlongitude\":\"-73.588405\",\"tolatitude\":\"45.2908788\",  \"tolongitude\":\"-73.588405\",\"mode\":\"car\", \"engine\":\"gasoline\", \"consumption\":\"8.4\"}"
-            var apiCall = APICall("http://carbon-emission-tracker-team-7.herokuapp.com/api/v1/tripinfo", "GET", "robatto.jeanmarie@gmail.com", "password", jsonString)
-            var execute = apiCall.execute().get()
-            Log.d(TAG, execute.toString())
+            val jsonString = "{\"fromlatitude\":\"45\", \"fromlongitude\":\"-73\", \"tolatitude\":\"45.001\", \"tolongitude\":\"-73.001\", \"mode\":\"car\"}"
+            val request = APICall("https://jayaghgtracker.herokuapp.com/api/v1/tripinfo", "GET", "sect2team2@test", "1qazxsw2", jsonString)
+            val response = request.execute().get()
+
+            //val jsonString = "{\"fromlatitude\":\"45.4908788\", \"fromlongitude\":\"-73.588405\",\"tolatitude\":\"45.2908788\",  \"tolongitude\":\"-73.588405\",\"mode\":\"car\", \"engine\":\"gasoline\", \"consumption\":\"8.4\"}"
+            //var apiCall = APICall("http://carbon-emission-tracker-team-7.herokuapp.com/api/v1/tripinfo", "GET", "robatto.jeanmarie@gmail.com", "password", jsonString)
+            //var execute = apiCall.execute().get()
+            Log.d(TAG, response.toString())
 
             val trip  = Trip(id = 0, travelMode = travel_mode, reasonForTrip = reason, distance = distance,
                 carbonDioxide = co2, dateTimeStamp = java.util.Calendar.getInstance().time, fromLatitude = startLat,
