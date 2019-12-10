@@ -48,7 +48,10 @@ class MainActivity : AppCompatActivity() {
         storeLocationSharedPref()
     }
 
-    fun storeLocationSharedPref()
+    /**
+     * Function that stores the user's current location inside shared preferences.
+     */
+    private fun storeLocationSharedPref()
     {
         var fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         Log.d("Calculator", "fusedLocation init")
@@ -63,7 +66,6 @@ class MainActivity : AppCompatActivity() {
         fusedLocationClient.lastLocation
             .addOnSuccessListener { location : Location? ->
 
-
                 if (location != null)
                 {
                     with(getSharedPreferences(getString(R.string.Preferences), Context.MODE_PRIVATE).edit()) {
@@ -71,7 +73,6 @@ class MainActivity : AppCompatActivity() {
                         putString("CurrentLatitude", location!!.latitude.toString())
                         commit()
                     }
-
                 }
                 else
                 {
@@ -100,34 +101,69 @@ class MainActivity : AppCompatActivity() {
                 && prefs.contains("SchoolLat") && prefs.contains("SchoolLon") && prefs.contains("TimeStamp")
    }
 
+    /**
+     * Click handler that makes an intent to go to the WeatherActivity.
+     *
+     * @param view
+     */
     fun handleWeatherAPIClick(view: View) {
         startActivity(Intent(this, WeatherActivity::class.java))
     }
 
+    /**
+     * Click handler that makes an intent to go to the SustainabilityFactsActivity.
+     *
+     * @param view
+     */
     fun handleSustFactClick(view: View) {
         startActivity(Intent(this, SustainabilityFactsActivity::class.java))
     }
-    
+
+    /**
+     * Click handler that makes an intent to go to the TripLogActivity.
+     *
+     * @param view
+     */
     fun handleTripLogClick(view: View) {
         startActivity(Intent(this, TripLogActivity::class.java))
     }
 
+    /**
+     * Click handler that makes an intent to go to the TripLogActivity for a to school trip.
+     *
+     * @param view
+     */
     fun handleSchoolTripClick(view: View) {
         val intent = Intent(this, TripLogActivity::class.java)
         intent.putExtra("preset", "school")
         startActivity(intent)
     }
 
+    /**
+     * Click handler that makes an intent to go to the TripLogActivity for a to home trip.
+     *
+     * @param view
+     */
     fun handleHomeTripClick(view: View) {
         val intent = Intent(this, TripLogActivity::class.java)
         intent.putExtra("preset", "home")
         startActivity(intent)
     }
 
+    /**
+     * Click handler that makes an intent to go to the CO2CalcActivity.
+     *
+     * @param view
+     */
     fun handleCO2Click(view: View) {
         startActivity(Intent(this, CO2CalcActivity::class.java))
     }
 
+    /**
+     * Click handler that makes an intent to go to the RemoteTripLogActivity.
+     *
+     * @param view
+     */
     fun handleRemoteTripLogClick(view: View) {
         startActivity(Intent(this, RemoteTripLogActivity::class.java))
     }
@@ -191,6 +227,7 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    // For logging
     companion object {
         private val TAG = "MAIN_ACTIVITY"
     }

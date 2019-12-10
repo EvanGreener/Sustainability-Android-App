@@ -7,6 +7,12 @@ import androidx.room.Insert
 import androidx.room.Query
 import com.sustaincsej.sustain_cedricsebevanjean.models.Trip
 
+/**
+ * DAO for interacting with the Room database for trips.
+ *
+ * @author Evan Greenstein
+ * @author Sebastien Palin
+ */
 @Dao
 interface TripDAO {
 

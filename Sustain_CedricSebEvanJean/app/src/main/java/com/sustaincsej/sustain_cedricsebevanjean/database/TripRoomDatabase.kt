@@ -13,6 +13,12 @@ import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.util.*
 
+/**
+ * Room database for a trip.
+ *
+ * @author Evan Greenstein
+ * @author Sebastien Palin
+ */
 @Database(entities = arrayOf(Trip::class), version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class TripRoomDatabase : RoomDatabase() {

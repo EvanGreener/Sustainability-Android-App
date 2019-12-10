@@ -264,6 +264,13 @@ class NewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener
         updateValues(travelMode)
     }
 
+    /**
+     * Function that gets the current latitude and longitude of the user, as well as the co2 and distance of the trip
+     *
+     * @param travelMode
+     * @param destLat
+     * @param destLon
+     */
     private fun calculateAndUpdate(travelMode: String, destLat: Double, destLon: Double) : DoubleArray {
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this@NewTripActivity)

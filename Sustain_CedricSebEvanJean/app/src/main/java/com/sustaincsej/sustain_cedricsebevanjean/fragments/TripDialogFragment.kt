@@ -17,11 +17,20 @@ import com.sustaincsej.sustain_cedricsebevanjean.activities.TripLogActivity
 import com.sustaincsej.sustain_cedricsebevanjean.models.Trip
 import com.sustaincsej.sustain_cedricsebevanjean.models.TripViewModel
 
+/**
+ * Fragment that displays information for a trip.
+ *
+ * @author Evan Greenstein
+ * @author Sebastien Palin
+ */
 class TripDialogFragment : DialogFragment() {
 
     private lateinit var trip: Trip
     private lateinit var _context: Context
 
+    /**
+     * onCreate that sets all TextViews to the information of the trip
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
