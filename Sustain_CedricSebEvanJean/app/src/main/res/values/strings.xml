@@ -125,4 +125,7 @@
     <string name="empty_not_saved">Trip not saved because it is empty.</string>
     <string name="not_filled_out_not_saved">Trip not saved because it is empty.</string>
     <string name="delete">DELETE</string>
+    <string name="newtrip_remote_home_selected">Home Selected</string>
+    <string name="newtrip_remote_school_selected">School Selected</string>
+    <string name="back">BACK</string>
 </resources>

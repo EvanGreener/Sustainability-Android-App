@@ -82,6 +82,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+<<<<<<< HEAD
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -171,6 +172,9 @@
                             tools:text="Total CO2 (placeholder)" />
                     </LinearLayout>
                 </LinearLayout>
+=======
+                    android:orientation="horizontal"/>
+>>>>>>> 5d812257f87c1c32e51801624a6e6c9bb6ff4247
 
             </LinearLayout>
 

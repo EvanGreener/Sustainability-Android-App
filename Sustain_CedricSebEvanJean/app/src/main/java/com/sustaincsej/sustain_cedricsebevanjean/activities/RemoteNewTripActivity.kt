@@ -1,27 +1,14 @@
 package com.sustaincsej.sustain_cedricsebevanjean.activities
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.location.Location
 import android.os.Bundle
-import android.os.Looper
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.get
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationServices
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-
 import com.sustaincsej.sustain_cedricsebevanjean.R
 import com.sustaincsej.sustain_cedricsebevanjean.httprequests.APICall
-import com.sustaincsej.sustain_cedricsebevanjean.models.TravelMode
 
 /**
  * Class that will let the user add a new Trip to the remote/php database.
@@ -42,6 +29,8 @@ class RemoteNewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedLi
     var homeLatitude = 0.0
     var currentLatitude = 0.0
     var currentLongitude = 0.0
+    var email : String = ""
+    var password : String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,11 +38,8 @@ class RemoteNewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedLi
         setContentView(R.layout.activity_remote_new_trip)
 
         showSpinner()
-        Log.i(TAG, "afterSpinner")
         retrieveCoords()
-        Log.i(TAG, "afterreTreive")
         setUpButtons()
-        Log.i(TAG, "afterButtons")
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -66,17 +52,24 @@ class RemoteNewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedLi
         if(travelMode.equals("Car Diesel") || travelMode.equals("Carpool (3) Diesel"))
         {engine = "diesel"}
         else if(travelMode.equals("Car Gas") || travelMode.equals("Carpool (3) Gas"))
-        {engine = "gas"}
+        {engine = "gasoline"}
 
-        when(travelMode)
+        when
         {
-            "Car Diesel" -> {efficiency = "9.3"; travelModeToAPI = "car"}
-            "Car Gas" -> {efficiency ="10.6"; travelModeToAPI = "car"}
-            "Carpool (3) Diesel" -> {efficiency ="3.1"; travelModeToAPI = "carpool"}
-            "Carpool (3) Gas" -> {efficiency ="3.53"; travelModeToAPI = "carpool"}
-            "Public Transit" -> {efficiency ="4.62"; travelModeToAPI = "publicTransport"}
-            "Walk" -> {efficiency ="0"; travelModeToAPI = "pedestrian"}
-            "Bike" -> {efficiency ="0"; travelModeToAPI = "bicycle"}
+            travelMode.equals("Car Diesel") -> {efficiency = "9.3"
+                travelModeToAPI = "car"}
+            travelMode.equals("Car Gas") -> {efficiency ="10.6"
+                travelModeToAPI = "car"}
+            travelMode.equals("Carpool (3) Diesel") -> {efficiency ="3.1"
+                travelModeToAPI = "carpool"}
+            travelMode.equals("Carpool (3) Gas") -> {efficiency ="3.53"
+                travelModeToAPI = "carpool"}
+            travelMode.equals("Public Transit") -> {efficiency ="4.62"
+                travelModeToAPI = "publicTransport"}
+            travelMode.equals("Walk") -> {efficiency ="0.0"
+                travelModeToAPI = "pedestrian"}
+            travelMode.equals("Bike") -> {efficiency ="0.0"
+                travelModeToAPI = "bicycle"}
         }
         //updateValues(travelMode)
     }
@@ -94,10 +87,12 @@ class RemoteNewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedLi
     }
     private fun handleHomeClick(view: View) {
         destination = "home"
+        Toast.makeText(this, resources.getString(R.string.newtrip_remote_home_selected), Toast.LENGTH_SHORT).show()
     }
 
     private fun handleSchoolClick(view: View) {
         destination = "school"
+        Toast.makeText(this, resources.getString(R.string.newtrip_remote_school_selected), Toast.LENGTH_SHORT).show()
     }
 
     private fun handleSaveClick(view: View){
@@ -115,14 +110,16 @@ class RemoteNewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedLi
         }
         if(travelModeToAPI.equals("car") || travelModeToAPI.equals("carpool")) {
             jsonString =
-                "{\"fromlatitude\":\"$currentLatitude\", \"fromlongitude\":\"$currentLongitude\",\"tolatitude\":\"$destLat\",  \"tolongitude\":\"$destLong\",\"mode\":\"$travelModeToAPI\", \"engine\":\"$engine\"}"
+                "{\"fromlatitude\":\"$currentLatitude\", \"fromlongitude\":\"$currentLongitude\", \"tolatitude\":\"$destLat\", \"tolongitude\":\"$destLong\",\"mode\":\"$travelModeToAPI\", \"engine\":\"$engine\"}"
         }
         else{
-            jsonString = "{\"fromlatitude\":\"$currentLatitude\", \"fromlongitude\":\"$currentLongitude\",\"tolatitude\":\"$destLat\",  \"tolongitude\":\"$destLong\",\"mode\":\"$travelModeToAPI\"}"
+            jsonString = "{\"fromlatitude\":\"$currentLatitude\", \"fromlongitude\":\"$currentLongitude\",\"tolatitude\":\"$destLat\",  \"tolongitude\":\"$destLong\",\"mode\":\"$travelModeToAPI\", \"engine\":\"$engine\", \"consumption\"=\"$efficiency\"}"
+            Log.d(TAG, jsonString)
         }
-        var apiCall =  APICall("http://carbon-emission-tracker-team-7.herokuapp.com/api/v1/addtrip", "POST", "robatto.jeanmarie@gmail.com", "password", jsonString)
-        var result = apiCall.execute().get()
+        val apiCall =  APICall("http://carbon-emission-tracker-team-7.herokuapp.com/api/v1/addtrip", "POST", email, password, jsonString)
+        val result = apiCall.execute().get()
         Log.i(TAG, result.toString())
+        startActivity(Intent(this, RemoteTripLogActivity::class.java))
         finish()
     }
 
@@ -136,6 +133,8 @@ class RemoteNewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedLi
             var homeLon = this["HomeLon"] as String
             var curLat = this["CurrentLatitude"] as String
             var curLong = this["CurrentLongitude"] as String
+            email = this["Email"] as String
+            password = this["Password"] as String
             schoolLongitude = schoolLon.toDouble()
             schoolLatitude = schoolLat.toDouble()
             homeLongitude = homeLon.toDouble()
@@ -147,7 +146,7 @@ class RemoteNewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedLi
 
     private fun showSpinner() {
         Log.d("Calculator", "ShowSpinner")
-        val travelModeSpinner = findViewById(R.id.newtrip_travelmode_spinner) as Spinner
+        val travelModeSpinner = findViewById<Spinner>(R.id.newtrip_travelmode_spinner)
         val dataAdapter = ArrayAdapter<String>(
             this, R.layout.simple_spinner, resources.getStringArray(R.array.newtrip_travel_modes))
         travelModeSpinner.adapter = dataAdapter
