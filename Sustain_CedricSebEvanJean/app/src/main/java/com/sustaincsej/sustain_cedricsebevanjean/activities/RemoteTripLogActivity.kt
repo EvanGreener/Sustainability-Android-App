@@ -23,12 +23,21 @@ import com.sustaincsej.sustain_cedricsebevanjean.models.Trip
 import com.sustaincsej.sustain_cedricsebevanjean.models.TripViewModel
 import java.lang.Thread.sleep
 
+/**
+ * Class that will display all trips from the remote/php database.
+ *
+ * @author Cedric Richards
+ * @author Sebastien Palin
+ */
 class RemoteTripLogActivity : AppCompatActivity() {
 
 
     private lateinit var tripViewModel: RemoteTripViewModel
     private val newTripActivityRequestCode = 1
 
+    /**
+     * onCreate that will set up the RecyclerView and fab
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_trip_log)

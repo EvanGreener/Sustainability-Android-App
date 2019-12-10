@@ -23,6 +23,12 @@ import com.sustaincsej.sustain_cedricsebevanjean.R
 import com.sustaincsej.sustain_cedricsebevanjean.httprequests.APICall
 import com.sustaincsej.sustain_cedricsebevanjean.models.TravelMode
 
+/**
+ * Class that will let the user add a new Trip to the remote/php database.
+ *
+ * @author Cedric Richards
+ * @author Sebastien Palin
+ */
 class RemoteNewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener {
 
     var travelMode = "Car Diesel"
