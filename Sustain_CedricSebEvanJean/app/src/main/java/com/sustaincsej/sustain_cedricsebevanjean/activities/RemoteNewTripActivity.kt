@@ -36,6 +36,8 @@ class RemoteNewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedLi
     var homeLatitude = 0.0
     var currentLatitude = 0.0
     var currentLongitude = 0.0
+    var email : String = ""
+    var password : String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,17 +62,24 @@ class RemoteNewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedLi
         if(travelMode.equals("Car Diesel") || travelMode.equals("Carpool (3) Diesel"))
         {engine = "diesel"}
         else if(travelMode.equals("Car Gas") || travelMode.equals("Carpool (3) Gas"))
-        {engine = "gas"}
+        {engine = "gasoline"}
 
-        when(travelMode)
+        when
         {
-            "Car Diesel" -> {efficiency = "9.3"; travelModeToAPI = "car"}
-            "Car Gas" -> {efficiency ="10.6"; travelModeToAPI = "car"}
-            "Carpool (3) Diesel" -> {efficiency ="3.1"; travelModeToAPI = "carpool"}
-            "Carpool (3) Gas" -> {efficiency ="3.53"; travelModeToAPI = "carpool"}
-            "Public Transit" -> {efficiency ="4.62"; travelModeToAPI = "publicTransport"}
-            "Walk" -> {efficiency ="0"; travelModeToAPI = "pedestrian"}
-            "Bike" -> {efficiency ="0"; travelModeToAPI = "bicycle"}
+            travelMode.equals("Car Diesel") -> {efficiency = "9.3"
+                travelModeToAPI = "car"}
+            travelMode.equals("Car Gas") -> {efficiency ="10.6"
+                travelModeToAPI = "car"}
+            travelMode.equals("Carpool (3) Diesel") -> {efficiency ="3.1"
+                travelModeToAPI = "carpool"}
+            travelMode.equals("Carpool (3) Gas") -> {efficiency ="3.53"
+                travelModeToAPI = "carpool"}
+            travelMode.equals("Public Transit") -> {efficiency ="4.62"
+                travelModeToAPI = "publicTransport"}
+            travelMode.equals("Walk") -> {efficiency ="0.0"
+                travelModeToAPI = "pedestrian"}
+            travelMode.equals("Bike") -> {efficiency ="0.0"
+                travelModeToAPI = "bicycle"}
         }
         //updateValues(travelMode)
     }
@@ -112,9 +121,11 @@ class RemoteNewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedLi
                 "{\"fromlatitude\":\"$currentLatitude\", \"fromlongitude\":\"$currentLongitude\",\"tolatitude\":\"$destLat\",  \"tolongitude\":\"$destLong\",\"mode\":\"$travelModeToAPI\", \"engine\":\"$engine\"}"
         }
         else{
-            jsonString = "{\"fromlatitude\":\"$currentLatitude\", \"fromlongitude\":\"$currentLongitude\",\"tolatitude\":\"$destLat\",  \"tolongitude\":\"$destLong\",\"mode\":\"$travelModeToAPI\"}"
+
+            jsonString = "{\"fromlatitude\":\"$currentLatitude\", \"fromlongitude\":\"$currentLongitude\",\"tolatitude\":\"$destLat\",  \"tolongitude\":\"$destLong\",\"mode\":\"$travelModeToAPI\", \"engine\":\"$engine\", \"consumption\"=\"$efficiency\"}"
+            Log.d(TAG, jsonString)
         }
-        var apiCall =  APICall("http://carbon-emission-tracker-team-7.herokuapp.com/api/v1/addtrip", "POST", "robatto.jeanmarie@gmail.com", "password", jsonString)
+        var apiCall =  APICall("http://carbon-emission-tracker-team-7.herokuapp.com/api/v1/addtrip", "POST", email, password, jsonString)
         var result = apiCall.execute().get()
         Log.i(TAG, result.toString())
         finish()
@@ -130,6 +141,8 @@ class RemoteNewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedLi
             var homeLon = this["HomeLon"] as String
             var curLat = this["CurrentLatitude"] as String
             var curLong = this["CurrentLongitude"] as String
+            email = this["Email"] as String
+            password = this["Password"] as String
             schoolLongitude = schoolLon.toDouble()
             schoolLatitude = schoolLat.toDouble()
             homeLongitude = homeLon.toDouble()
