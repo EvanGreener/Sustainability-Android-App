@@ -141,18 +141,6 @@
                 android:padding="@dimen/componentPadding">
 
                 <Button
-                    android:id="@+id/newtrip_remote_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="1"
-                    android:background="@color/surface"
-                    android:padding="@dimen/componentPadding"
-                    android:text="@string/newtrip_remote_button"
-                    android:textColor="@color/onSurface"
-                    android:textSize="@dimen/buttonTextSize" />
-
-                <Button
                     android:id="@+id/newtrip_local_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

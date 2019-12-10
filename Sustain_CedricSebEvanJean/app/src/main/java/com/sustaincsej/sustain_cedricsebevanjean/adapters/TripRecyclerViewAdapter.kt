@@ -12,17 +12,14 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.sustaincsej.sustain_cedricsebevanjean.R
-
 import com.sustaincsej.sustain_cedricsebevanjean.models.TravelMode
 import com.sustaincsej.sustain_cedricsebevanjean.models.Trip
 import com.sustaincsej.sustain_cedricsebevanjean.fragments.TripDialogFragment
 
 /**
- * Adapter for a Trip RecyclerView. Shows the date, the distance, the co2 emissions and the travel image
- * for the trip.
+ * The adapter to show a list of Trips
  *
- * @author Jean Robatto
- * @author Sebastien Palin
+ * @author Jean Robatto and Evan Greenstein
  */
 class TripRecyclerViewAdapter internal constructor(
     context: Context,

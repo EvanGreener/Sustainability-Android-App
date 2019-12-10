@@ -33,7 +33,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="TextView"
+                android:text="@string/trip_row_date_string"
                 android:textColor="@color/onSurface"
                 tools:text="@string/trip_row_date_string" />
 

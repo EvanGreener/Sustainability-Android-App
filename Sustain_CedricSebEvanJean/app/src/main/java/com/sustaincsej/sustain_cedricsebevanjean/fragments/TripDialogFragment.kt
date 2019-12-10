@@ -18,10 +18,8 @@ import com.sustaincsej.sustain_cedricsebevanjean.models.Trip
 import com.sustaincsej.sustain_cedricsebevanjean.models.TripViewModel
 
 /**
- * Fragment that displays information for a trip.
- *
- * @author Evan Greenstein
- * @author Sebastien Palin
+ * Fragment to show trip details
+ * @author Jean Robatto
  */
 class TripDialogFragment : DialogFragment() {
 
@@ -64,6 +62,7 @@ class TripDialogFragment : DialogFragment() {
             } else {
                 startActivity(Intent(_context, RemoteTripLogActivity::class.java))
             }
+            dismiss()
         }
 
         return root

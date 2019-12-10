@@ -29,9 +29,6 @@ import com.sustaincsej.sustain_cedricsebevanjean.R
  */
 class MainActivity : AppCompatActivity() {
 
-
-    private val newTripActivityRequestCode = 1
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -53,12 +50,11 @@ class MainActivity : AppCompatActivity() {
      */
     private fun storeLocationSharedPref()
     {
-        var fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        val fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         Log.d("Calculator", "fusedLocation init")
-        var location: Location? = null
         //Asyncronous call to get location the method will end before it completes its task.
-        var locationRequest = LocationRequest.create()
-        var locationCallback = LocationCallback()
+        val locationRequest = LocationRequest.create()
+        val locationCallback = LocationCallback()
         fusedLocationClient.requestLocationUpdates(locationRequest,
             locationCallback,
             Looper.getMainLooper())
@@ -69,9 +65,9 @@ class MainActivity : AppCompatActivity() {
                 if (location != null)
                 {
                     with(getSharedPreferences(getString(R.string.Preferences), Context.MODE_PRIVATE).edit()) {
-                        putString("CurrentLongitude", location!!.longitude.toString())
-                        putString("CurrentLatitude", location!!.latitude.toString())
-                        commit()
+                        putString("CurrentLongitude", location.longitude.toString())
+                        putString("CurrentLatitude", location.latitude.toString())
+                        apply()
                     }
                 }
                 else
@@ -79,7 +75,7 @@ class MainActivity : AppCompatActivity() {
                     with(getSharedPreferences(getString(R.string.Preferences), Context.MODE_PRIVATE).edit()) {
                         putString("CurrentLongitude", "0.0")
                         putString("CurrentLatitude", "0.0")
-                        commit()
+                        apply()
                     }
                 }
                 Log.i("Location", location!!.longitude.toString())
@@ -229,6 +225,6 @@ class MainActivity : AppCompatActivity() {
 
     // For logging
     companion object {
-        private val TAG = "MAIN_ACTIVITY"
+        private const val TAG = "MAIN_ACTIVITY"
     }
 }

@@ -1,17 +1,10 @@
 <resources>
-    <!-- Strings for the options menu -->
     <string name="AboutOption">About</string>
     <string name="WWWOption">WWW</string>
     <string name="SettingOption">Settings</string>
-
-    <!-- String for the Dawson Sustain webpage -->
     <string name="DawsonURL">https://www.dawsoncollege.qc.ca/sustainable/</string>
-
-    <!-- Strings for the MainActivity -->
     <string name="NoPrefs">Shared preferences are missing</string>
     <string name="Preferences">Settings</string>
-
-    <!-- Strings for the SettingsActivity -->
     <string name="SaveToast">Settings have been saved!</string>
     <string name="EmptyTitle">Settings Incomplete!</string>
     <string name="EmptyMessage">All Settings fields must be filled before saving!</string>
@@ -23,15 +16,13 @@
     <string name="StayTitle">Don\'t Leave Yet!</string>
     <string name="StayMessage">You have to input these settings before using this app!</string>
     <string name="StayButton">Ok</string>
-    <!-- Strings for SettingsActivity logging -->
     <string name="SaveClick">Saved Settings</string>
     <string name="BackClick">Back button clicked</string>
-
     <string name="app_name">Carbon Emission Tracker</string>
     <string name="triplog_title_string">TRIP LOG</string>
     <string name="trip_row_date_string">Date: </string>
-    <string name="trip_row_distance_string">Distance: </string>
-    <string name="trip_row_co2_string">Total CO2: </string>
+    <string name="trip_row_distance_string">Distance (km): </string>
+    <string name="trip_row_co2_string">Total CO2 (kg): </string>
     <string name="main_title_string">CO2 TRACKER</string>
     <string name="main_co2_header_string">Total CO2: </string>
     <string name="main_weatherapi_button_string">Weather API</string>
@@ -80,9 +71,9 @@
     <string name="about_jean_name">Jean Robatto</string>
     <string name="about_evan_name">Evan Greenstein</string>
     <string name="about_seb_name">Seb</string>
-    <string name="about_cedric_message">BLA BLA I AM CEDRIC</string>
-    <string name="about_jean_message">BLA BLA I AM Jean</string>
-    <string name="about_evan_message">BLA BLA I AM EVAN</string>
+    <string name="about_cedric_message">This is Cedric! He loves veggie burgers!</string>
+    <string name="about_jean_message">This is Jean! Master Coder!</string>
+    <string name="about_evan_message">This is Evan! A real sqlite pro!</string>
     <string name="about_seb_message">This is Sebastien! He enjoys having his picture taken and staying up late to finish projects!</string>
     <string name="trip_title_string">TRIP</string>
     <string name="trip_fromlat_label">From Latitude: </string>
@@ -92,7 +83,7 @@
     <string name="trip_travelmode_label">Travel Mode: </string>
     <string name="trip_distance_label">Distance in km: </string>
     <string name="trip_co2_label">Total CO2: </string>
-    <string name="trip_date_label">Date: </string>
+    <string name="trip_date_label">\nDate: </string>
     <string name="trip_time_label">Time: </string>
     <string name="trip_reason_label">Reason for Trip: </string>
     <string name="co2calc_title_string">CALCULATOR</string>
@@ -117,7 +108,6 @@
         <item>Walk</item>
         <item>Bike</item>
     </string-array>
-
     <string name="remotenewtrip_home_text">HOME</string>
     <string name="remotenewtrip_school_text">SCHOOL</string>
     <string name="sust_title_string">SUSTAINABILITY FACTS</string>
@@ -128,4 +118,6 @@
     <string name="newtrip_remote_home_selected">Home Selected</string>
     <string name="newtrip_remote_school_selected">School Selected</string>
     <string name="back">BACK</string>
+    <string name="trip_home">Trip to home</string>
+    <string name="trip_school">Trip to school</string>
 </resources>

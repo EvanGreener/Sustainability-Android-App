@@ -12,20 +12,15 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.get
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
-
 import com.sustaincsej.sustain_cedricsebevanjean.R
 import com.sustaincsej.sustain_cedricsebevanjean.httprequests.APICall
-import com.sustaincsej.sustain_cedricsebevanjean.models.CurrentWeather
 import com.sustaincsej.sustain_cedricsebevanjean.models.TravelMode
 import com.sustaincsej.sustain_cedricsebevanjean.models.TripInfoResponse
-import org.json.JSONObject
 
 /**
  * Activity that allows the user to create a new trip from their current location to the location of their
@@ -33,6 +28,7 @@ import org.json.JSONObject
  *
  * @author Evan Greenstein
  * @author Sebastien Palin
+ * @author Jean Robatto
  */
 class NewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener {
 
@@ -74,9 +70,6 @@ class NewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener
         findViewById<Button>(R.id.newtrip_local_btn).setOnClickListener {
             onClick(it.id)
         }
-        findViewById<Button>(R.id.newtrip_remote_btn).setOnClickListener {
-            onClick(it.id)
-        }
 
         //Set on change events
         destinationLat.addTextChangedListener(object : TextWatcher {
@@ -107,14 +100,19 @@ class NewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener
         if (preset == "home") {
             destinationLat.setText(prefs.getString("HomeLat", ""))
             destinationLon.setText(prefs.getString("HomeLon", ""))
+            reason.setText(resources.getString(R.string.trip_home))
             destinationLat.isEnabled = false
             destinationLon.isEnabled = false
+            updateValues(findViewById<Spinner>(R.id.newtrip_travelmode_spinner).selectedItem.toString())
         } else if (preset == "school") {
             destinationLat.setText(prefs.getString("SchoolLat", ""))
             destinationLon.setText(prefs.getString("SchoolLon", ""))
+            reason.setText(resources.getString(R.string.trip_school))
             destinationLat.isEnabled = false
             destinationLon.isEnabled = false
+            updateValues(findViewById<Spinner>(R.id.newtrip_travelmode_spinner).selectedItem.toString())
         }
+
     }
 
     /**
@@ -124,7 +122,7 @@ class NewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener
      */
     private fun showSpinner() {
         Log.d("Calculator", "ShowSpinner")
-        val travelModeSpinner = findViewById(R.id.newtrip_travelmode_spinner) as Spinner
+        val travelModeSpinner = findViewById<Spinner>(R.id.newtrip_travelmode_spinner)
         val dataAdapter = ArrayAdapter<String>(
             this, R.layout.simple_spinner, resources.getStringArray(R.array.newtrip_travel_modes))
         travelModeSpinner.adapter = dataAdapter
@@ -144,8 +142,8 @@ class NewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener
         var travelmode = travelmode.selectedItem.toString()
         val reason = findViewById<EditText>(R.id.newtrip_reason).text.toString()
 
-        var latDouble = lat.toDouble()
-        var lonDouble = lon.toDouble()
+        val latDouble: Double
+        val lonDouble: Double
         val replyIntent = Intent()
 
         if (lat.isEmpty() || lon.isEmpty() || travelmode.isEmpty() || reason.isEmpty()){
@@ -168,7 +166,6 @@ class NewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener
         }
 
         when (id) {
-            R.id.newtrip_remote_btn -> Log.i(TAG, "Remote button clicked")//FIRE REMOTE
             R.id.newtrip_local_btn ->{
                 Log.i(TAG, "Local button clicked")
 
@@ -177,7 +174,7 @@ class NewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener
                 val password = prefs.getString("Password", "")
 
                 getCurrentLocation()
-                var apiCall = APICall("http://carbon-emission-tracker-team-7.herokuapp.com/api/v1/tripinfo", "GET", email!!, password!!, constructApiQueryString(latDouble, lonDouble))
+                val apiCall = APICall("http://carbon-emission-tracker-team-7.herokuapp.com/api/v1/tripinfo", "GET", email!!, password!!, constructApiQueryString(latDouble, lonDouble))
 
                 val response = Gson().fromJson(apiCall.execute().get().getJSONObject(0).toString(), TripInfoResponse::class.java)
 
@@ -204,10 +201,10 @@ class NewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener
     private fun getCurrentLocation() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this@NewTripActivity)
 
-        var location: Location? = null
+        var location: Location?
         //Asyncronous call to get location the method will end before it completes its task.
-        var locationRequest = LocationRequest.create()
-        var locationCallback = LocationCallback()
+        val locationRequest = LocationRequest.create()
+        val locationCallback = LocationCallback()
         fusedLocationClient.requestLocationUpdates(locationRequest,
             locationCallback,
             Looper.getMainLooper())
@@ -275,10 +272,10 @@ class NewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this@NewTripActivity)
 
-        var location: Location? = null
+        var location: Location?
         //Asyncronous call to get location the method will end before it completes its task.
-        var locationRequest = LocationRequest.create()
-        var locationCallback = LocationCallback()
+        val locationRequest = LocationRequest.create()
+        val locationCallback = LocationCallback()
         fusedLocationClient.requestLocationUpdates(locationRequest,
             locationCallback,
             Looper.getMainLooper())
@@ -298,6 +295,8 @@ class NewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener
                 currentLat = currentLocation.latitude
                 currentLon = currentLocation.longitude
 
+                Log.i(TAG, "Location success")
+
             }
         }
 
@@ -308,12 +307,10 @@ class NewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener
      * Updates the values for co2 emissions and distance
      */
     private fun updateValues(travelMode: String) {
-        val info : DoubleArray
-        if (destinationLat.text.isEmpty() || destinationLon.text.isEmpty()){
-            info = calculateAndUpdate(travelMode, destinationLatDefault, destinationLonDefault)
-        }
-        else{
-            info = calculateAndUpdate(travelMode, destinationLat.text.toString().toDouble(), destinationLon.text.toString().toDouble())
+        val info : DoubleArray = if (destinationLat.text.isEmpty() || destinationLon.text.isEmpty()){
+            calculateAndUpdate(travelMode, destinationLatDefault, destinationLonDefault)
+        } else{
+            calculateAndUpdate(travelMode, destinationLat.text.toString().toDouble(), destinationLon.text.toString().toDouble())
         }
 
         distance = info[0]
@@ -329,8 +326,8 @@ class NewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener
     private fun distanceToDestination(destLat: Double, destLon: Double): Double
     {
         Log.d("Calculator", "distanceToSchool")
-        var results: FloatArray = floatArrayOf(1.0f)
-        Log.d("Calculator", "location = " +currentLocation.toString())
+        val results: FloatArray = floatArrayOf(1.0f)
+        Log.d("Calculator", "location = $currentLocation")
         if(this.haveLocation) {
 
             Location.distanceBetween(
@@ -354,28 +351,22 @@ class NewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener
      */
     private fun calculateCO2G(distance: Double, transportMode : String ): Double{
         Log.d("Calculator", "calculateCO2G")
-        var distanceKM = distance / 1000.0f
+        val distanceKM = distance / 1000.0f
         var vehicleEfficiency = 0.0f
-        if(transportMode.equals("Car Diesel"))
-        {vehicleEfficiency = 121.5f}
-        else if(transportMode.equals("Car Gas"))
-        {vehicleEfficiency = 123.4f}
-        else if(transportMode.equals("Carpool (3) Diesel"))
-        {vehicleEfficiency = 40.5f}
-        else if(transportMode.equals("Carpool (3) Gas"))
-        {vehicleEfficiency = 41.1f}
-        else if(transportMode.equals("Public Transit"))
-        {vehicleEfficiency = 46.2f}
-        else if(transportMode.equals("Walk"))
-        {vehicleEfficiency = 0.0f}
-        else if(transportMode.equals("Bike"))
-        {vehicleEfficiency = 0.0f}
-        var totalCO2 = distanceKM * vehicleEfficiency
-        return totalCO2
+        when (transportMode) {
+            "Car Diesel" -> vehicleEfficiency = 121.5f
+            "Car Gas" -> vehicleEfficiency = 123.4f
+            "Carpool (3) Diesel" -> vehicleEfficiency = 40.5f
+            "Carpool (3) Gas" -> vehicleEfficiency = 41.1f
+            "Public Transit" -> vehicleEfficiency = 46.2f
+            "Walk" -> vehicleEfficiency = 0.0f
+            "Bike" -> vehicleEfficiency = 0.0f
+        }
+        return distanceKM * vehicleEfficiency
     }
 
     companion object {
-        private val TAG = "NewTripActivity"
+        private const val TAG = "NewTripActivity"
         const val FROM_LAT = "from-lat"
         const val FROM_LON  = "from-lon"
         const val TO_LAT = "to-lat"

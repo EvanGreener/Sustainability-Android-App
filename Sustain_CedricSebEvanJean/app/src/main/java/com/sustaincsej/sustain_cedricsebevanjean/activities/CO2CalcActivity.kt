@@ -1,17 +1,13 @@
 package com.sustaincsej.sustain_cedricsebevanjean.activities
 
+import android.annotation.SuppressLint
 import android.content.Context
-import android.location.Location
 import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.location.FusedLocationProviderClient
-import java.io.*
-import java.net.HttpURLConnection
-import java.net.URL
 import com.sustaincsej.sustain_cedricsebevanjean.R
 import com.sustaincsej.sustain_cedricsebevanjean.httprequests.APICall
 
@@ -23,11 +19,11 @@ import com.sustaincsej.sustain_cedricsebevanjean.httprequests.APICall
  * Values from the spinner
  *
  * @author Cedric Richards
+ * @author Jean Robatto
  */
 class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener {
     private lateinit var calculator: Co2Calculator
     private var transportMode = "Car Diesel"
-    //if false destination is school
     private var destinationHome = "School"
     private var vehicleEfficiency = 123.4f
 
@@ -40,10 +36,10 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
      * @param savedInstanceState
      */
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d("Calculator", "onCreate")
+        Log.d(TAG, "onCreate")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_co2_calc)
-        Log.d("Calculator", "before calc")
+        Log.d(TAG, "before calc")
         this.calculator = Co2Calculator()
         this.calculator.execute(transportMode, destinationHome)
         showSpinner()
@@ -52,16 +48,6 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
 
 
     }
-    fun returnInfo(array: Array<Float>) : Array<Float>
-    {
-        return array
-    }
-    /*fun calculate(array: Array<String>) :  AsyncTask<String, Float, Float>
-    {
-        this.calculator = Co2Calculator()
-        return this.calculator.execute(array[0], array[1])
-    }
-    */
 
     /**
      * Everytime the button is pushed and the value of destinationHome is changed calculator is
@@ -70,16 +56,15 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
      */
     private fun setUpToggleButton()
     {
-        Log.d("Calculator", "setUpToggleButton")
+        Log.d(TAG, "setUpToggleButton")
         val toggle: ToggleButton = findViewById(R.id.co2calc_homeschool_toggle)
         toggle.setOnCheckedChangeListener { _, isHome ->
-            if(isHome) {
-                destinationHome = "Home"
+            destinationHome = if(isHome) {
+                "Home"
+            } else{
+                "School"
             }
-            else{
-                destinationHome = "School"
-            }
-            Log.i("Calculator", destinationHome.toString())
+            Log.i(TAG, destinationHome)
             this.calculator = Co2Calculator()
             this.calculator.execute(transportMode, destinationHome)
         }
@@ -92,8 +77,8 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
      *
      */
     private fun showSpinner() {
-        Log.d("Calculator", "ShowSpinner")
-        val travelModeSpinner = findViewById(R.id.co2calc_travelmode_spinner) as Spinner
+        Log.d(TAG, "ShowSpinner")
+        val travelModeSpinner = findViewById<Spinner>(R.id.co2calc_travelmode_spinner)
         val dataAdapter = ArrayAdapter<String>(
             this, R.layout.simple_spinner, resources.getStringArray(R.array.newtrip_travel_modes))
         travelModeSpinner.adapter = dataAdapter
@@ -115,26 +100,30 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
      *
      */
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        Log.d("Calculator", "OnitemSelected")
+        Log.d(TAG, "OnitemSelected")
         transportMode = parent!!.getItemAtPosition(position) as String
-        Log.i("Calculator", transportMode)
-        if(transportMode.equals("Car Diesel"))
+        Log.i(TAG, transportMode)
+        if(transportMode == "Car Diesel")
         {vehicleEfficiency = 121.5f}
-        else if(transportMode.equals("Car Gas"))
+        else if(transportMode == "Car Gas")
         {vehicleEfficiency = 123.4f}
-        else if(transportMode.equals("Carpool (3) Diesel"))
+        else if(transportMode == "Carpool (3) Diesel")
         {vehicleEfficiency = 40.5f}
-        else if(transportMode.equals("Carpool (3) Gas"))
+        else if(transportMode == "Carpool (3) Gas")
         {vehicleEfficiency = 41.1f}
-        else if(transportMode.equals("Public Transit"))
+        else if(transportMode == "Public Transit")
         {vehicleEfficiency = 46.2f}
-        else if(transportMode.equals("Walk"))
+        else if(transportMode == "Walk")
         {vehicleEfficiency = 0.0f}
-        else if(transportMode.equals("Bike"))
+        else if(transportMode == "Bike")
         {vehicleEfficiency = 0.0f}
 
         this.calculator = Co2Calculator()
         this.calculator.execute(transportMode, destinationHome)
+    }
+
+    companion object {
+        private const val TAG = "CO2CalcActivity"
     }
 
     /**
@@ -144,11 +133,9 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
      *
      *
      */
+    @SuppressLint("StaticFieldLeak")
     private inner class Co2Calculator : AsyncTask<String, String, Float>() {
 
-        private lateinit var fusedLocationClient: FusedLocationProviderClient
-        private lateinit var currentLocation: Location
-        private var haveLocation = false
         private var schoolLongitude = -73.58854
         private var schoolLatitude = 45.48775
         private var homeLongitude = 0.0
@@ -157,8 +144,6 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
         private lateinit var destinationHome : String
         private var currentLatitude = 0.0
         private var currentLongitude = 0.0
-        private val myurl = "https://jayaghgtracker.herokuapp.com/api/v1/tripinfo"
-        private val NETIOBUFFER = 1024
         lateinit var apiCall : APICall
         private var email: String = ""
         private var password: String = ""
@@ -171,7 +156,7 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
          *
          */
         override fun doInBackground(vararg types : String): Float{
-            Log.d("Calculator", "initializing calc")
+            Log.d(TAG, "initializing calc")
 
             transportMode = types[0]
             destinationHome = types[1]
@@ -180,31 +165,30 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
             var engine = "diesel"
 
 
-            if(transportMode.equals("Car Diesel") || transportMode.equals("Carpool (3) Diesel"))
+            if(transportMode == "Car Diesel" || transportMode == "Carpool (3) Diesel")
             {engine = "diesel"}
-            else if(transportMode.equals("Car Gas") || transportMode.equals("Carpool (3) Gas"))
+            else if(transportMode == "Car Gas" || transportMode == "Carpool (3) Gas")
             {engine = "gasoline"}
 
-            when
-            {
-                transportMode.equals("Car Diesel") -> {efficiency = "9.3"
+            when (transportMode) {
+                "Car Diesel" -> {efficiency = "9.3"
                     travelModeToAPI = "car"}
-                transportMode.equals("Car Gas") -> {efficiency ="10.6"
+                "Car Gas" -> {efficiency ="10.6"
                     travelModeToAPI = "car"}
-                transportMode.equals("Carpool (3) Diesel") -> {efficiency ="3.1"
+                "Carpool (3) Diesel" -> {efficiency ="3.1"
                     travelModeToAPI = "carpool"}
-                transportMode.equals("Carpool (3) Gas") -> {efficiency ="3.53"
+                "Carpool (3) Gas" -> {efficiency ="3.53"
                     travelModeToAPI = "carpool"}
-                transportMode.equals("Public Transit") -> {efficiency ="4.62"
+                "Public Transit" -> {efficiency ="4.62"
                     travelModeToAPI = "publicTransport"}
-                transportMode.equals("Walk") -> {efficiency ="0.0"
+                "Walk" -> {efficiency ="0.0"
                     travelModeToAPI = "pedestrian"}
-                transportMode.equals("Bike") -> {efficiency ="0.0"
+                "Bike" -> {efficiency ="0.0"
                     travelModeToAPI = "bicycle"}
             }
             var destLong = 0.0
             var destLat = 0.0
-            if(destinationHome.equals("Home")){
+            if(destinationHome == "Home"){
                 destLong = homeLongitude
                 destLat = homeLatitude
             }
@@ -213,7 +197,7 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
                 destLat = schoolLatitude
             }
 
-            var jsonString = "{\"fromlatitude\":\"$currentLatitude\", \"fromlongitude\":\"$currentLongitude\",\"tolatitude\":\"$destLat\",  \"tolongitude\":\"$destLong\",\"mode\":\"$travelModeToAPI\", \"engine\":\"$engine\", \"consumption\"=\"$efficiency\"}"
+            val jsonString = "{\"fromlatitude\":\"$currentLatitude\", \"fromlongitude\":\"$currentLongitude\",\"tolatitude\":\"$destLat\",  \"tolongitude\":\"$destLong\",\"mode\":\"$travelModeToAPI\", \"engine\":\"$engine\", \"consumption\"=\"$efficiency\"}"
 
             publishProgress(jsonString)
 
@@ -221,28 +205,6 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
             Log.d("Calculator", "execute ended")
             return 0.0f
         }
-
-        @Throws(IOException::class, UnsupportedEncodingException::class)
-        fun readIt(stream: InputStream?): String {
-            var bytesRead: Int
-            var totalRead = 0
-            val buffer = ByteArray(NETIOBUFFER)
-
-            // for data from the server
-            val bufferedInStream = BufferedInputStream(stream!!)
-
-            val byteArrayOutputStream = ByteArrayOutputStream()
-            val writer = DataOutputStream(byteArrayOutputStream)
-
-            bytesRead = bufferedInStream.read(buffer)
-            writer.write(buffer)
-            totalRead += bytesRead
-            writer.flush()
-            Log.d("Calculator", "Bytes read: " + totalRead
-                    + "(-1 means end of reader so max of)")
-
-            return byteArrayOutputStream.toString()
-        } // readIt()
 
 
 
@@ -254,29 +216,15 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
          * @param result this is the distance in meters calculated by the api
          */
         override fun onProgressUpdate(vararg result: String?){
-            Log.d("Calculator", "onProgressUpdate")
-            /*var cO2View = findViewById<TextView>(R.id.co2calc_totalco2)
-            var totalCO2 = calculateCO2G(result[0] as Float)
-            cO2View.text = totalCO2.toString()
-            var treeOffSetView = findViewById<TextView>(R.id.co2calc_trees)
-            var treeOffSet = calculateTrees(totalCO2)
-            treeOffSetView.text = treeOffSet.toString()
-            var distanceKM = result[0] as Float / 1000.0f
-            var array = arrayOf(
-                distanceKM,
-                totalCO2,
-                this.currentLocation.latitude.toFloat(),
-                this.currentLocation.longitude.toFloat()
-            )*/
+            Log.d(TAG, "onProgressUpdate")
             apiCall =  APICall("http://carbon-emission-tracker-team-7.herokuapp.com/api/v1/tripinfo", "GET", email, password, result[0]as String)
-            var result = apiCall.execute().get()
-            var co2 = result.getJSONObject(0).getDouble("co2emissions")
-            var trees = calculateTrees((co2*1000).toFloat() )
-            var cO2View = findViewById<TextView>(R.id.co2calc_totalco2)
+            val result = apiCall.execute().get()
+            val co2 = result.getJSONObject(0).getDouble("co2emissions")
+            val trees = calculateTrees((co2*1000).toFloat() )
+            val cO2View = findViewById<TextView>(R.id.co2calc_totalco2)
             cO2View.text = co2.toString()
-            var treeOffSetView = findViewById<TextView>(R.id.co2calc_trees)
+            val treeOffSetView = findViewById<TextView>(R.id.co2calc_trees)
             treeOffSetView.text = trees.toString()
-            //returnInfo(array)
         }
 
         /**
@@ -287,24 +235,23 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
          */
         private fun calculateCO2G(distance: Float): Float{
             Log.d("Calculator", "calculateCO2G")
-            var distanceKM = distance / 1000.0f
+            val distanceKM = distance / 1000.0f
             var vehicleEfficiency = 0.0f
-            if(transportMode.equals("Car Diesel"))
+            if(transportMode == "Car Diesel")
             {vehicleEfficiency = 121.5f}
-            else if(transportMode.equals("Car Gas"))
+            else if(transportMode == "Car Gas")
             {vehicleEfficiency = 123.4f}
-            else if(transportMode.equals("Carpool (3) Diesel"))
+            else if(transportMode == "Carpool (3) Diesel")
             {vehicleEfficiency = 40.5f}
-            else if(transportMode.equals("Carpool (3) Gas"))
+            else if(transportMode == "Carpool (3) Gas")
             {vehicleEfficiency = 41.1f}
-            else if(transportMode.equals("Public Transit"))
+            else if(transportMode == "Public Transit")
             {vehicleEfficiency = 46.2f}
-            else if(transportMode.equals("Walk"))
+            else if(transportMode == "Walk")
             {vehicleEfficiency = 0.0f}
-            else if(transportMode.equals("Bike"))
+            else if(transportMode == "Bike")
             {vehicleEfficiency = 0.0f}
-            var totalCO2 = distanceKM * vehicleEfficiency
-            return totalCO2
+            return distanceKM * vehicleEfficiency
         }
 
         /**
@@ -314,50 +261,9 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
          */
         private fun calculateTrees(cO2InGrams: Float): Float
         {
-            Log.d("Calculator", "calculateTrees")
+            Log.d(TAG, "calculateTrees")
             val gramsPerDayPerTree = 59.7f
-            var treesToOffset = cO2InGrams / gramsPerDayPerTree/ 365.0f
-            return treesToOffset
-        }
-
-        /**
-         * This function will return 0.0 as distance, turning all displayed information to 0.0
-         * If there is no location in the devices memory.
-         *
-         * @return the distance to the destination in meters as a Float
-         */
-        fun distanceToDestination() : Float
-        {
-            Log.d("Calculator", "distanceToSchool")
-            var results: FloatArray = floatArrayOf(1.0f)
-            Log.d("Calculator", "location = " +currentLocation.toString())
-            if(this.haveLocation) {
-                Log.d("Calculator", "in if")
-                if(destinationHome.equals("Home")) {
-
-                    Location.distanceBetween(
-                        this.currentLatitude,
-                        this.currentLongitude,
-                        homeLatitude,
-                        homeLongitude,
-                        results
-                    )
-                }
-                else
-                {
-                    Location.distanceBetween(
-                        this.currentLatitude,
-                        this.currentLongitude,
-                        schoolLatitude,
-                        schoolLongitude,
-                        results
-                    )
-                }
-                Log.d("Calculator", "distance calc")
-                Log.d("Calculator", results[0].toString())
-                return results[0]
-            }
-            return 0.0f
+            return cO2InGrams / gramsPerDayPerTree/ 365.0f
         }
 
         /**
@@ -369,12 +275,12 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
             // set up the task here
             Log.d("Calculator", "onPreExecute")
             with(getSharedPreferences(getString(R.string.Preferences), Context.MODE_PRIVATE).all){
-                var schoolLat = this["SchoolLat"] as String
-                var schoolLon = this["SchoolLon"] as String
-                var homeLat = this["HomeLat"] as String
-                var homeLon = this["HomeLon"] as String
-                var curLat = this["CurrentLatitude"] as String
-                var curLong = this["CurrentLongitude"] as String
+                val schoolLat = this["SchoolLat"] as String
+                val schoolLon = this["SchoolLon"] as String
+                val homeLat = this["HomeLat"] as String
+                val homeLon = this["HomeLon"] as String
+                val curLat = this["CurrentLatitude"] as String
+                val curLong = this["CurrentLongitude"] as String
                 email = this["Email"] as String
                 password = this["Password"] as String
                 schoolLongitude = schoolLon.toDouble()

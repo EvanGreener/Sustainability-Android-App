@@ -1,5 +1,6 @@
 package com.sustaincsej.sustain_cedricsebevanjean.activities
 
+import android.annotation.SuppressLint
 import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -19,7 +20,6 @@ import kotlin.math.roundToInt
 /**
  * Displays the current weather and weather information.
  *
- * @author Cedric Richards
  * @author Jean Robatto
  */
 class WeatherActivity : AppCompatActivity() {
@@ -64,7 +64,7 @@ class WeatherActivity : AppCompatActivity() {
         val lon = location.longitude.toString()
 
         val request = Request.Builder()
-            .url("http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&APPID=${apiKey}")
+            .url("http://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&units=metric&APPID=$apiKey")
             .build()
 
         client.newCall(request).enqueue(object : Callback {
@@ -91,7 +91,7 @@ class WeatherActivity : AppCompatActivity() {
         val lon = location.longitude.toString()
 
         val request = Request.Builder()
-            .url("http://api.openweathermap.org/data/2.5/uvi?lat=${lat}&lon=${lon}&APPID=${apiKey}")
+            .url("http://api.openweathermap.org/data/2.5/uvi?lat=$lat&lon=$lon&APPID=$apiKey")
             .build()
 
         client.newCall(request).enqueue(object : Callback {
@@ -113,6 +113,7 @@ class WeatherActivity : AppCompatActivity() {
     /**
      * Updates all fields in the weather view
      */
+    @SuppressLint("SetTextI18n")
     private fun updateWeatherUI(weather: CurrentWeather) {
         findViewById<TextView>(R.id.weather_temp).text = "${weather.main.temp} C"
         findViewById<TextView>(R.id.weather_recommendation_text).text = when {
@@ -146,7 +147,7 @@ class WeatherActivity : AppCompatActivity() {
     }
 
     companion object {
-        private val TAG = "WeatherActivity"
+        private const val TAG = "WeatherActivity"
     }
 
 

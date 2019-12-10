@@ -10,8 +10,6 @@ import com.sustaincsej.sustain_cedricsebevanjean.models.Converters
 import com.sustaincsej.sustain_cedricsebevanjean.models.Trip
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import java.time.LocalDate
-import java.util.*
 
 /**
  * Room database for a trip.

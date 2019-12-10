@@ -107,7 +107,7 @@ class APICall(private var url: String, private val method: String, private val e
         Log.d(TAG, "getData")
         var jsonData: JSONArray? = null
 
-        var out: OutputStream
+        val out: OutputStream
         var reader: BufferedReader? = null
 
         try {
