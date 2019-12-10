@@ -23,8 +23,14 @@ import com.sustaincsej.sustain_cedricsebevanjean.R
 import com.sustaincsej.sustain_cedricsebevanjean.httprequests.APICall
 import com.sustaincsej.sustain_cedricsebevanjean.models.TravelMode
 
+/**
+ * Activity that allows the user to create a new trip from their current location to the location of their
+ * choosing.
+ *
+ * @author Evan Greenstein
+ * @author Sebastien Palin
+ */
 class NewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener {
-
 
     private lateinit var currentLocation: Location
     private var haveLocation = false
@@ -122,7 +128,12 @@ class NewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener
 
     }
 
-
+    /**
+     * Function that will create a new trip from the user's current location to where the coordinates they
+     * inputted.
+     *
+     * @param id The id of the button clicked that called this function
+     */
     private fun onClick(id: Int) {
         val lat =  destinationLat.text.toString()
         val lon = destinationLon.text.toString()

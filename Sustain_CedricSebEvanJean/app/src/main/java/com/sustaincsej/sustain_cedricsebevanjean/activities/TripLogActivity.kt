@@ -13,20 +13,29 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-
-
 import com.sustaincsej.sustain_cedricsebevanjean.R
 import com.sustaincsej.sustain_cedricsebevanjean.adapters.TripRecyclerViewAdapter
-import com.sustaincsej.sustain_cedricsebevanjean.httprequests.APICall
 import com.sustaincsej.sustain_cedricsebevanjean.models.Trip
 import com.sustaincsej.sustain_cedricsebevanjean.models.TripViewModel
 
+/**
+ * Activity that displays all trips inside the local SQLite database and allows the creating of new ones.
+ *
+ * @author Evan Greenstein
+ * @author Jean Robatto
+ * @author Sebastien Palin
+ */
 class TripLogActivity : AppCompatActivity() {
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var tripViewModel: TripViewModel
     private val newTripActivityRequestCode = 1
 
+    /**
+     * Set up the RecyclerView and get the floating action button.
+     *
+     * @param savedInstanceState
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_trip_log)
@@ -44,8 +53,6 @@ class TripLogActivity : AppCompatActivity() {
             // Update the cached copy of the words in the adapter.
             trips?.let { adapter.setTrips(it) }
         })
-
-
 
         val fab = findViewById<FloatingActionButton>(R.id.trip_log_add_trip)
         fab.setOnClickListener {
@@ -73,9 +80,15 @@ class TripLogActivity : AppCompatActivity() {
         }
 
         intent.removeExtra("preset")
-
     }
 
+    /**
+     * Get all trip information to store from an Intent to the NewTripActivity.
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -93,12 +106,6 @@ class TripLogActivity : AppCompatActivity() {
 
             Log.d(TAG, "co2: $co2")
             Log.d(TAG, "distance: $distance")
-
-            val jsonString = "{\"fromlatitude\":\"45.4908788\", \"fromlongitude\":\"-73.588405\",\"tolatitude\":\"45.2908788\",  \"tolongitude\":\"-73.588405\",\"mode\":\"car\", \"engine\":\"gasoline\", \"consumption\":\"8.4\"}"
-            var apiCall = APICall("http://carbon-emission-tracker-team-7.herokuapp.com/api/v1/tripinfo", "GET", "robatto.jeanmarie@gmail.com", "password", jsonString)
-            var response = apiCall.execute().get()
-            Log.d(TAG, response.toString())
-
 
             val trip  = Trip(id = 0, travelMode = travel_mode, reasonForTrip = reason, distance = distance,
                 carbonDioxide = co2, dateTimeStamp = java.util.Calendar.getInstance().time, fromLatitude = startLat,
