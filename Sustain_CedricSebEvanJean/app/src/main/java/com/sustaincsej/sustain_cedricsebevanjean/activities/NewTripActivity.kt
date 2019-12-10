@@ -129,8 +129,8 @@ class NewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener
         var travelmode = travelmode.selectedItem.toString()
         val reason = findViewById<EditText>(R.id.newtrip_reason).text.toString()
 
-        var latDouble = 0.0
-        var lonDouble = 0.0
+        var latDouble = lat.toDouble()
+        var lonDouble = lon.toDouble()
         val replyIntent = Intent()
 
         if (lat.isEmpty() || lon.isEmpty() || travelmode.isEmpty() || reason.isEmpty()){
@@ -157,20 +157,8 @@ class NewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener
             R.id.newtrip_local_btn ->{
                 Log.i(TAG, "Local button clicked")
 
-                var basicJsonString =
-                    "{\"fromlatitude\":\"$currentLat\", \"fromlongitude\":\"$currentLon\",\"tolatitude\":\"$latDouble\",  \"tolongitude\":\"$lonDouble\","
-
-                when {
-                    travelMode.equals("Car Diesel") -> basicJsonString += "\"mode\":\"car\", \"engine\":\"diesel\", \"consumption\":\"121.5\"}"
-                    travelMode.equals("Car Gas") -> basicJsonString += "\"mode\":\"car\", \"engine\":\"gasoline\", \"consumption\":\"123.4\"}"
-                    travelMode.equals("Carpool (3) Diesel") -> basicJsonString += "\"mode\":\"carpool\", \"engine\":\"diesel\", \"consumption\":\"121.5\"}"
-                    travelMode.equals("Carpool (3) Gas") -> basicJsonString += "\"mode\":\"carpool\", \"engine\":\"gasoline\", \"consumption\":\"123.4\"}"
-                    travelMode.equals("Public Transit") -> basicJsonString += "\"mode\":\"publicTransport\"}"
-                    travelMode.equals("Walk") -> basicJsonString += "\"mode\":\"pedestrian\"}"
-                    travelMode.equals("Bike") -> basicJsonString += "\"mode\":\"bicycle\"}"
-                }
-
-                var apiCall = APICall("http://carbon-emission-tracker-team-7.herokuapp.com/api/v1/tripinfo", "GET", "robatto.jeanmarie@gmail.com", "password", basicJsonString)
+                getCurrentLocation()
+                var apiCall = APICall("http://carbon-emission-tracker-team-7.herokuapp.com/api/v1/tripinfo", "GET", "robatto.jeanmarie@gmail.com", "password", constructApiQueryString(latDouble, lonDouble))
                 var response = apiCall.execute().get()
 
                 replyIntent.putExtra(FROM_LAT, currentLat)
@@ -187,6 +175,55 @@ class NewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener
 
             }
         }
+    }
+
+    /**
+     * Function that will get the current latitude and longitude of the user. Sets global variables
+     * to the longitude and latitude instead of returning.
+     */
+    private fun getCurrentLocation() {
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this@NewTripActivity)
+
+        var location: Location? = null
+        //Asyncronous call to get location the method will end before it completes its task.
+        var locationRequest = LocationRequest.create()
+        var locationCallback = LocationCallback()
+        fusedLocationClient.requestLocationUpdates(locationRequest,
+            locationCallback,
+            Looper.getMainLooper())
+
+        fusedLocationClient.lastLocation
+            .addOnSuccessListener { l : Location? -> location = l
+                if (location != null) {
+                    haveLocation = true
+                    currentLocation = location as Location
+
+                    currentLat = currentLocation.latitude
+                    currentLon = currentLocation.longitude
+
+                }
+            }
+    }
+
+    /**
+     * Function that will create an api query string for use of calling the remote api to get the co2 consumed
+     * and the distanced traveled when creating a new trip.
+     */
+    private fun constructApiQueryString(latDouble: Double, lonDouble: Double) : String {
+        var basicJsonString =
+            "{\"fromlatitude\":\"$currentLat\", \"fromlongitude\":\"$currentLon\",\"tolatitude\":\"$latDouble\",  \"tolongitude\":\"$lonDouble\","
+
+        when {
+            travelMode.equals("Car Diesel") -> basicJsonString += "\"mode\":\"car\", \"engine\":\"diesel\", \"consumption\":\"121.5\"}"
+            travelMode.equals("Car Gas") -> basicJsonString += "\"mode\":\"car\", \"engine\":\"gasoline\", \"consumption\":\"123.4\"}"
+            travelMode.equals("Carpool (3) Diesel") -> basicJsonString += "\"mode\":\"carpool\", \"engine\":\"diesel\", \"consumption\":\"121.5\"}"
+            travelMode.equals("Carpool (3) Gas") -> basicJsonString += "\"mode\":\"carpool\", \"engine\":\"gasoline\", \"consumption\":\"123.4\"}"
+            travelMode.equals("Public Transit") -> basicJsonString += "\"mode\":\"publicTransport\"}"
+            travelMode.equals("Walk") -> basicJsonString += "\"mode\":\"pedestrian\"}"
+            travelMode.equals("Bike") -> basicJsonString += "\"mode\":\"bicycle\"}"
+        }
+
+        return basicJsonString
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
