@@ -17,7 +17,10 @@ import java.io.IOException
 import kotlin.math.roundToInt
 
 /**
- * Displays the current weather and weather information
+ * Displays the current weather and weather information.
+ *
+ * @author Cedric Richards
+ * @author Jean Robatto
  */
 class WeatherActivity : AppCompatActivity() {
 
