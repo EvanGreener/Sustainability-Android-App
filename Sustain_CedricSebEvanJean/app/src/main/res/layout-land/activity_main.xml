@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="@dimen/containerPadding"
+    tools:context=".activities.MainActivity">
+
+    <TextView
+        android:id="@+id/main_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/main_title_string"
+        android:textColor="@color/onBackground"
+        android:textSize="@dimen/titleSize" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".4"
+        android:background="@color/background"
+        android:orientation="horizontal"
+        android:padding="@dimen/linearLayoutPaddingSmall">
+
+        <ImageButton
+            android:id="@+id/main_weatherapi_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/componentMargin"
+            android:layout_weight="0.5"
+            android:background="@color/transparent"
+            android:onClick="handleWeatherAPIClick"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/weather" />
+
+        <ImageButton
+            android:id="@+id/main_sustfacts_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/componentMargin"
+            android:layout_weight="0.5"
+            android:background="@color/transparent"
+            android:onClick="handleSustFactClick"
+            android:scaleType="centerCrop"
+            android:src="@drawable/sustainability"
+            tools:srcCompat="@drawable/sustainability" />
+
+        <ImageButton
+            android:id="@+id/main_co2calc_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/componentMargin"
+            android:layout_weight="0.5"
+            android:background="@color/transparent"
+            android:onClick="handleCO2Click"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/co2" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.08"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/main_weatherapi_button_string"
+            android:textAlignment="center"
+            android:textColor="@color/onBackground"
+            android:textSize="@dimen/smallTextSize"
+            android:textStyle="italic" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/main_sustfacts_button_string"
+            android:textAlignment="center"
+            android:textColor="@color/onBackground"
+            android:textSize="@dimen/smallTextSize"
+            android:textStyle="italic" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/main_co2calc_button_string"
+            android:textAlignment="center"
+            android:textColor="@color/onBackground"
+            android:textSize="@dimen/smallTextSize"
+            android:textStyle="italic" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".4"
+        android:background="@color/background"
+        android:orientation="horizontal"
+        android:padding="@dimen/linearLayoutPaddingSmall">
+
+        <ImageButton
+            android:id="@+id/main_triplog_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/componentMargin"
+            android:layout_weight="0.5"
+            android:background="@color/transparent"
+            android:onClick="handleTripLogClick"
+            android:scaleType="centerCrop"
+            android:src="@drawable/trip"
+            tools:srcCompat="@drawable/trip" />
+
+        <ImageButton
+            android:id="@+id/main_triplogphp_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/componentMargin"
+            android:layout_weight="0.5"
+            android:background="@color/transparent"
+            android:onClick="handleTripLogClick"
+            android:scaleType="centerCrop"
+            android:src="@drawable/tripphp"
+            tools:srcCompat="@drawable/tripphp" />
+
+        <ImageButton
+            android:id="@+id/main_schooltrip_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/componentMargin"
+            android:layout_weight="0.5"
+            android:background="@color/transparent"
+            android:onClick="handleSchoolTripClick"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/school" />
+
+        <ImageButton
+            android:id="@+id/main_hometrip_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/componentMargin"
+            android:layout_weight="0.5"
+            android:background="@color/transparent"
+            android:onClick="handleHomeTripClick"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/home" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.08"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/main_triplogphp_button_string"
+            android:textAlignment="center"
+            android:textColor="@color/onBackground"
+            android:textSize="@dimen/smallTextSize"
+            android:textStyle="italic" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/main_triplog_button_string"
+            android:textAlignment="center"
+            android:textColor="@color/onBackground"
+            android:textSize="@dimen/smallTextSize"
+            android:textStyle="italic" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/main_schooltrip_button_string"
+            android:textAlignment="center"
+            android:textColor="@color/onBackground"
+            android:textStyle="italic" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/main_hometrip_button_string"
+            android:textAlignment="center"
+            android:textColor="@color/onBackground"
+            android:textStyle="italic" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/main_co2_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:padding="@dimen/componentPadding"
+        android:text="@string/main_co2_header_string"
+        android:textAlignment="center"
+        android:textColor="@color/onBackground"
+        android:textSize="@dimen/secondaryHeaderSize" />
+
+</LinearLayout>

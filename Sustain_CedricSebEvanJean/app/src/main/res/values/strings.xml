@@ -1,0 +1,123 @@
+<resources>
+    <string name="AboutOption">About</string>
+    <string name="WWWOption">WWW</string>
+    <string name="SettingOption">Settings</string>
+    <string name="DawsonURL">https://www.dawsoncollege.qc.ca/sustainable/</string>
+    <string name="NoPrefs">Shared preferences are missing</string>
+    <string name="Preferences">Settings</string>
+    <string name="SaveToast">Settings have been saved!</string>
+    <string name="EmptyTitle">Settings Incomplete!</string>
+    <string name="EmptyMessage">All Settings fields must be filled before saving!</string>
+    <string name="EmptyButton">I\'ll fix it!</string>
+    <string name="LeaveTitle">Are You Sure?</string>
+    <string name="LeaveMessage">Would you like to discard any unsaved changes to settings?</string>
+    <string name="LeaveYes">Yes</string>
+    <string name="LeaveNo">No</string>
+    <string name="StayTitle">Don\'t Leave Yet!</string>
+    <string name="StayMessage">You have to input these settings before using this app!</string>
+    <string name="StayButton">Ok</string>
+    <string name="SaveClick">Saved Settings</string>
+    <string name="BackClick">Back button clicked</string>
+    <string name="app_name">Carbon Emission Tracker</string>
+    <string name="triplog_title_string">TRIP LOG</string>
+    <string name="trip_row_date_string">Date: </string>
+    <string name="trip_row_distance_string">Distance (km): </string>
+    <string name="trip_row_co2_string">Total CO2 (kg): </string>
+    <string name="main_title_string">CO2 TRACKER</string>
+    <string name="main_co2_header_string">Total CO2: </string>
+    <string name="main_weatherapi_button_string">Weather API</string>
+    <string name="main_sustfacts_button_string">Sustainability Facts</string>
+    <string name="main_co2calc_button_string">CO2 Calculator</string>
+    <string name="main_triplog_button_string">Trip Log (SQLite)</string>
+    <string name="main_triplogphp_button_string">Trip Log (PHP)</string>
+    <string name="main_schooltrip_button_string">New School Trip</string>
+    <string name="main_hometrip_button_string">New Home Trip</string>
+    <string name="weather_title_string">WEATHER</string>
+    <string name="weather_recommendation_label">Advice: </string>
+    <string name="weather_recommendation_badweather">Take public transit, do not walk or bike.</string>
+    <string name="weather_recommendation_okweather">Take public transit or walk.</string>
+    <string name="weather_recommendation_goodweather">Great weather to bike or walk!</string>
+    <string name="weather_lat_label">Lat:</string>
+    <string name="weather_lon_label">Lon:</string>
+    <string name="weather_uv_low">UV: Low</string>
+    <string name="weather_uv_moderate">UV: Moderate</string>
+    <string name="weather_uv_high">UV: High</string>
+    <string name="weather_uv_veryhigh">UV: Very High</string>
+    <string name="weather_uv_extreme">UV: Extreme</string>
+    <string name="settings_title_string">SETTINGS</string>
+    <string name="settings_firstname_hint">First Name</string>
+    <string name="settings_lastname_hint">Last Name</string>
+    <string name="settings_email_hint">E-mail</string>
+    <string name="settings_password_hint">Password</string>
+    <string name="settings_home_lat_hint">Home Latitude</string>
+    <string name="settings_home_lon_hint">Home Longitude</string>
+    <string name="settings_school_lat_hint">School Latitude</string>
+    <string name="settings_school_lon_hint">School Longitude</string>
+    <string name="settings_last_modified_string">Last modified: </string>
+    <string name="settings_save_button_string">SAVE</string>
+    <string name="about_title_string">ABOUT</string>
+    <string name="about_app_description">Welcome to our Carbon Emission Tracker!\n\n
+                                         This application was designed to help students like us familiarize themselves with their average carbon emission,
+                                         in hopes of spreading awareness of the impact of our actions on the environment.\n\n
+                                         It provides users with:
+                                         \n-> A weather API for the current weather
+                                         \n-> Fun facts about sustainability
+                                         \n-> A CO2 calculator to estimate carbon emission for a trip
+                                         \n-> A log of personalized saved trips.\n\n
+                                         Take care of the environment, and she will take care of you!
+                                         \n\nA Dawson College Project: \n-> Course ID: 420-518-DW \n-> Section: 00002
+    </string>
+    <string name="about_cedric_name">Cedric Richards</string>
+    <string name="about_jean_name">Jean Robatto</string>
+    <string name="about_evan_name">Evan Greenstein</string>
+    <string name="about_seb_name">Seb</string>
+    <string name="about_cedric_message">This is Cedric! He loves veggie burgers!</string>
+    <string name="about_jean_message">This is Jean! Master Coder!</string>
+    <string name="about_evan_message">This is Evan! A real sqlite pro!</string>
+    <string name="about_seb_message">This is Sebastien! He enjoys having his picture taken and staying up late to finish projects!</string>
+    <string name="trip_title_string">TRIP</string>
+    <string name="trip_fromlat_label">From Latitude: </string>
+    <string name="trip_fromlon_label">From Longitude: </string>
+    <string name="trip_tolat_label">To Latitude: </string>
+    <string name="trip_tolon_label">To Longitude: </string>
+    <string name="trip_travelmode_label">Travel Mode: </string>
+    <string name="trip_distance_label">Distance in km: </string>
+    <string name="trip_co2_label">Total CO2: </string>
+    <string name="trip_date_label">\nDate: </string>
+    <string name="trip_time_label">Time: </string>
+    <string name="trip_reason_label">Reason for Trip: </string>
+    <string name="co2calc_title_string">CALCULATOR</string>
+    <string name="co2calc_home_toggle">HOME</string>
+    <string name="co2calc_school_toggle">SCHOOL</string>
+    <string name="co2calc_fromto_label">From here,\nto:</string>
+    <string name="co2calc_travelmode_label">Travel mode:</string>
+    <string name="co2calc_co2_label">Total CO2 (kg):</string>
+    <string name="co2calc_trees_label">Number of trees to offset CO2 per year:\n\n\n\n</string>
+    <string name="newtrip_title_string">ADD A TRIP</string>
+    <string name="newtrip_lat_hint">Lat</string>
+    <string name="newtrip_lon_hint">Lon</string>
+    <string name="newtrip_reason_hint">Reason for trip: </string>
+    <string name="newtrip_local_button">Save Local</string>
+    <string name="newtrip_remote_button">Save Remote</string>
+    <string-array name="newtrip_travel_modes">
+        <item>Car Diesel</item>
+        <item>Car Gas</item>
+        <item>Carpool (3) Diesel</item>
+        <item>Carpool (3) Gas</item>
+        <item>Public Transit</item>
+        <item>Walk</item>
+        <item>Bike</item>
+    </string-array>
+    <string name="remotenewtrip_home_text">HOME</string>
+    <string name="remotenewtrip_school_text">SCHOOL</string>
+    <string name="sust_title_string">SUSTAINABILITY FACTS</string>
+    <string name="sust_help_string">Click on the image for a new fact!</string>
+    <string name="empty_not_saved">Trip not saved because it is empty.</string>
+    <string name="not_filled_out_not_saved">Trip not saved because it is empty.</string>
+    <string name="delete">DELETE</string>
+    <string name="newtrip_remote_home_selected">Home Selected</string>
+    <string name="newtrip_remote_school_selected">School Selected</string>
+    <string name="back">BACK</string>
+    <string name="trip_home">Trip to home</string>
+    <string name="trip_school">Trip to school</string>
+</resources>

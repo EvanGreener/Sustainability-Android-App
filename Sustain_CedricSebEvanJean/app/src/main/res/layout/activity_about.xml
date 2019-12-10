@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical"
+    android:padding="@dimen/containerPadding"
+    tools:context=".activities.AboutActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:text="@string/about_title_string"
+        android:textAlignment="center"
+        android:textColor="@color/onBackground"
+        android:textSize="@dimen/titleSize" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/about_cedric_pic"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/componentMargin"
+                        android:layout_weight="1"
+                        android:onClick="handleImageViewClick"
+                        android:padding="@dimen/componentPadding"
+                        android:scaleType="centerCrop"
+                        app:srcCompat="@drawable/cedric" />
+
+                    <ImageView
+                        android:id="@+id/about_jean_pic"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/componentMargin"
+                        android:layout_weight="1"
+                        android:onClick="handleImageViewClick"
+                        android:padding="@dimen/componentPadding"
+                        android:scaleType="centerCrop"
+                        app:srcCompat="@drawable/jean" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".5"
+                        android:text="Cedric Richards"
+                        android:textAlignment="center"
+                        android:textColor="@color/onBackground"
+                        android:textStyle="italic" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".5"
+                        android:text="Jean Robatto"
+                        android:textAlignment="center"
+                        android:textColor="@color/onBackground"
+                        android:textStyle="italic" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/about_evan_pic"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/componentMargin"
+                        android:layout_weight="1"
+                        android:onClick="handleImageViewClick"
+                        android:padding="@dimen/componentPadding"
+                        android:scaleType="centerCrop"
+                        app:srcCompat="@drawable/evan" />
+
+                    <ImageView
+                        android:id="@+id/about_seb_pic"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/componentMargin"
+                        android:layout_weight="1"
+                        android:onClick="handleImageViewClick"
+                        android:padding="@dimen/componentPadding"
+                        android:scaleType="centerCrop"
+                        app:srcCompat="@drawable/seb" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".5"
+                        android:text="Evan Greenstein"
+                        android:textAlignment="center"
+                        android:textColor="@color/onBackground"
+                        android:textStyle="italic" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".5"
+                        android:text="Seb"
+                        android:textAlignment="center"
+                        android:textColor="@color/onBackground"
+                        android:textStyle="italic" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/componentMargin"
+                android:gravity="center"
+                android:padding="@dimen/componentPadding"
+                android:text="@string/about_app_description"
+                android:textAlignment="textStart"
+                android:textColor="@color/onBackground"
+                android:textSize="@dimen/textSize"
+                android:textStyle="italic" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

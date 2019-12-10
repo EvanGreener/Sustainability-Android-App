@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical"
+    android:padding="@dimen/containerPadding"
+    tools:context=".activities.SettingsActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="@string/settings_title_string"
+        android:textAlignment="center"
+        android:textColor="@color/onBackground"
+        android:textSize="@dimen/titleSize" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <EditText
+                android:id="@+id/settings_firstname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/componentMargin"
+                android:background="@color/surface"
+                android:ems="10"
+                android:hint="@string/settings_firstname_hint"
+                style="@style/EditTextTheme"
+                android:inputType="textPersonName"
+                android:padding="@dimen/componentPadding"
+                android:textColor="@color/onSurface" />
+
+            <EditText
+                android:id="@+id/setting_lastname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/componentMargin"
+                android:background="@color/surface"
+                android:ems="10"
+                android:hint="@string/settings_lastname_hint"
+                style="@style/EditTextTheme"
+                android:inputType="textPersonName"
+                android:padding="@dimen/componentPadding"
+                android:textColor="@color/onSurface" />
+
+            <EditText
+                android:id="@+id/settings_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/componentMargin"
+                android:background="@color/surface"
+                android:ems="10"
+                android:hint="@string/settings_email_hint"
+                style="@style/EditTextTheme"
+                android:inputType="textEmailAddress"
+                android:padding="@dimen/componentPadding"
+                android:textColor="@color/onSurface" />
+
+            <EditText
+                android:id="@+id/settings_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/componentMargin"
+                android:background="@color/surface"
+                android:ems="10"
+                android:hint="@string/settings_password_hint"
+                style="@style/EditTextTheme"
+                android:inputType="textPassword"
+                android:padding="@dimen/componentPadding"
+                android:textColor="@color/onSurface" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/settings_home_lat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/componentMargin"
+                    android:layout_weight="0.5"
+                    android:background="@color/surface"
+                    android:ems="10"
+                    android:hint="@string/settings_home_lat_hint"
+                    style="@style/EditTextTheme"
+                    android:inputType="numberDecimal"
+                    android:padding="@dimen/componentPadding"
+                    android:textColor="@color/onSurface" />
+
+                <EditText
+                    android:id="@+id/settings_home_lon"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/componentMargin"
+                    android:layout_weight="0.5"
+                    android:background="@color/surface"
+                    android:ems="10"
+                    android:hint="@string/settings_home_lon_hint"
+                    style="@style/EditTextTheme"
+                    android:inputType="numberDecimal"
+                    android:padding="@dimen/componentPadding"
+                    android:textColor="@color/onSurface" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/settings_school_lat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/componentMargin"
+                    android:layout_weight="0.5"
+                    android:background="@color/surface"
+                    android:ems="10"
+                    android:hint="@string/settings_school_lat_hint"
+                    style="@style/EditTextTheme"
+                    android:inputType="numberDecimal"
+                    android:padding="@dimen/componentPadding"
+                    android:textColor="@color/onSurface" />
+
+                <EditText
+                    android:id="@+id/settings_school_lon"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/componentMargin"
+                    android:layout_weight="0.5"
+                    android:background="@color/surface"
+                    android:ems="10"
+                    android:hint="@string/settings_school_lon_hint"
+                    style="@style/EditTextTheme"
+                    android:inputType="numberDecimal"
+                    android:padding="@dimen/componentPadding"
+                    android:textColor="@color/onSurface" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/settings_date_stamp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/componentMargin"
+                android:background="@color/surface"
+                android:padding="@dimen/componentPadding"
+                android:text="@string/settings_last_modified_string"
+                android:textColor="@color/onSurface" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="bottom"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/settings_save_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/surface"
+                    android:text="@string/settings_save_button_string"
+                    android:textColor="@color/onSurface"
+                    android:textSize="@dimen/buttonTextSize"
+                    android:onClick="handleSave" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
