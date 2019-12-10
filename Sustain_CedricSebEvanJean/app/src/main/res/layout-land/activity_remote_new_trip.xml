@@ -80,31 +80,6 @@
 
                 </LinearLayout>
 
-<<<<<<< HEAD
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".5"
-                    android:orientation="vertical"
-                    android:padding="3dp">
-
-                    <EditText
-                        android:id="@+id/newtrip_reason"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        style="@style/EditTextTheme"
-                        android:layout_margin="@dimen/componentMargin"
-                        android:background="@color/surface"
-                        android:ems="10"
-                        android:gravity="top"
-                        android:hint="@string/newtrip_reason_hint"
-                        android:inputType="textPersonName"
-                        android:padding="@dimen/componentPadding"
-                        android:textColor="@color/onSurface"
-                        android:textSize="@dimen/textSize" />
-                </LinearLayout>
-=======
->>>>>>> 5d812257f87c1c32e51801624a6e6c9bb6ff4247
             </LinearLayout>
 
             <LinearLayout
