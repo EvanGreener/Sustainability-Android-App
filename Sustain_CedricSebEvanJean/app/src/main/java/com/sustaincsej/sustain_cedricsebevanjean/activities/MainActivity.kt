@@ -17,8 +17,16 @@ import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.sustaincsej.sustain_cedricsebevanjean.R
-import com.sustaincsej.sustain_cedricsebevanjean.httprequests.APICall
 
+/**
+ * Activity that displays the "Main Menu" of the app, where the user can navigate to each sub-menu/
+ * feature from.
+ *
+ * @author Sebastien Palin
+ * @author Jean Robatto
+ * @author Cedric Richards
+ * @author Evan Greenstein
+ */
 class MainActivity : AppCompatActivity() {
 
 

@@ -83,7 +83,7 @@
     <string name="about_cedric_message">BLA BLA I AM CEDRIC</string>
     <string name="about_jean_message">BLA BLA I AM Jean</string>
     <string name="about_evan_message">BLA BLA I AM EVAN</string>
-    <string name="about_seb_message">BLA BLA I AM SEB</string>
+    <string name="about_seb_message">This is Sebastien! He enjoys having his picture taken and staying up late to finish projects!</string>
     <string name="trip_title_string">TRIP</string>
     <string name="trip_fromlat_label">From Latitude: </string>
     <string name="trip_fromlon_label">From Longitude: </string>

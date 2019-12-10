@@ -18,12 +18,23 @@ import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.gson.Gson
 
 import com.sustaincsej.sustain_cedricsebevanjean.R
+import com.sustaincsej.sustain_cedricsebevanjean.httprequests.APICall
+import com.sustaincsej.sustain_cedricsebevanjean.models.CurrentWeather
 import com.sustaincsej.sustain_cedricsebevanjean.models.TravelMode
+import com.sustaincsej.sustain_cedricsebevanjean.models.TripInfoResponse
+import org.json.JSONObject
 
+/**
+ * Activity that allows the user to create a new trip from their current location to the location of their
+ * choosing.
+ *
+ * @author Evan Greenstein
+ * @author Sebastien Palin
+ */
 class NewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener {
-
 
     private lateinit var currentLocation: Location
     private var haveLocation = false
@@ -40,6 +51,7 @@ class NewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener
     private val destinationLonDefault = -73.58854
     private var distance = 0.0
     private var co2 = 0.0
+    private var travelMode = "Car Diesel"
 
     private lateinit var co2Txt : TextView
     private lateinit var distanceTxt : TextView
@@ -120,15 +132,20 @@ class NewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener
 
     }
 
-
+    /**
+     * Function that will create a new trip from the user's current location to where the coordinates they
+     * inputted.
+     *
+     * @param id The id of the button clicked that called this function
+     */
     private fun onClick(id: Int) {
         val lat =  destinationLat.text.toString()
         val lon = destinationLon.text.toString()
         var travelmode = travelmode.selectedItem.toString()
         val reason = findViewById<EditText>(R.id.newtrip_reason).text.toString()
 
-        var latDouble = 0.0
-        var lonDouble = 0.0
+        var latDouble = lat.toDouble()
+        var lonDouble = lon.toDouble()
         val replyIntent = Intent()
 
         if (lat.isEmpty() || lon.isEmpty() || travelmode.isEmpty() || reason.isEmpty()){
@@ -150,10 +167,19 @@ class NewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener
             "Bike" -> travelmode = TravelMode.BIKE.name
         }
 
-        when (id) { //TODO Implement remote
+        when (id) {
             R.id.newtrip_remote_btn -> Log.i(TAG, "Remote button clicked")//FIRE REMOTE
             R.id.newtrip_local_btn ->{
                 Log.i(TAG, "Local button clicked")
+
+                val prefs = getSharedPreferences(getString(R.string.Preferences),Context.MODE_PRIVATE)
+                val email = prefs.getString("Email", "")
+                val password = prefs.getString("Password", "")
+
+                getCurrentLocation()
+                var apiCall = APICall("http://carbon-emission-tracker-team-7.herokuapp.com/api/v1/tripinfo", "GET", email!!, password!!, constructApiQueryString(latDouble, lonDouble))
+
+                val response = Gson().fromJson(apiCall.execute().get().getJSONObject(0).toString(), TripInfoResponse::class.java)
 
                 replyIntent.putExtra(FROM_LAT, currentLat)
                 replyIntent.putExtra(FROM_LON, currentLon)
@@ -161,8 +187,8 @@ class NewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener
                 replyIntent.putExtra(TO_LON, lonDouble)
                 replyIntent.putExtra(TRAVEL_MODE, travelmode)
                 replyIntent.putExtra(REASON, reason)
-                replyIntent.putExtra(DISTANCE, distance)
-                replyIntent.putExtra(CO2, co2)
+                replyIntent.putExtra(DISTANCE, response.distance)
+                replyIntent.putExtra(CO2, response.co2emissions)
 
                 setResult(Activity.RESULT_OK, replyIntent)
                 finish()
@@ -171,14 +197,70 @@ class NewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener
         }
     }
 
+    /**
+     * Function that will get the current latitude and longitude of the user. Sets global variables
+     * to the longitude and latitude instead of returning.
+     */
+    private fun getCurrentLocation() {
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this@NewTripActivity)
+
+        var location: Location? = null
+        //Asyncronous call to get location the method will end before it completes its task.
+        var locationRequest = LocationRequest.create()
+        var locationCallback = LocationCallback()
+        fusedLocationClient.requestLocationUpdates(locationRequest,
+            locationCallback,
+            Looper.getMainLooper())
+
+        fusedLocationClient.lastLocation
+            .addOnSuccessListener { l : Location? -> location = l
+                if (location != null) {
+                    haveLocation = true
+                    currentLocation = location as Location
+
+                    currentLat = currentLocation.latitude
+                    currentLon = currentLocation.longitude
+
+                }
+            }
+    }
+
+    /**
+     * Function that will create an api query string for use of calling the remote api to get the co2 consumed
+     * and the distanced traveled when creating a new trip.
+     *
+     * @param latDouble The double latitude of the destination
+     * @param lonDouble The double longitude of the destinatino
+     * @return A query String for the remote api
+     */
+    private fun constructApiQueryString(latDouble: Double, lonDouble: Double) : String {
+        var basicJsonString =
+            "{\"fromlatitude\":\"$currentLat\", \"fromlongitude\":\"$currentLon\",\"tolatitude\":\"$latDouble\",  \"tolongitude\":\"$lonDouble\","
+
+        when {
+            travelMode.equals("Car Diesel") -> basicJsonString += "\"mode\":\"car\", \"engine\":\"diesel\", \"consumption\":\"121.5\"}"
+            travelMode.equals("Car Gas") -> basicJsonString += "\"mode\":\"car\", \"engine\":\"gasoline\", \"consumption\":\"123.4\"}"
+            travelMode.equals("Carpool (3) Diesel") -> basicJsonString += "\"mode\":\"carpool\", \"engine\":\"diesel\", \"consumption\":\"121.5\"}"
+            travelMode.equals("Carpool (3) Gas") -> basicJsonString += "\"mode\":\"carpool\", \"engine\":\"gasoline\", \"consumption\":\"123.4\"}"
+            travelMode.equals("Public Transit") -> basicJsonString += "\"mode\":\"publicTransport\"}"
+            travelMode.equals("Walk") -> basicJsonString += "\"mode\":\"pedestrian\"}"
+            travelMode.equals("Bike") -> basicJsonString += "\"mode\":\"bicycle\"}"
+        }
+
+        return basicJsonString
+    }
+
+    /**
+     * This is implemented so as to keep inheritance happy, but does nothing as it is not really needed
+     */
     override fun onNothingSelected(parent: AdapterView<*>?) {
-        TODO("No need to implement. Useless")
+        // Don't do anything with
     }
 
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         Log.d(TAG, "onItemSelected")
-        val travelMode = parent!!.getItemAtPosition(position) as String
+        travelMode = parent!!.getItemAtPosition(position) as String
         updateValues(travelMode)
     }
 
@@ -284,12 +366,6 @@ class NewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener
         var totalCO2 = distanceKM * vehicleEfficiency
         return totalCO2
     }
-
-    /*
-    fun showPopup() {
-        dialog.show()
-    }
-     */
 
     companion object {
         private val TAG = "NewTripActivity"

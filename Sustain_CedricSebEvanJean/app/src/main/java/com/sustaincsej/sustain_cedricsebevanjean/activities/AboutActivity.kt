@@ -7,7 +7,12 @@ import com.sustaincsej.sustain_cedricsebevanjean.R
 import android.content.DialogInterface
 import androidx.appcompat.app.AlertDialog
 
-
+/**
+ * Class that displays a small paragraph about the app itself and about the programmers of it.
+ *
+ * @author Jean Robatto
+ * @author Sebastien Palin
+ */
 class AboutActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
