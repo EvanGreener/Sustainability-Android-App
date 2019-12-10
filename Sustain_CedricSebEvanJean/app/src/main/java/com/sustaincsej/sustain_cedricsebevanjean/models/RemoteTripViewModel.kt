@@ -1,11 +1,13 @@
 package com.sustaincsej.sustain_cedricsebevanjean.models
 
 import android.app.Application
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.sustaincsej.sustain_cedricsebevanjean.R
 import com.sustaincsej.sustain_cedricsebevanjean.database.TripRepository
 import com.sustaincsej.sustain_cedricsebevanjean.database.TripRoomDatabase
 import com.sustaincsej.sustain_cedricsebevanjean.httprequests.APICall
@@ -18,6 +20,8 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter.ISO_INSTANT
 import java.util.*
 
+
+
 class RemoteTripViewModel(application: Application) : AndroidViewModel(application) {
 
     var allTrips: LiveData<List<Trip>>
@@ -27,9 +31,16 @@ class RemoteTripViewModel(application: Application) : AndroidViewModel(applicati
 
         var date = Date()
 
+        var email = ""
+        var password = ""
+        with(application.getSharedPreferences(application.getString(R.string.Preferences), Context.MODE_PRIVATE).all){
 
+            email = this["Email"] as String
+            password = this["Password"] as String
+
+        }
         val jsonString = ""
-        var apiCall = APICall("http://carbon-emission-tracker-team-7.herokuapp.com/api/v1/alltrips", "GET", "robatto.jeanmarie@gmail.com", "password", jsonString)
+        var apiCall = APICall("http://carbon-emission-tracker-team-7.herokuapp.com/api/v1/alltrips", "GET", email, password, jsonString)
         Log.d(TAG, "here")
         var results = apiCall.execute().get() as JSONArray
         Log.d(TAG, results.toString())
@@ -54,7 +65,8 @@ class RemoteTripViewModel(application: Application) : AndroidViewModel(applicati
                 jsonTrip.getJSONObject("to").getDouble("longitude"),
                 jsonTrip.getDouble("distance"),
                 jsonTrip.getDouble("co2emissions"),
-                DateFormat.getInstance().parse(jsonTrip.getString("created_at")) as Date,
+                //DateFormat.getInstance().parse(jsonTrip.getString("created_at")) as Date
+                Date(),
                 " "
             )
             list.add(trip)
