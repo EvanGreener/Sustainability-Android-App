@@ -13,6 +13,7 @@ import java.io.*
 import java.net.HttpURLConnection
 import java.net.URL
 import com.sustaincsej.sustain_cedricsebevanjean.R
+import com.sustaincsej.sustain_cedricsebevanjean.httprequests.APICall
 
 
 /**
@@ -55,11 +56,13 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
     {
         return array
     }
-    fun calculate(array: Array<String>) :  AsyncTask<String, Float, Float>
+    /*fun calculate(array: Array<String>) :  AsyncTask<String, Float, Float>
     {
         this.calculator = Co2Calculator()
         return this.calculator.execute(array[0], array[1])
     }
+    */
+
     /**
      * Everytime the button is pushed and the value of destinationHome is changed calculator is
      * reinitialized and executed, it cannot be executed without being reinitialized.
@@ -141,7 +144,7 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
      *
      *
      */
-    private inner class Co2Calculator : AsyncTask<String, Float, Float>() {
+    private inner class Co2Calculator : AsyncTask<String, String, Float>() {
 
         private lateinit var fusedLocationClient: FusedLocationProviderClient
         private lateinit var currentLocation: Location
@@ -156,6 +159,10 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
         private var currentLongitude = 0.0
         private val myurl = "https://jayaghgtracker.herokuapp.com/api/v1/tripinfo"
         private val NETIOBUFFER = 1024
+        lateinit var apiCall : APICall
+        private var email: String = ""
+        private var password: String = ""
+
 
         /**
          * This Async task calls makes another asyncronous call, which is why onProgress update is used
@@ -168,73 +175,47 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
 
             transportMode = types[0]
             destinationHome = types[1]
+            var travelModeToAPI = ""
+            var efficiency = "0.0"
+            var engine = "diesel"
 
-            var istream: InputStream? = null
-            var conn: HttpURLConnection? = null
-            val url = URL(myurl)
 
-            /*
-            Authenticator.setDefault(object : Authenticator() {
-                protected val passwordAuthentication: PasswordAuthentication?
-                    protected get() = PasswordAuthentication("sect2team2@test", "1qazxsw2".toCharArray())
-            })*/
+            if(transportMode.equals("Car Diesel") || transportMode.equals("Carpool (3) Diesel"))
+            {engine = "diesel"}
+            else if(transportMode.equals("Car Gas") || transportMode.equals("Carpool (3) Gas"))
+            {engine = "gasoline"}
 
-            try {
-                // create and open the connection
-                conn = url.openConnection() as HttpURLConnection
-
-                conn.readTimeout = 10000
-
-                conn.connectTimeout = 15000
-
-                conn.requestMethod = "GET"
-
-                conn.doInput = true
-
-                conn.setRequestProperty("fromlatitude", currentLatitude.toString())
-                conn.setRequestProperty("fromlongitude", currentLongitude.toString())
-                conn.setRequestProperty("tolatitude", homeLatitude.toString())
-                conn.setRequestProperty("tolongitude", schoolLongitude.toString())
-                conn.setRequestProperty("mode", "publicTransport")
-
-                //val auth: String = "sect2team2@test" + ":" + "1qazxsw2"
-                //val encodedAuth: ByteArray =
-                //    Base64.encode(auth.toByteArray(StandardCharsets.UTF_8), DEFAULT)
-                //val authHeaderValue = "Basic " + String(encodedAuth)
-                conn.setRequestProperty("Authorization", "1qazxsw2")
-
-                conn.connect()
-
-                val response = conn.responseCode
-                Log.d("Calculator", "Server returned: $response")
-
-                if (response != HttpURLConnection.HTTP_OK) {
-                    return 0.0f
-                }
-
-                istream = conn.inputStream
-                Log.d("Calculator", readIt(istream))
-                return 0.0f //temporary
-            } catch (e: IOException) {
-                Log.e("Calculator", "IO exception in bg")
-                Log.getStackTraceString(e)
-                throw e
-            } finally {
-                if (istream != null) {
-                    try {
-                        istream.close()
-                    } catch (ignore: IOException) {
-                    }
-
-                    if (conn != null)
-                        try {
-                            conn.disconnect()
-                        } catch (ignore: IllegalStateException) {
-                        }
-
-                }
+            when
+            {
+                transportMode.equals("Car Diesel") -> {efficiency = "9.3"
+                    travelModeToAPI = "car"}
+                transportMode.equals("Car Gas") -> {efficiency ="10.6"
+                    travelModeToAPI = "car"}
+                transportMode.equals("Carpool (3) Diesel") -> {efficiency ="3.1"
+                    travelModeToAPI = "carpool"}
+                transportMode.equals("Carpool (3) Gas") -> {efficiency ="3.53"
+                    travelModeToAPI = "carpool"}
+                transportMode.equals("Public Transit") -> {efficiency ="4.62"
+                    travelModeToAPI = "publicTransport"}
+                transportMode.equals("Walk") -> {efficiency ="0.0"
+                    travelModeToAPI = "pedestrian"}
+                transportMode.equals("Bike") -> {efficiency ="0.0"
+                    travelModeToAPI = "bicycle"}
+            }
+            var destLong = 0.0
+            var destLat = 0.0
+            if(destinationHome.equals("Home")){
+                destLong = homeLongitude
+                destLat = homeLatitude
+            }
+            else{
+                destLong = schoolLongitude
+                destLat = schoolLatitude
             }
 
+            var jsonString = "{\"fromlatitude\":\"$currentLatitude\", \"fromlongitude\":\"$currentLongitude\",\"tolatitude\":\"$destLat\",  \"tolongitude\":\"$destLong\",\"mode\":\"$travelModeToAPI\", \"engine\":\"$engine\", \"consumption\"=\"$efficiency\"}"
+
+            publishProgress(jsonString)
 
 
             Log.d("Calculator", "execute ended")
@@ -272,9 +253,9 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
          * @see calculateCO2G
          * @param result this is the distance in meters calculated by the api
          */
-        override fun onProgressUpdate(vararg result: Float?){
+        override fun onProgressUpdate(vararg result: String?){
             Log.d("Calculator", "onProgressUpdate")
-            var cO2View = findViewById<TextView>(R.id.co2calc_totalco2)
+            /*var cO2View = findViewById<TextView>(R.id.co2calc_totalco2)
             var totalCO2 = calculateCO2G(result[0] as Float)
             cO2View.text = totalCO2.toString()
             var treeOffSetView = findViewById<TextView>(R.id.co2calc_trees)
@@ -286,8 +267,16 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
                 totalCO2,
                 this.currentLocation.latitude.toFloat(),
                 this.currentLocation.longitude.toFloat()
-            )
-            returnInfo(array)
+            )*/
+            apiCall =  APICall("http://carbon-emission-tracker-team-7.herokuapp.com/api/v1/tripinfo", "GET", email, password, result[0]as String)
+            var result = apiCall.execute().get()
+            var co2 = result.getJSONObject(0).getDouble("co2emissions")
+            var trees = calculateTrees((co2*1000).toFloat() )
+            var cO2View = findViewById<TextView>(R.id.co2calc_totalco2)
+            cO2View.text = co2.toString()
+            var treeOffSetView = findViewById<TextView>(R.id.co2calc_trees)
+            treeOffSetView.text = trees.toString()
+            //returnInfo(array)
         }
 
         /**
@@ -327,7 +316,7 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
         {
             Log.d("Calculator", "calculateTrees")
             val gramsPerDayPerTree = 59.7f
-            var treesToOffset = cO2InGrams / gramsPerDayPerTree
+            var treesToOffset = cO2InGrams / gramsPerDayPerTree/ 365.0f
             return treesToOffset
         }
 
@@ -386,6 +375,8 @@ class CO2CalcActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener
                 var homeLon = this["HomeLon"] as String
                 var curLat = this["CurrentLatitude"] as String
                 var curLong = this["CurrentLongitude"] as String
+                email = this["Email"] as String
+                password = this["Password"] as String
                 schoolLongitude = schoolLon.toDouble()
                 schoolLatitude = schoolLat.toDouble()
                 homeLongitude = homeLon.toDouble()

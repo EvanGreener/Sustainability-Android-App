@@ -12,6 +12,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.sustaincsej.sustain_cedricsebevanjean.R
+import com.sustaincsej.sustain_cedricsebevanjean.activities.RemoteTripLogActivity
 import com.sustaincsej.sustain_cedricsebevanjean.activities.TripLogActivity
 import com.sustaincsej.sustain_cedricsebevanjean.models.Trip
 import com.sustaincsej.sustain_cedricsebevanjean.models.TripViewModel
@@ -41,13 +42,19 @@ class TripDialogFragment : DialogFragment() {
         root.findViewById<TextView>(R.id.trip_date).text = trip.dateTimeStamp.toString()
         root.findViewById<TextView>(R.id.trip_reason).text = trip.reasonForTrip
 
+        if (!arguments!!.getBoolean("local")) root.findViewById<Button>(R.id.delete_trip_button).text = resources.getString(R.string.back)
+
         root.findViewById<FloatingActionButton>(R.id.trip_close_popup_btn).setOnClickListener {
             dismiss()
         }
 
         root.findViewById<Button>(R.id.delete_trip_button).setOnClickListener{
-            ViewModelProvider(this).get(TripViewModel::class.java).delete(trip)
-            startActivity(Intent(_context, TripLogActivity::class.java))
+            if (arguments!!.getBoolean("local")) {
+                ViewModelProvider(this).get(TripViewModel::class.java).delete(trip)
+                startActivity(Intent(_context, TripLogActivity::class.java))
+            } else {
+                startActivity(Intent(_context, RemoteTripLogActivity::class.java))
+            }
         }
 
         return root
