@@ -157,7 +157,8 @@ class APICall(private var url: String, private val method: String, private val e
                     catch(e: JSONException)
                     {
                         try{
-                            jsonData = JSONArray("["+data.toString()+"]")
+                            jsonData = JSONArray("[$data]")
+                            Log.i(TAG, "Data: $data")
                         }
                         catch(e: JSONException)
                         {

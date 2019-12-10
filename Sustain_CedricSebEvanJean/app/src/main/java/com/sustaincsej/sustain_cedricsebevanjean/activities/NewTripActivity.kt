@@ -18,10 +18,14 @@ import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.gson.Gson
 
 import com.sustaincsej.sustain_cedricsebevanjean.R
 import com.sustaincsej.sustain_cedricsebevanjean.httprequests.APICall
+import com.sustaincsej.sustain_cedricsebevanjean.models.CurrentWeather
 import com.sustaincsej.sustain_cedricsebevanjean.models.TravelMode
+import com.sustaincsej.sustain_cedricsebevanjean.models.TripInfoResponse
+import org.json.JSONObject
 
 /**
  * Activity that allows the user to create a new trip from their current location to the location of their
@@ -163,14 +167,19 @@ class NewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener
             "Bike" -> travelmode = TravelMode.BIKE.name
         }
 
-        when (id) { //TODO Implement remote
+        when (id) {
             R.id.newtrip_remote_btn -> Log.i(TAG, "Remote button clicked")//FIRE REMOTE
             R.id.newtrip_local_btn ->{
                 Log.i(TAG, "Local button clicked")
 
+                val prefs = getSharedPreferences(getString(R.string.Preferences),Context.MODE_PRIVATE)
+                val email = prefs.getString("Email", "")
+                val password = prefs.getString("Password", "")
+
                 getCurrentLocation()
-                var apiCall = APICall("http://carbon-emission-tracker-team-7.herokuapp.com/api/v1/tripinfo", "GET", "robatto.jeanmarie@gmail.com", "password", constructApiQueryString(latDouble, lonDouble))
-                var response = apiCall.execute().get()
+                var apiCall = APICall("http://carbon-emission-tracker-team-7.herokuapp.com/api/v1/tripinfo", "GET", email!!, password!!, constructApiQueryString(latDouble, lonDouble))
+
+                val response = Gson().fromJson(apiCall.execute().get().getJSONObject(0).toString(), TripInfoResponse::class.java)
 
                 replyIntent.putExtra(FROM_LAT, currentLat)
                 replyIntent.putExtra(FROM_LON, currentLon)
@@ -178,8 +187,8 @@ class NewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener
                 replyIntent.putExtra(TO_LON, lonDouble)
                 replyIntent.putExtra(TRAVEL_MODE, travelmode)
                 replyIntent.putExtra(REASON, reason)
-                replyIntent.putExtra(DISTANCE, response.getDouble(0))
-                replyIntent.putExtra(CO2, response.getDouble(2))
+                replyIntent.putExtra(DISTANCE, response.distance)
+                replyIntent.putExtra(CO2, response.co2emissions)
 
                 setResult(Activity.RESULT_OK, replyIntent)
                 finish()
