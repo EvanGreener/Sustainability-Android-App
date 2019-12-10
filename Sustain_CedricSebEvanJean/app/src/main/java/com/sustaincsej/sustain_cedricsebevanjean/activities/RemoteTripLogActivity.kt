@@ -13,9 +13,10 @@ import com.sustaincsej.sustain_cedricsebevanjean.adapters.TripRecyclerViewAdapte
 import com.sustaincsej.sustain_cedricsebevanjean.models.RemoteTripViewModel
 
 /**
- * Shows a list of trips from the php api
+ * Class that will display all trips from the remote/php database.
  *
  * @author Cedric Richards
+ * @author Sebastien Palin
  */
 class RemoteTripLogActivity : AppCompatActivity() {
 
@@ -23,6 +24,9 @@ class RemoteTripLogActivity : AppCompatActivity() {
     private lateinit var tripViewModel: RemoteTripViewModel
     private val newTripActivityRequestCode = 1
 
+    /**
+     * onCreate that will set up the RecyclerView and fab
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_trip_log)

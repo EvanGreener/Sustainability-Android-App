@@ -13,9 +13,11 @@ import java.util.*
 import java.text.SimpleDateFormat
 import java.text.ParseException
 
-
 /**
- * A view model designed for remote trips
+ * Model to insert and delete a trip from the remote php repository.
+ *
+ * @author Cedric Richards
+ * @author Sebastien Palin
  */
 class RemoteTripViewModel(application: Application) : AndroidViewModel(application) {
 

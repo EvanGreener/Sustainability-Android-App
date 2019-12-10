@@ -26,6 +26,9 @@ class TripDialogFragment : DialogFragment() {
     private lateinit var trip: Trip
     private lateinit var _context: Context
 
+    /**
+     * onCreate that sets all TextViews to the information of the trip
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

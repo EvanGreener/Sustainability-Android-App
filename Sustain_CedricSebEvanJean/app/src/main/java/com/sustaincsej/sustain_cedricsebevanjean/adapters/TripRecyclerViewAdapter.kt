@@ -58,6 +58,12 @@ class TripRecyclerViewAdapter internal constructor(
         return TripViewHolder(itemView, local)
     }
 
+    /**
+     * Gets all information from the Trip that was selected.
+     *
+     * @param holder
+     * @param position
+     */
     override fun onBindViewHolder(holder: TripViewHolder, position: Int) {
         val current = trips[position]
 
@@ -68,7 +74,6 @@ class TripRecyclerViewAdapter internal constructor(
 
         val travelMode = current.travelMode
 
-        //Ill retrieve some sample images later
         when(travelMode){
             TravelMode.BIKE.name -> holder.travelModeImg.setImageResource(R.drawable.bike)
             TravelMode.CARPOOL_DIESEL.name -> holder.travelModeImg.setImageResource(R.drawable.cp_diesel)
@@ -81,11 +86,17 @@ class TripRecyclerViewAdapter internal constructor(
             
         }
     }
-    
+
+    /**
+     * Set the RecyclerView content to a List of Trip.
+     */
     internal fun setTrips(trips: List<Trip>) {
         this.trips = trips
         notifyDataSetChanged()
     }
 
+    /**
+     * Get the number of trips in the RecyclerView.     *
+     */
     override fun getItemCount() = trips.size
 }
