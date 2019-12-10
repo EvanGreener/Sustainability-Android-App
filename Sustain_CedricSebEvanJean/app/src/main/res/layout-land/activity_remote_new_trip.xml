@@ -117,6 +117,7 @@
                         android:id="@+id/newtrip_reason"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        style="@style/EditTextTheme"
                         android:layout_margin="@dimen/componentMargin"
                         android:background="@color/surface"
                         android:ems="10"

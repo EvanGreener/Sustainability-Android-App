@@ -18,6 +18,12 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter.ISO_INSTANT
 import java.util.*
 
+/**
+ * Model to insert and delete a trip from the remote php repository.
+ *
+ * @author Cedric Richards
+ * @author Sebastien Palin
+ */
 class RemoteTripViewModel(application: Application) : AndroidViewModel(application) {
 
     var allTrips: LiveData<List<Trip>>
@@ -65,10 +71,20 @@ class RemoteTripViewModel(application: Application) : AndroidViewModel(applicati
 
     }
 
+    /**
+     * Insert a trip into the database.
+     *
+     * @param trip The trip to add
+     */
     fun insert(trip: Trip) = viewModelScope.launch {
     //    repository.insert(trip)
     }
 
+    /**
+     * Delete a trip from the database.
+     *
+     * @param trip The trip to delete
+     */
     fun delete(trip: Trip) = viewModelScope.launch {
         //repository.delete(trip)
     }

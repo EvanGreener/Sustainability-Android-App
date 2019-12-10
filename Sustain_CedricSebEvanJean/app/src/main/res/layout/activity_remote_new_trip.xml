@@ -130,6 +130,7 @@
                             android:id="@+id/newtrip_reason"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            style="@style/EditTextTheme"
                             android:layout_margin="@dimen/componentMargin"
                             android:layout_weight="4"
                             android:background="@color/surface"
