@@ -20,6 +20,7 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 import com.sustaincsej.sustain_cedricsebevanjean.R
+import com.sustaincsej.sustain_cedricsebevanjean.httprequests.APICall
 import com.sustaincsej.sustain_cedricsebevanjean.models.TravelMode
 
 class NewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener {
@@ -40,6 +41,7 @@ class NewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener
     private val destinationLonDefault = -73.58854
     private var distance = 0.0
     private var co2 = 0.0
+    private var travelMode = "Car Diesel"
 
     private lateinit var co2Txt : TextView
     private lateinit var distanceTxt : TextView
@@ -155,14 +157,30 @@ class NewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener
             R.id.newtrip_local_btn ->{
                 Log.i(TAG, "Local button clicked")
 
+                var basicJsonString =
+                    "{\"fromlatitude\":\"$currentLat\", \"fromlongitude\":\"$currentLon\",\"tolatitude\":\"$latDouble\",  \"tolongitude\":\"$lonDouble\","
+
+                when {
+                    travelMode.equals("Car Diesel") -> basicJsonString += "\"mode\":\"car\", \"engine\":\"diesel\", \"consumption\":\"121.5\"}"
+                    travelMode.equals("Car Gas") -> basicJsonString += "\"mode\":\"car\", \"engine\":\"gasoline\", \"consumption\":\"123.4\"}"
+                    travelMode.equals("Carpool (3) Diesel") -> basicJsonString += "\"mode\":\"carpool\", \"engine\":\"diesel\", \"consumption\":\"121.5\"}"
+                    travelMode.equals("Carpool (3) Gas") -> basicJsonString += "\"mode\":\"carpool\", \"engine\":\"gasoline\", \"consumption\":\"123.4\"}"
+                    travelMode.equals("Public Transit") -> basicJsonString += "\"mode\":\"publicTransport\"}"
+                    travelMode.equals("Walk") -> basicJsonString += "\"mode\":\"pedestrian\"}"
+                    travelMode.equals("Bike") -> basicJsonString += "\"mode\":\"bicycle\"}"
+                }
+
+                var apiCall = APICall("http://carbon-emission-tracker-team-7.herokuapp.com/api/v1/tripinfo", "GET", "robatto.jeanmarie@gmail.com", "password", basicJsonString)
+                var response = apiCall.execute().get()
+
                 replyIntent.putExtra(FROM_LAT, currentLat)
                 replyIntent.putExtra(FROM_LON, currentLon)
                 replyIntent.putExtra(TO_LAT, latDouble)
                 replyIntent.putExtra(TO_LON, lonDouble)
                 replyIntent.putExtra(TRAVEL_MODE, travelmode)
                 replyIntent.putExtra(REASON, reason)
-                replyIntent.putExtra(DISTANCE, distance)
-                replyIntent.putExtra(CO2, co2)
+                replyIntent.putExtra(DISTANCE, response.getDouble(0))
+                replyIntent.putExtra(CO2, response.getDouble(2))
 
                 setResult(Activity.RESULT_OK, replyIntent)
                 finish()
@@ -172,13 +190,13 @@ class NewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
-        TODO("No need to implement. Useless")
+        // Don't do anything with
     }
 
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         Log.d(TAG, "onItemSelected")
-        val travelMode = parent!!.getItemAtPosition(position) as String
+        travelMode = parent!!.getItemAtPosition(position) as String
         updateValues(travelMode)
     }
 
@@ -284,12 +302,6 @@ class NewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener
         var totalCO2 = distanceKM * vehicleEfficiency
         return totalCO2
     }
-
-    /*
-    fun showPopup() {
-        dialog.show()
-    }
-     */
 
     companion object {
         private val TAG = "NewTripActivity"
