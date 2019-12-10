@@ -35,7 +35,7 @@ class RemoteTripLogActivity : AppCompatActivity() {
 
 
         val recyclerView = findViewById<RecyclerView>(R.id.trip_log_recycler_view)
-        val adapter = TripRecyclerViewAdapter(this)
+        val adapter = TripRecyclerViewAdapter(this, false)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
@@ -45,7 +45,6 @@ class RemoteTripLogActivity : AppCompatActivity() {
             // Update the cached copy of the words in the adapter.
             trips?.let { adapter.setTrips(it) }
         })
-        //retreiveFromAPI()
 
         val fab = findViewById<FloatingActionButton>(R.id.trip_log_add_trip)
         fab.setOnClickListener {
@@ -53,20 +52,6 @@ class RemoteTripLogActivity : AppCompatActivity() {
             startActivityForResult(intent, newTripActivityRequestCode)
         }
 
-    }
-
-    fun retreiveFromAPI()
-    {
-        Log.d(TAG, "retreiveFromApi")
-        //val jsonString = ""
-        //var apiCall = APICall("http://carbon-emission-tracker-team-7.herokuapp.com/api/v1/alltrips", "GET", "robatto.jeanmarie@gmail.com", "password", jsonString)
-
-        //val jsonString = "{\"fromlatitude\":\"45.4908788\", \"fromlongitude\":\"-73.588405\",\"tolatitude\":\"45.2908788\",  \"tolongitude\":\"-73.588405\",\"mode\":\"car\", \"engine\":\"gasoline\", \"consumption\":\"8.4\"}"
-        //var apiCall =  APICall("http://carbon-emission-tracker-team-7.herokuapp.com/api/v1/addtrip", "POST", "robatto.jeanmarie@gmail.com", "password", jsonString)
-        //var execute = apiCall.execute()
-
-        //var results = execute.get()
-        //Log.d(TAG, results.toString())
     }
 
     companion object {
@@ -79,6 +64,5 @@ class RemoteTripLogActivity : AppCompatActivity() {
         const val REASON = "lat"
         const val DISTANCE = "distance"
         const val CO2 = "co2"
-
     }
 }

@@ -2,31 +2,30 @@ package com.sustaincsej.sustain_cedricsebevanjean.adapters
 
 import android.content.Context
 
-import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sustaincsej.sustain_cedricsebevanjean.R
-import com.sustaincsej.sustain_cedricsebevanjean.activities.TripLogActivity
 
 import com.sustaincsej.sustain_cedricsebevanjean.models.TravelMode
 import com.sustaincsej.sustain_cedricsebevanjean.models.Trip
 import com.sustaincsej.sustain_cedricsebevanjean.fragments.TripDialogFragment
 
 class TripRecyclerViewAdapter internal constructor(
-    context: Context
+    context: Context,
+    private val local: Boolean
 ) : RecyclerView.Adapter<TripRecyclerViewAdapter.TripViewHolder>() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private var trips = emptyList<Trip>() // Cached copy of words
 
-    inner class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class TripViewHolder(itemView: View, local: Boolean) : RecyclerView.ViewHolder(itemView) {
         var trip: Trip? = null
 
         val tripDateView: TextView = itemView.findViewById(R.id.trip_row_date)
@@ -36,10 +35,12 @@ class TripRecyclerViewAdapter internal constructor(
 
         init {
             itemView.setOnClickListener{
+                Log.i("TRIP_ROW", local.toString())
                 val context = it.context
                 val fragment = TripDialogFragment()
                 val args = Bundle()
                 args.putSerializable("trip", trip)
+                args.putBoolean("local", local)
                 fragment.arguments = args
 
                 val app = context as AppCompatActivity
@@ -50,7 +51,7 @@ class TripRecyclerViewAdapter internal constructor(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TripViewHolder {
         val itemView = inflater.inflate(R.layout.trip_row, parent, false)
-        return TripViewHolder(itemView)
+        return TripViewHolder(itemView, local)
     }
 
     override fun onBindViewHolder(holder: TripViewHolder, position: Int) {

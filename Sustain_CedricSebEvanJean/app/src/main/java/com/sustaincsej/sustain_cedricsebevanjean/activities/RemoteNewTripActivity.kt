@@ -1,27 +1,14 @@
 package com.sustaincsej.sustain_cedricsebevanjean.activities
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.location.Location
 import android.os.Bundle
-import android.os.Looper
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.get
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationServices
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-
 import com.sustaincsej.sustain_cedricsebevanjean.R
 import com.sustaincsej.sustain_cedricsebevanjean.httprequests.APICall
-import com.sustaincsej.sustain_cedricsebevanjean.models.TravelMode
 
 class RemoteNewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener {
 
@@ -45,11 +32,8 @@ class RemoteNewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedLi
         setContentView(R.layout.activity_remote_new_trip)
 
         showSpinner()
-        Log.i(TAG, "afterSpinner")
         retrieveCoords()
-        Log.i(TAG, "afterreTreive")
         setUpButtons()
-        Log.i(TAG, "afterButtons")
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -97,10 +81,12 @@ class RemoteNewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedLi
     }
     private fun handleHomeClick(view: View) {
         destination = "home"
+        Toast.makeText(this, resources.getString(R.string.newtrip_remote_home_selected), Toast.LENGTH_SHORT).show()
     }
 
     private fun handleSchoolClick(view: View) {
         destination = "school"
+        Toast.makeText(this, resources.getString(R.string.newtrip_remote_school_selected), Toast.LENGTH_SHORT).show()
     }
 
     private fun handleSaveClick(view: View){
@@ -118,16 +104,16 @@ class RemoteNewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedLi
         }
         if(travelModeToAPI.equals("car") || travelModeToAPI.equals("carpool")) {
             jsonString =
-                "{\"fromlatitude\":\"$currentLatitude\", \"fromlongitude\":\"$currentLongitude\",\"tolatitude\":\"$destLat\",  \"tolongitude\":\"$destLong\",\"mode\":\"$travelModeToAPI\", \"engine\":\"$engine\"}"
+                "{\"fromlatitude\":\"$currentLatitude\", \"fromlongitude\":\"$currentLongitude\", \"tolatitude\":\"$destLat\", \"tolongitude\":\"$destLong\",\"mode\":\"$travelModeToAPI\", \"engine\":\"$engine\"}"
         }
         else{
-
             jsonString = "{\"fromlatitude\":\"$currentLatitude\", \"fromlongitude\":\"$currentLongitude\",\"tolatitude\":\"$destLat\",  \"tolongitude\":\"$destLong\",\"mode\":\"$travelModeToAPI\", \"engine\":\"$engine\", \"consumption\"=\"$efficiency\"}"
             Log.d(TAG, jsonString)
         }
-        var apiCall =  APICall("http://carbon-emission-tracker-team-7.herokuapp.com/api/v1/addtrip", "POST", email, password, jsonString)
-        var result = apiCall.execute().get()
+        val apiCall =  APICall("http://carbon-emission-tracker-team-7.herokuapp.com/api/v1/addtrip", "POST", email, password, jsonString)
+        val result = apiCall.execute().get()
         Log.i(TAG, result.toString())
+        startActivity(Intent(this, RemoteTripLogActivity::class.java))
         finish()
     }
 
@@ -154,7 +140,7 @@ class RemoteNewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedLi
 
     private fun showSpinner() {
         Log.d("Calculator", "ShowSpinner")
-        val travelModeSpinner = findViewById(R.id.newtrip_travelmode_spinner) as Spinner
+        val travelModeSpinner = findViewById<Spinner>(R.id.newtrip_travelmode_spinner)
         val dataAdapter = ArrayAdapter<String>(
             this, R.layout.simple_spinner, resources.getStringArray(R.array.newtrip_travel_modes))
         travelModeSpinner.adapter = dataAdapter

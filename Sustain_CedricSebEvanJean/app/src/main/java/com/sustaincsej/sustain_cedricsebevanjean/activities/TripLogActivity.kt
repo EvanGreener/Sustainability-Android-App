@@ -33,7 +33,7 @@ class TripLogActivity : AppCompatActivity() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this@TripLogActivity)
 
         val recyclerView = findViewById<RecyclerView>(R.id.trip_log_recycler_view)
-        val adapter = TripRecyclerViewAdapter(this)
+        val adapter = TripRecyclerViewAdapter(this, true)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 

@@ -27,7 +27,7 @@ class RemoteTripViewModel(application: Application) : AndroidViewModel(applicati
     var allTrips: LiveData<List<Trip>>
 
     init {
-        var list :MutableList<Trip> = ArrayList<Trip>()
+        var list :MutableList<Trip> = ArrayList()
 
         var date = Date()
 
@@ -44,7 +44,7 @@ class RemoteTripViewModel(application: Application) : AndroidViewModel(applicati
         Log.d(TAG, "here")
         var results = apiCall.execute().get() as JSONArray
         Log.d(TAG, results.toString())
-        for(i in 0 until results.length()-1){
+        for(i in 0 until results.length()){
 
             val jsonTrip = results.getJSONObject(i)
             var dateString = jsonTrip.getString("created_at")
