@@ -208,6 +208,10 @@ class NewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener
     /**
      * Function that will create an api query string for use of calling the remote api to get the co2 consumed
      * and the distanced traveled when creating a new trip.
+     *
+     * @param latDouble The double latitude of the destination
+     * @param lonDouble The double longitude of the destinatino
+     * @return A query String for the remote api
      */
     private fun constructApiQueryString(latDouble: Double, lonDouble: Double) : String {
         var basicJsonString =
@@ -226,6 +230,9 @@ class NewTripActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener
         return basicJsonString
     }
 
+    /**
+     * This is implemented so as to keep inheritance happy, but does nothing as it is not really needed
+     */
     override fun onNothingSelected(parent: AdapterView<*>?) {
         // Don't do anything with
     }
