@@ -4,14 +4,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.sustaincsej.sustain_cedricsebevanjean.R
-import android.content.DialogInterface
 import androidx.appcompat.app.AlertDialog
 
 /**
  * Class that displays a small paragraph about the app itself and about the programmers of it.
  *
  * @author Jean Robatto
- * @author Sebastien Palin
  */
 class AboutActivity : AppCompatActivity() {
 
@@ -42,9 +40,9 @@ class AboutActivity : AppCompatActivity() {
         builder.setMessage(message)
             .setTitle(title)
             .setCancelable(false)
-            .setPositiveButton("COOL!", DialogInterface.OnClickListener { dialog, id ->
+            .setPositiveButton("COOL!") { _, _ ->
                 //do nothing (required for constructor)
-            })
+            }
         val alert = builder.create()
         alert.show()
     }

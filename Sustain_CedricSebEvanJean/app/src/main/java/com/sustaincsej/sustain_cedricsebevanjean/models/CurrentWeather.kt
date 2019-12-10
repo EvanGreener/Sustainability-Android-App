@@ -2,6 +2,8 @@ package com.sustaincsej.sustain_cedricsebevanjean.models
 
 /**
  * Classes used to convert json to object for the weather api.
+ *
+ * @author Jean Robatto
  */
 data class CurrentWeather(val coord: Coord, val weather: Array<Weather>, val base: String, val main: Main,
                             val wind: Wind, val rain: Rain, val dt: Int, val sys: Sys, val timezone: Int,

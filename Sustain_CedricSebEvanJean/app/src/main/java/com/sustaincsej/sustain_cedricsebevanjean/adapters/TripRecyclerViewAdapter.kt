@@ -12,11 +12,15 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.sustaincsej.sustain_cedricsebevanjean.R
-
 import com.sustaincsej.sustain_cedricsebevanjean.models.TravelMode
 import com.sustaincsej.sustain_cedricsebevanjean.models.Trip
 import com.sustaincsej.sustain_cedricsebevanjean.fragments.TripDialogFragment
 
+/**
+ * The adapter to show a list of Trips
+ *
+ * @author Jean Robatto and Evan Greenstein
+ */
 class TripRecyclerViewAdapter internal constructor(
     context: Context,
     private val local: Boolean

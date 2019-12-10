@@ -20,7 +20,7 @@ class TripViewModel(application: Application) : AndroidViewModel(application) {
         val tripsDao = TripRoomDatabase.getDatabase(application, viewModelScope).tripDao()
         repository = TripRepository(tripsDao)
         allTrips = repository.allTrips
-        Log.d("Trips", "allTrips "+allTrips.toString())
+        Log.d("Trips", "allTrips $allTrips")
         Log.d("Trips", "allTrips.value "+allTrips.value.toString())
     }
 

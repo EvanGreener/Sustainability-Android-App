@@ -10,10 +10,8 @@ import com.sustaincsej.sustain_cedricsebevanjean.models.Converters
 import com.sustaincsej.sustain_cedricsebevanjean.models.Trip
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import java.time.LocalDate
-import java.util.*
 
-@Database(entities = arrayOf(Trip::class), version = 1, exportSchema = false)
+@Database(entities = [Trip::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class TripRoomDatabase : RoomDatabase() {
     abstract fun tripDao(): TripDAO

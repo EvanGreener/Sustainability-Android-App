@@ -1,6 +1,6 @@
 package com.sustaincsej.sustain_cedricsebevanjean.models
 
-enum class TravelMode(){
+enum class TravelMode{
     CAR_GAS,
     CAR_DIESEL,
     CARPOOL_GAS,

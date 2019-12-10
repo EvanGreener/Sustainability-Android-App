@@ -95,8 +95,8 @@ class TripLogActivity : AppCompatActivity() {
         if (requestCode == newTripActivityRequestCode && resultCode == Activity.RESULT_OK) {
             val extras = data?.extras
 
-            var lat = extras?.getDouble(NewTripActivity.TO_LAT)
-            var lon = extras?.getDouble(NewTripActivity.TO_LON)
+            val lat = extras?.getDouble(NewTripActivity.TO_LAT)
+            val lon = extras?.getDouble(NewTripActivity.TO_LON)
             val travel_mode = extras?.getString(NewTripActivity.TRAVEL_MODE)!!
             val reason = extras.getString(NewTripActivity.REASON)!!
             val distance = extras.getDouble(NewTripActivity.DISTANCE)

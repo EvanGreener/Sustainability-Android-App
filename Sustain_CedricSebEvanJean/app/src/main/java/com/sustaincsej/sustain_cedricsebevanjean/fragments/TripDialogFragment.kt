@@ -17,6 +17,10 @@ import com.sustaincsej.sustain_cedricsebevanjean.activities.TripLogActivity
 import com.sustaincsej.sustain_cedricsebevanjean.models.Trip
 import com.sustaincsej.sustain_cedricsebevanjean.models.TripViewModel
 
+/**
+ * Fragment to show trip details
+ * @author Jean Robatto
+ */
 class TripDialogFragment : DialogFragment() {
 
     private lateinit var trip: Trip
@@ -55,6 +59,7 @@ class TripDialogFragment : DialogFragment() {
             } else {
                 startActivity(Intent(_context, RemoteTripLogActivity::class.java))
             }
+            dismiss()
         }
 
         return root

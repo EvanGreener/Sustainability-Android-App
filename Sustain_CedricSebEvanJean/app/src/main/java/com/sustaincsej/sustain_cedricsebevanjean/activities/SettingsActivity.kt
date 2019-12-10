@@ -1,5 +1,6 @@
 package com.sustaincsej.sustain_cedricsebevanjean.activities
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
@@ -18,7 +19,6 @@ import java.util.*
  * Class that allows the user to input their settings via a form.
  *
  * @author Sebastien Palin
- * @author Jean Robatto
  * @author Evan Greenstein
  */
 class SettingsActivity : AppCompatActivity() {
@@ -67,6 +67,7 @@ class SettingsActivity : AppCompatActivity() {
     /**
      * Function that displays the user's saved settings in the settings views
      */
+    @SuppressLint("SetTextI18n")
     private fun showSavedSettings() {
         val prefs = getSharedPreferences(getString(R.string.Preferences), Context.MODE_PRIVATE)
         firstName.setText(prefs.getString("FirstName", ""))
@@ -122,7 +123,7 @@ class SettingsActivity : AppCompatActivity() {
             putString("SchoolLat", schoolLat.text.toString())
             putString("SchoolLon", schoolLon.text.toString())
             putString("TimeStamp", getDate())
-            commit()
+            apply()
         }
     }
 
@@ -131,6 +132,7 @@ class SettingsActivity : AppCompatActivity() {
      *
      * @return Today's date, formatted to dd/MM/yyy
      */
+    @SuppressLint("SimpleDateFormat")
     private fun getDate() : String {
         val formatter = SimpleDateFormat("dd/MM/yyyy")
         val date = Calendar.getInstance().time
@@ -202,6 +204,6 @@ class SettingsActivity : AppCompatActivity() {
      * Companion object used for logging
      */
     companion object {
-        private val TAG = "SETTINGS"
+        private const val TAG = "SETTINGS"
     }
 }
