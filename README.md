@@ -5,7 +5,7 @@ Android app to help students to identify their CO2 footprint and its consequence
 Known issues:
 
 -> Adding remote trip with bicycle/pedestrian/public transport does not work because of a 
-problem in the php server. Hopefully this can be fixed by the 10th.
+problem in the api server.
 
 -> Dates are in UTC time, they have not been converted to local time zone
 
